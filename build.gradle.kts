@@ -15,6 +15,26 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+	maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1") {
+		content {
+			includeGroup("me.djtheredstoner")
+		}
+	}
+	maven("https://maven.terraformersmc.com/") {
+		content {
+			includeGroup("com.terraformersmc")
+		}
+	}
+	maven("https://api.modrinth.com/maven") {
+		content {
+			includeGroup("maven.modrinth")
+		}
+	}
+	maven("https://repo.hypixel.net/repository/Hypixel/") {
+		content {
+			includeGroup("net.hypixel")
+		}
+	}
 }
 
 dependencies {
@@ -26,7 +46,10 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation("net.fabricmc.fabric-api:fabric-api:${providers.gradleProperty("fabric_api_version").get()}")
 	modImplementation("net.fabricmc:fabric-language-kotlin:${providers.gradleProperty("fabric_kotlin_version").get()}")
-	implementation("net.hypixel:mod-api:1.0.2")
+
+	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.2")
+	implementation("net.hypixel:mod-api:1.0.1")
+	modImplementation("maven.modrinth:hypixel-mod-api:1.0.1+build.1+mc1.21")
 }
 
 tasks.processResources {
