@@ -2,10 +2,11 @@ package com.nopo
 
 import com.google.gson.annotations.Expose
 import com.mojang.brigadier.CommandDispatcher
-import com.nopo.Utils.componentBuilder
-import com.nopo.Utils.withColor
+import com.nopo.utils.Utils.componentBuilder
+import com.nopo.utils.Utils.withColor
 import com.nopo.config.ConfigManager
 import com.nopo.config.ModuleConfig
+import com.nopo.utils.Utils
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.minecraft.ChatFormatting

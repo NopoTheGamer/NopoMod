@@ -4,6 +4,10 @@ pluginManagement {
 			name = "Fabric"
 			url = uri("https://maven.fabricmc.net/")
 		}
+		maven {
+			name = "Hypixel"
+			url = uri("https://repo.hypixel.net/repository/Hypixel/")
+		}
 		mavenCentral()
 		gradlePluginPortal()
 	}

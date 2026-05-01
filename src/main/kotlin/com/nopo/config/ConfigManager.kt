@@ -3,7 +3,7 @@ package com.nopo.config
 import com.google.gson.GsonBuilder
 import com.google.gson.stream.JsonReader
 import com.nopo.NopoMod
-import com.nopo.Utils
+import com.nopo.utils.Utils
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.Minecraft
 import java.io.BufferedWriter

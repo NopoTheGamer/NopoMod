@@ -2,9 +2,9 @@ package com.nopo.features
 
 import com.nopo.Module
 import com.nopo.NopoMod
-import com.nopo.Utils
-import com.nopo.Utils.componentBuilder
-import com.nopo.Utils.replace
+import com.nopo.utils.Utils
+import com.nopo.utils.Utils.componentBuilder
+import com.nopo.utils.Utils.replace
 import com.nopo.config.ModuleConfig
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents
 import java.awt.Color

@@ -2,8 +2,8 @@ package com.nopo.features
 
 import com.mojang.brigadier.CommandDispatcher
 import com.nopo.Module
-import com.nopo.Utils
-import com.nopo.Utils.componentBuilder
+import com.nopo.utils.Utils
+import com.nopo.utils.Utils.componentBuilder
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.minecraft.commands.CommandBuildContext

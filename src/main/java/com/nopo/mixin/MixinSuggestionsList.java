@@ -7,7 +7,7 @@ import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import com.mojang.brigadier.suggestion.Suggestion;
-import com.nopo.Utils;
+import com.nopo.utils.Utils;
 import com.nopo.features.emoji.Emoji;
 import com.nopo.features.emoji.EmojiReplace;
 import com.nopo.mixin.accessor.AccessorCommandSuggestions;

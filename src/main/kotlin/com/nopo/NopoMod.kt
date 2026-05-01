@@ -5,6 +5,7 @@ import com.nopo.config.ConfigManager
 import com.nopo.features.SixSeven
 import com.nopo.features.WokeName
 import com.nopo.features.emoji.EmojiReplace
+import com.nopo.utils.Utils
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback

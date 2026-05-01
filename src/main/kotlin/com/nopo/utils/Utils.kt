@@ -1,5 +1,6 @@
-package com.nopo
+package com.nopo.utils
 
+import com.nopo.NopoMod
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
@@ -13,6 +14,7 @@ import java.awt.Color
 import java.util.Optional
 import kotlin.concurrent.atomics.AtomicBoolean
 import kotlin.concurrent.atomics.ExperimentalAtomicApi
+import kotlin.text.replace
 
 object Utils {
 

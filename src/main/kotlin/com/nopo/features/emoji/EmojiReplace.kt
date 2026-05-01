@@ -5,8 +5,8 @@ import com.google.gson.Gson
 import com.google.gson.stream.JsonReader
 import com.nopo.Module
 import com.nopo.NopoMod
-import com.nopo.Utils
-import com.nopo.Utils.replace
+import com.nopo.utils.Utils
+import com.nopo.utils.Utils.replace
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.network.chat.Component
