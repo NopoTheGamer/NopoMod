@@ -2,21 +2,25 @@ package com.nopo.features
 
 import com.nopo.module.Module
 import com.nopo.NopoMod
+import com.nopo.events.GuiRendering
 import com.nopo.events.IslandChange
 import com.nopo.events.ScoreboardChange
 import com.nopo.utils.IslandType
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.cleanColor
+import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.screens.ChatScreen
 import net.minecraft.network.chat.Component
 
-object DebugModule : Module("debug", NopoMod.config.debug, dev = true), IslandChange, ScoreboardChange {
+object DebugModule : Module("debug", NopoMod.config.debug, dev = true), IslandChange, ScoreboardChange, GuiRendering {
 
     override fun onWorldSwap(newIsland: IslandType, oldIsland: IslandType) {
         if (!config.enabled) return
         Utils.sendMessageToPlayer("new $newIsland old $oldIsland")
     }
 
-    val timeRegex = Regex(".*\\d+:\\d+[ap]m .")
+    val crapLines = Regex("(?:.*\\d+:\\d+[ap]m .)|(?:Carnival \\d+:\\d+:\\d+)")
 
     override fun onScoreboardChange(
         added: List<Component>,
@@ -25,8 +29,8 @@ object DebugModule : Module("debug", NopoMod.config.debug, dev = true), IslandCh
         old: List<Component>,
     ) {
         if (!config.enabled) return
-        val added = added.filterNot { timeRegex.matches(it.string.cleanColor()) }
-        val removed = removed.filterNot { timeRegex.matches(it.string.cleanColor()) }
+        val added = added.filterNot { crapLines.matches(it.string.cleanColor()) }
+        val removed = removed.filterNot { crapLines.matches(it.string.cleanColor()) }
 
         if (added.isNotEmpty()) {
             Utils.sendMessageToPlayer("Added: ")
@@ -40,6 +44,21 @@ object DebugModule : Module("debug", NopoMod.config.debug, dev = true), IslandCh
                 Utils.sendMessageToPlayer(component)
             }
         }
+    }
+
+    var lastX = 0
+    var lastY = 0
+
+    override fun render(context: GuiGraphics) {
+        if (!config.enabled) return
+        val screen = Minecraft.getInstance().screen
+        if (screen != null && screen !is ChatScreen) {
+            val x = Minecraft.getInstance().mouseHandler.getScaledXPos(Minecraft.getInstance().window).toInt()
+            val y = Minecraft.getInstance().mouseHandler.getScaledYPos(Minecraft.getInstance().window).toInt()
+            lastX = x
+            lastY = y
+        }
+        context.drawString(Minecraft.getInstance().font, "x: $lastX y: $lastY", lastX, lastY, -1)
     }
 
 }

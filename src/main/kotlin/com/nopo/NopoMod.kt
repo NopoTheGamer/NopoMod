@@ -7,20 +7,28 @@ import com.nopo.features.DebugModule
 import com.nopo.features.OverflowPetLevels
 import com.nopo.commands.SixSeven
 import com.nopo.commands.TaskList
+import com.nopo.events.GuiRendering
 import com.nopo.events.TickEvent
 import com.nopo.events.WorldChange
+import com.nopo.features.AshwreathReminder
 import com.nopo.features.FirstTImeGreeting
 import com.nopo.features.WokeName
 import com.nopo.features.emoji.EmojiReplace
 import com.nopo.module.Module
+import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientWorldEvents
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry
+import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements
 import net.hypixel.modapi.HypixelModAPI
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket
+import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.resources.Identifier
 
 object NopoMod : ModInitializer {
 
@@ -43,6 +51,8 @@ object NopoMod : ModInitializer {
             OverflowPetLevels,
             TaskList,
             FirstTImeGreeting,
+            AshwreathReminder,
+            DelayedRuns,
         )
 
         HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket::class.java)
@@ -71,6 +81,17 @@ object NopoMod : ModInitializer {
             for (module in modules) {
                 if (module is WorldChange) {
                     module.onWorldChange()
+                }
+            }
+        }
+
+        HudElementRegistry.attachElementBefore(
+            VanillaHudElements.SLEEP,
+            Identifier.fromNamespaceAndPath(MOD_ID, "rendering")
+        ) { context: GuiGraphics, _: DeltaTracker ->
+            for (module in modules) {
+                if (module is GuiRendering) {
+                    module.render(context)
                 }
             }
         }

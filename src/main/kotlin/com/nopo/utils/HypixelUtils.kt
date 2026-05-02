@@ -22,7 +22,7 @@ object HypixelUtils : Module("hypixel utils", needsToggle = false), TickEvent, W
     var map: String? = null
     var mode: String? = null
     var currentIsland: IslandType = IslandType.UNKNOWN
-    var inSkyblock = false
+    private var inSkyblock = false
 
     init {
         HypixelModAPI.getInstance().createHandler<ClientboundLocationPacket?>(

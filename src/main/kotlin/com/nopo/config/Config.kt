@@ -2,6 +2,7 @@ package com.nopo.config
 
 import com.google.gson.annotations.Expose
 import com.nopo.commands.TaskConfig
+import com.nopo.features.AshwreathConfig
 
 class Config {
 
@@ -16,6 +17,9 @@ class Config {
 
     @Expose
     var overflowPetLevel = ModuleConfig()
+
+    @Expose
+    var ashwreath = AshwreathConfig()
 
     @Expose
     var tasks = TaskConfig()

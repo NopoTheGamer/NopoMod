@@ -86,6 +86,7 @@ object TaskList : Module("tasks", NopoMod.config.tasks, needsToggle = false), Co
                             append("Deleted every task ")
                             append(Utils.createEmoji("frowning"))
                         })
+                        ConfigManager.save()
                     }
                 }
             }

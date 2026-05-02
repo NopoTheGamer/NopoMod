@@ -31,8 +31,7 @@ object Utils {
         append("[") {
             withColor(1279794)
         }
-        // idk if i like this yet
-        append(createGradientText(Color(24, 199, 146), Color(28, 173, 122), "Nopo"))
+        append(themedGradient("Nopo"))
         append("] ") {
             withColor(1279794)
         }
@@ -233,6 +232,13 @@ object Utils {
             }
         }
         return text
+    }
+
+    fun themedGradient(string: String): Component {
+        // idk if i like this yet
+        val start = Color(24, 199, 146)
+        val end = Color(22, 166, 149)
+        return createGradientText(start, end, string)
     }
 
     val guiIdentifier = Identifier.withDefaultNamespace("gui")
