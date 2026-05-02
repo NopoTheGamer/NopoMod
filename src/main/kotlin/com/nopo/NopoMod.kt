@@ -7,6 +7,7 @@ import com.nopo.features.DebugModule
 import com.nopo.features.OverflowPetLevels
 import com.nopo.commands.SixSeven
 import com.nopo.commands.TaskList
+import com.nopo.events.TickEvent
 import com.nopo.features.FirstTImeGreeting
 import com.nopo.features.WokeName
 import com.nopo.features.emoji.EmojiReplace
@@ -14,8 +15,10 @@ import com.nopo.module.Module
 import com.nopo.utils.HypixelUtils
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.hypixel.modapi.HypixelModAPI
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket
+import net.minecraft.client.Minecraft
 
 object NopoMod : ModInitializer {
 
@@ -23,6 +26,7 @@ object NopoMod : ModInitializer {
     lateinit var config: Config
     var modules: List<Module> = emptyList()
         private set
+    private var ticks = 0
 
 
     override fun onInitialize() {
@@ -46,6 +50,17 @@ object NopoMod : ModInitializer {
                 module.registerToggleCommand()?.register(dispatcher)
                 if (module is CommandRegistration) {
                     module.createCommand().register(dispatcher)
+                }
+            }
+        }
+
+        ClientTickEvents.END_CLIENT_TICK.register {
+            if (Minecraft.getInstance().player == null) return@register
+            if (Minecraft.getInstance().level == null) return@register
+
+            for (module in modules) {
+                if (module is TickEvent) {
+                    module.onTick(++ticks)
                 }
             }
         }

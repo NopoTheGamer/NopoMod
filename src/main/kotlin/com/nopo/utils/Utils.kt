@@ -339,4 +339,8 @@ object Utils {
         set(value) {
             this.withStyle { it.withObfuscated(value) }
         }
+
+    fun String.cleanColor(): String {
+        return this.replace(Regex("§."), "")
+    }
 }
