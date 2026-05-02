@@ -16,7 +16,21 @@ import net.minecraft.network.chat.Component
 object BossesSinceDrop : Module("killsSinceSlayerDrop", NopoMod.config.bossesSinceDrop), AllowChat, WorldChange {
 
     private fun getConfig() = config as BossesSinceDropConfig
+
+    /*
+    * "   Wolf Slayer LVL 8 - Next LVL in 260,232 XP!"
+    * "   Zombie Slayer LVL 9 - LVL MAXED OUT!"
+     */
     private val bossTypeRegex = Regex(" +(?<slayer>Wolf|Zombie|Blaze|Vampire|Spider|Enderman) Slayer LVL \\d.*")
+
+    /*
+    * VERY RARE DROP! (Critical VI) (+218% ✯ Magic Find)
+    * RARE DROP! (4x Hamster Wheel) (+218% ✯ Magic Find)
+    * INSANE DROP! (Shard of the Shredded) (+170% ✯ Magic Find)
+    * INSANE DROP! (Warden Heart)
+    * CRAZY RARE DROP! (Judgement Core) (+236% ✯ Magic Find)
+    * VERY RARE DROP! (◆ Spirit Rune I) (+218% ✯ Magic Find)
+     */
     private val dropRegex = Regex("(?:VERY RARE|RARE|INSANE|CRAZY RARE) DROP! \\((?<amount>\\d+x )?(?<item>[^)]+)\\)(?: .+)?")
     private var currentBoss: SlayerType? = null
 
