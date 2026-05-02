@@ -9,6 +9,14 @@ import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
 import com.nopo.events.CommandRegistration
 import com.nopo.utils.Utils
+import com.nopo.utils.Utils.append
+import com.nopo.utils.Utils.command
+import com.nopo.utils.Utils.componentBuilder
+import com.nopo.utils.Utils.hover
+import com.nopo.utils.Utils.suggest
+import com.nopo.utils.Utils.withColor
+import net.minecraft.ChatFormatting
+import net.minecraft.network.chat.Component
 
 object TaskList : Module("tasks", NopoMod.config.tasks, needsToggle = false), CommandRegistration {
 
@@ -18,8 +26,13 @@ object TaskList : Module("tasks", NopoMod.config.tasks, needsToggle = false), Co
         return Commodore("nopo") {
             literal("tasks") {
                 literal("list").runs {
-                    Utils.sendMessageToPlayer("Tasks (${getConfig().tasks.size})")
-                    getConfig().tasks.forEach {
+                    val taskCount = getConfig().tasks.size
+                    if (taskCount == 0) {
+                        sendEmptyMessage()
+                        return@runs
+                    }
+                    Utils.sendMessageToPlayer("Tasks ($taskCount)")
+                    buildTaskList(null).forEach {
                         Utils.sendMessageToPlayer(it)
                     }
                 }
@@ -42,12 +55,81 @@ object TaskList : Module("tasks", NopoMod.config.tasks, needsToggle = false), Co
                 }
                 literal("random") {
                     runs {
+                        if (getConfig().tasks.isEmpty()) {
+                            sendEmptyMessage()
+                            return@runs
+                        }
                         val random = getConfig().tasks.random()
-                        Utils.sendMessageToPlayer("Random Task: $random")
+                        Utils.sendMessageToPlayer(
+                            componentBuilder {
+                                append("Random Task: ")
+                                append(buildTaskLine(random))
+                                append(" ")
+                                append {
+                                    append("[")
+                                    append(Utils.createEmoji("repeat")) {
+                                        withColor(ChatFormatting.WHITE)
+                                    }
+                                    append("]")
+                                    withColor(ChatFormatting.GRAY)
+                                    command = "/nopo tasks random"
+                                    hover = Component.literal("Get a different task")
+                                }
+                            }
+                        )
+                    }
+                }
+                literal("deleteall") {
+                    runs {
+                        getConfig().tasks.clear()
+                        Utils.sendMessageToPlayer(componentBuilder {
+                            append("Deleted every task ")
+                            append(Utils.createEmoji("frowning"))
+                        })
                     }
                 }
             }
         }
+    }
+
+    private fun buildTaskList(task: String?): List<Component> {
+        if (task == null) {
+            val list = mutableListOf<Component>()
+            getConfig().tasks.forEach {
+                list.add(buildTaskLine(it))
+            }
+            return list
+        }
+
+        return listOf(buildTaskLine(task))
+    }
+
+    private fun buildTaskLine(task: String): Component {
+        return componentBuilder {
+            append(task)
+            append(" ")
+            append {
+                append("[")
+                append(Utils.createEmoji("x")) {
+                    withColor(ChatFormatting.WHITE)
+                }
+                append("]")
+                withColor(ChatFormatting.GRAY)
+                command = "/nopo tasks remove $task"
+                hover = Component.literal("Delete this task")
+            }
+        }
+    }
+
+    private fun sendEmptyMessage() {
+        Utils.sendMessageToPlayer(componentBuilder {
+            append("No tasks created. Create some with ")
+            append("/nopo tasks add") {
+                withColor(ChatFormatting.YELLOW)
+            }
+            suggest = "/nopo tasks add "
+            hover = Component.literal("Click to insert into chat bar")
+        })
     }
 }
 
