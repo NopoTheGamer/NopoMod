@@ -23,6 +23,7 @@ import java.net.URI
 import java.util.Optional
 import kotlin.concurrent.atomics.AtomicBoolean
 import kotlin.concurrent.atomics.ExperimentalAtomicApi
+import kotlin.text.iterator
 import kotlin.text.replace
 
 object Utils {
@@ -37,15 +38,18 @@ object Utils {
         }
     }
 
+    fun debug(message: String) {
+        if (!isDevAllowed()) return
+        sendMessageToPlayer(message)
+    }
+
+    fun debug(message: Component) {
+        if (!isDevAllowed()) return
+        sendMessageToPlayer(message)
+    }
+
     fun sendMessageToPlayer(message: String, prefix: Boolean = true) {
-        var finalMessage: Component = Component.literal(message)
-        if (prefix) {
-            finalMessage = componentBuilder {
-                append(chatPrefix)
-                append(message)
-            }
-        }
-        Minecraft.getInstance()?.player?.displayClientMessage(finalMessage, false)
+        sendMessageToPlayer(Component.literal(message), prefix)
     }
 
     fun sendMessageToPlayer(message: Component, prefix: Boolean = true) {
@@ -56,7 +60,7 @@ object Utils {
                 append(message)
             }
         }
-        Minecraft.getInstance()?.player?.displayClientMessage(finalMessage, false)
+        Minecraft.getInstance().player?.displayClientMessage(finalMessage, false)
     }
 
     fun componentBuilder(init: MutableComponent.() -> Unit): Component {
@@ -249,6 +253,7 @@ object Utils {
     }
 
     fun isDevAllowed(): Boolean {
+        if (NopoMod.config.dev == true) return true
         return FabricLoader.getInstance().isDevelopmentEnvironment || Minecraft.getInstance().player?.name?.string == "Throwpo"
     }
 
@@ -348,5 +353,44 @@ object Utils {
 
     fun String.cleanColor(): String {
         return this.replace(Regex("§."), "")
+    }
+
+    fun Component.append(newText: Component): MutableComponent {
+        return this.copyIfNeeded().append(newText)
+    }
+
+    fun matcher(component: Component, match: String): Component? {
+        var index = 0
+        var newComponent: Component = Component.empty()
+        var currentString = ""
+
+        component.visit({ style: Style, string: String ->
+            if (string.isEmpty()) return@visit Optional.empty()
+            for (c in string) {
+                if (index >= match.length) {
+                    if (!currentString.isEmpty()) {
+                        newComponent.append(Component.literal(currentString).withStyle(style))
+                    }
+                    currentString = ""
+                    return@visit Optional.of(newComponent)
+                }
+                if (c == match[index]) {
+                    currentString += c
+                    index++
+                } else {
+                    currentString = ""
+                    newComponent = Component.empty()
+                    index = 0
+                }
+            }
+            if (!currentString.isEmpty()) {
+                newComponent.append(Component.literal(currentString).withStyle(style))
+            }
+            currentString = ""
+
+            Optional.empty()
+        }, Style.EMPTY)
+        if (newComponent.string.isEmpty()) return null
+        return newComponent
     }
 }
