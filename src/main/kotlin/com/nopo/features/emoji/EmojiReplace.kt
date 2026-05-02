@@ -23,12 +23,8 @@ object EmojiReplace : Module("chatEmojis", NopoMod.config.chatEmojis) {
 
     init {
         ClientReceiveMessageEvents.MODIFY_GAME.register(::onModify)
-        val path = FabricLoader.getInstance().getModContainer("nopo").get()
-            .findPath("assets/nopo/emojis.json").get()
-        val newInputStream = Files.newInputStream(path).reader()
-        val jsonReader = JsonReader(newInputStream)
-        val json = Gson().fromJson<Emojis>(jsonReader, EMOJI_TYPE)
-        emojis = json.emojis
+        val json = Utils.getJsonFromJar<Emojis>("emojis.json", EMOJI_TYPE)
+        emojis = json?.emojis ?: emptyList()
         for (emoji in emojis) {
             for (part in emoji.getAll()) {
                 chatList.add(part)

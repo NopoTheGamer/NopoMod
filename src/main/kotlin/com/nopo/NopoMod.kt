@@ -1,26 +1,29 @@
 package com.nopo
 
+import com.google.gson.stream.JsonReader
 import com.nopo.commands.ListConfigCommand
-import com.nopo.config.Config
-import com.nopo.config.ConfigManager
-import com.nopo.events.CommandRegistration
-import com.nopo.features.DebugModule
-import com.nopo.features.OverflowPetLevels
 import com.nopo.commands.SixSeven
 import com.nopo.commands.TaskList
+import com.nopo.config.Config
+import com.nopo.config.ConfigManager
 import com.nopo.events.AllowChat
+import com.nopo.events.CommandRegistration
 import com.nopo.events.GuiRendering
 import com.nopo.events.ModifyChat
 import com.nopo.events.TickEvent
 import com.nopo.events.WorldChange
 import com.nopo.features.AshwreathReminder
+import com.nopo.features.DebugModule
 import com.nopo.features.FirstTImeGreeting
+import com.nopo.features.OverflowPetLevels
 import com.nopo.features.WokeName
 import com.nopo.features.emoji.EmojiReplace
 import com.nopo.features.slayer.BossesSinceDrop
 import com.nopo.module.Module
+import com.nopo.utils.Data
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
+import com.nopo.utils.Utils
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
@@ -35,6 +38,9 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
+import java.io.StringReader
+import java.net.URI
+import java.net.URL
 
 object NopoMod : ModInitializer {
 
@@ -43,6 +49,8 @@ object NopoMod : ModInitializer {
     var modules: List<Module> = emptyList()
         private set
     private var ticks = 0
+    private const val DATA_JSON = "https://raw.githubusercontent.com/NopoTheGamer/NopoMod/refs/heads/master/src/main/resources/assets/nopo/data.json"
+    var data: Data? = null
 
 
     override fun onInitialize() {
@@ -62,6 +70,16 @@ object NopoMod : ModInitializer {
             ListConfigCommand,
             BossesSinceDrop,
         )
+
+        if (config.useLocalJson != true) {
+            try {
+                val json = URL.of(URI.create(DATA_JSON), null).readText()
+                data = ConfigManager.gson.fromJson<Data>(JsonReader(StringReader(json)), Data::class.java)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        if (data == null) data = Utils.getJsonFromJar<Data>("data.json")
 
         HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket::class.java)
 

@@ -14,6 +14,9 @@ class Config {
     var dev: Boolean? = null
 
     @Expose
+    var useLocalJson: Boolean? = null
+
+    @Expose
     var wokeConfig = ModuleConfig()
 
     @Expose
@@ -23,7 +26,7 @@ class Config {
     var overflowPetLevel = ModuleConfig()
 
     @Expose
-    var ashwreath = AshwreathConfig()
+    var ashwreath = AshwreathConfig(false)
 
     @Expose
     var tasks = TaskConfig()

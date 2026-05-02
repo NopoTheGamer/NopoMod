@@ -1,8 +1,15 @@
 package com.nopo.features.emoji
 
-data class Emojis(val emojis: List<Emoji>)
+import com.google.gson.annotations.Expose
 
-data class Emoji(val name: String, val alternatives: List<String>? = null) {
+data class Emojis(
+    @Expose val emojis: List<Emoji>,
+)
+
+data class Emoji(
+    @Expose val name: String,
+    @Expose val alternatives: List<String>? = null,
+) {
     fun isEmoji(part: String): Boolean {
         if (part == name || ":$part:" in getColonAlternatives()) return true
         return false

@@ -8,6 +8,7 @@ import com.nopo.events.AllowChat
 import com.nopo.events.WorldChange
 import com.nopo.module.Module
 import com.nopo.utils.DelayedRuns
+import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.cleanColor
 import com.nopo.utils.Utils.componentBuilder
@@ -44,6 +45,7 @@ object BossesSinceDrop : Module("killsSinceSlayerDrop", NopoMod.config.bossesSin
 
     override fun onChat(message: Component, actionBar: Boolean): Boolean {
         if (actionBar) return true
+        if (!HypixelUtils.onSkyblock()) return true
         val string = message.string.cleanColor()
         if (bossTypeRegex.matches(string)) {
             val group = bossTypeRegex.matchEntire(string)?.groups["slayer"]?.value

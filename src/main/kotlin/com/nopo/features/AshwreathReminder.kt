@@ -65,6 +65,7 @@ object AshwreathReminder : Module("ashwreath", NopoMod.config.ashwreath), TickEv
 
     override fun onWorldSwap(newIsland: IslandType, oldIsland: IslandType) {
         if (!getConfig().enabled) return
+        if (!HypixelUtils.onSkyblock()) return
         if (newIsland != IslandType.GARDEN) return
         if (shouldTell()) {
             DelayedRuns.schedule(200) {
@@ -92,7 +93,7 @@ object AshwreathReminder : Module("ashwreath", NopoMod.config.ashwreath), TickEv
     }
 }
 
-class AshwreathConfig : ModuleConfig() {
+class AshwreathConfig(default: Boolean) : ModuleConfig(default = default) {
 
     @Expose
     var lastCollected = 0L

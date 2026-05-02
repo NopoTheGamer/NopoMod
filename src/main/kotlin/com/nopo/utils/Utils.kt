@@ -1,6 +1,8 @@
 package com.nopo.utils
 
+import com.google.gson.stream.JsonReader
 import com.nopo.NopoMod
+import com.nopo.config.ConfigManager
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
@@ -19,12 +21,12 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.chunk.LevelChunk
 import java.awt.Color
+import java.lang.reflect.Type
 import java.net.URI
+import java.nio.file.Files
 import java.util.Optional
 import kotlin.concurrent.atomics.AtomicBoolean
 import kotlin.concurrent.atomics.ExperimentalAtomicApi
-import kotlin.text.iterator
-import kotlin.text.replace
 
 object Utils {
 
@@ -254,7 +256,7 @@ object Utils {
 
     fun isDevAllowed(): Boolean {
         if (NopoMod.config.dev == true) return true
-        return FabricLoader.getInstance().isDevelopmentEnvironment || Minecraft.getInstance().player?.name?.string == "Throwpo"
+        return FabricLoader.getInstance().isDevelopmentEnvironment || Minecraft.getInstance().player?.stringUUID == NopoMod.data?.devs?.first()
     }
 
     fun registerDebugScreenEntry(
@@ -392,5 +394,22 @@ object Utils {
         }, Style.EMPTY)
         if (newComponent.string.isEmpty()) return null
         return newComponent
+    }
+
+    inline fun <reified T> getJsonFromJar(fileName: String, token: Type? = null): T? {
+        try {
+            val path = FabricLoader.getInstance().getModContainer("nopo").get()
+                .findPath("assets/nopo/$fileName").get()
+            val newInputStream = Files.newInputStream(path).reader()
+            val jsonReader = JsonReader(newInputStream)
+            if (token == null) {
+                return ConfigManager.gson.fromJson(jsonReader, T::class.java)
+            } else {
+                return ConfigManager.gson.fromJson(jsonReader, token)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return null
+        }
     }
 }

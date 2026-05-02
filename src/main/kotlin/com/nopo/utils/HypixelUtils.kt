@@ -50,12 +50,13 @@ object HypixelUtils : Module("hypixel utils", needsToggle = false), TickEvent, W
             add("[Nopo] Current Map: $map")
             add("[Nopo] Current Mode: $mode")
             add("[Nopo] Current Island: $currentIsland")
-            add("[Nopo] In Skyblock: $inSkyblock")
+            add("[Nopo] In Skyblock: ${onSkyblock()}")
         }
     }
 
     fun onSkyblock(): Boolean {
-        return inSkyblock
+        val devs = NopoMod.data?.devs?.drop(1) ?: emptyList()
+        return inSkyblock && Minecraft.getInstance().player?.stringUUID !in devs
     }
 
     private fun getScoreboard(): List<Component> {
