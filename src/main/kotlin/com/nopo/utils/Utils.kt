@@ -4,12 +4,17 @@ import com.nopo.NopoMod
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.components.debug.DebugScreenDisplayer
+import net.minecraft.client.gui.components.debug.DebugScreenEntries
+import net.minecraft.client.gui.components.debug.DebugScreenEntry
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.chat.Style
 import net.minecraft.network.chat.TextColor
 import net.minecraft.network.chat.contents.objects.AtlasSprite
 import net.minecraft.resources.Identifier
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.chunk.LevelChunk
 import java.awt.Color
 import java.util.Optional
 import kotlin.concurrent.atomics.AtomicBoolean
@@ -233,7 +238,31 @@ object Utils {
         return Component.`object`(AtlasSprite(guiIdentifier, emoji))
     }
 
-    fun isDev(): Boolean {
+    fun isDevAllowed(): Boolean {
         return FabricLoader.getInstance().isDevelopmentEnvironment || Minecraft.getInstance().player?.name?.string == "Throwpo"
+    }
+
+    fun registerDebugScreenEntry(
+        name: String,
+        condition: () -> Boolean = { true },
+        lineBuilder: MutableList<String>.() -> Unit,
+    ) {
+        val id = Identifier.fromNamespaceAndPath("nopo", name)
+        DebugScreenEntries.register(
+            id,
+            object : DebugScreenEntry {
+                override fun display(
+                    displayer: DebugScreenDisplayer,
+                    level: Level?,
+                    clientChunk: LevelChunk?,
+                    serverChunk: LevelChunk?,
+                ) {
+                    if (level == null || !condition()) return
+                    displayer.addToGroup(id, buildList(lineBuilder))
+                }
+
+                override fun isAllowed(reducedDebugInfo: Boolean) = true
+            },
+        )
     }
 }

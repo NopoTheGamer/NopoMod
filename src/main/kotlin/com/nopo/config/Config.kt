@@ -1,7 +1,6 @@
 package com.nopo.config
 
 import com.google.gson.annotations.Expose
-import com.nopo.features.WokeConfig
 
 class Config {
 
@@ -10,6 +9,9 @@ class Config {
 
     @Expose
     var chatEmojis = ModuleConfig()
+
+    @Expose
+    var debug = ModuleConfig(false)
 
     // dont try saving stuff here
     var dummyConfig = ModuleConfig()

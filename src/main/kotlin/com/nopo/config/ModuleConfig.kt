@@ -2,8 +2,8 @@ package com.nopo.config
 
 import com.google.gson.annotations.Expose
 
-open class ModuleConfig {
+open class ModuleConfig(default: Boolean = true) {
 
    @Expose
-   var enabled: Boolean = true
+   var enabled: Boolean = default
 }

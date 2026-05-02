@@ -24,10 +24,10 @@ open class Module(
         registry: CommandBuildContext
     ) {
         if (!needsToggle) return
-        if (dev && !Utils.isDev()) return
+        if (dev && !Utils.isDevAllowed()) return
         dispatcher.register(
             ClientCommandManager.literal("nopo")
-                .then(ClientCommandManager.literal("toggle").then(
+                .then(ClientCommandManager.literal("feature").then(
                 ClientCommandManager.literal(name).executes {
                     config.enabled = !config.enabled
                     Utils.sendMessageToPlayer(
