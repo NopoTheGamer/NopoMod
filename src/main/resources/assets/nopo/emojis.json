@@ -16063,10 +16063,7 @@
       "name": "magic_wand"
     },
     {
-      "name": "piñata",
-      "alternatives": [
-        "pinata"
-      ]
+      "name": "pinata"
     },
     {
       "name": "nesting_dolls"
