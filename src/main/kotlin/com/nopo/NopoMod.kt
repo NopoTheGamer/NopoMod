@@ -8,6 +8,7 @@ import com.nopo.features.OverflowPetLevels
 import com.nopo.commands.SixSeven
 import com.nopo.commands.TaskList
 import com.nopo.events.TickEvent
+import com.nopo.events.WorldChange
 import com.nopo.features.FirstTImeGreeting
 import com.nopo.features.WokeName
 import com.nopo.features.emoji.EmojiReplace
@@ -16,6 +17,7 @@ import com.nopo.utils.HypixelUtils
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientWorldEvents
 import net.hypixel.modapi.HypixelModAPI
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket
 import net.minecraft.client.Minecraft
@@ -61,6 +63,14 @@ object NopoMod : ModInitializer {
             for (module in modules) {
                 if (module is TickEvent) {
                     module.onTick(++ticks)
+                }
+            }
+        }
+
+        ClientWorldEvents.AFTER_CLIENT_WORLD_CHANGE.register { _, _ ->
+            for (module in modules) {
+                if (module is WorldChange) {
+                    module.onWorldChange()
                 }
             }
         }

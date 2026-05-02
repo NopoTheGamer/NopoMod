@@ -4,7 +4,9 @@ import com.nopo.NopoMod
 import com.nopo.events.IslandChange
 import com.nopo.events.ScoreboardChange
 import com.nopo.events.TickEvent
+import com.nopo.events.WorldChange
 import com.nopo.module.Module
+import net.hypixel.data.type.GameType
 import net.hypixel.modapi.HypixelModAPI
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket
 import net.minecraft.client.Minecraft
@@ -15,11 +17,12 @@ import net.minecraft.world.scores.Scoreboard
 import kotlin.jvm.optionals.getOrNull
 
 
-object HypixelUtils : Module("hypixel utils", needsToggle = false), TickEvent {
+object HypixelUtils : Module("hypixel utils", needsToggle = false), TickEvent, WorldChange {
 
     var map: String? = null
     var mode: String? = null
     var currentIsland: IslandType = IslandType.UNKNOWN
+    var inSkyblock = false
 
     init {
         HypixelModAPI.getInstance().createHandler<ClientboundLocationPacket?>(
@@ -27,6 +30,7 @@ object HypixelUtils : Module("hypixel utils", needsToggle = false), TickEvent {
         ) { packet: ClientboundLocationPacket ->
             map = packet.map.getOrNull()
             mode = packet.mode.getOrNull()
+            inSkyblock = packet.serverType.getOrNull() == GameType.SKYBLOCK
             val prev = currentIsland
             currentIsland = IslandType.UNKNOWN
             for (island in IslandType.entries) {
@@ -46,7 +50,12 @@ object HypixelUtils : Module("hypixel utils", needsToggle = false), TickEvent {
             add("[Nopo] Current Map: $map")
             add("[Nopo] Current Mode: $mode")
             add("[Nopo] Current Island: $currentIsland")
+            add("[Nopo] In Skyblock: $inSkyblock")
         }
+    }
+
+    fun onSkyblock(): Boolean {
+        return inSkyblock
     }
 
     private fun getScoreboard(): List<Component> {
@@ -88,5 +97,16 @@ object HypixelUtils : Module("hypixel utils", needsToggle = false), TickEvent {
                 }
             }
         }
+    }
+
+    override fun onWorldChange() {
+        reset()
+    }
+
+    private fun reset() {
+        mode = null
+        map = null
+        inSkyblock = false
+        currentIsland = IslandType.UNKNOWN
     }
 }
