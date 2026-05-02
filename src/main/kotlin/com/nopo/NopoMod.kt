@@ -8,7 +8,9 @@ import com.nopo.features.DebugModule
 import com.nopo.features.OverflowPetLevels
 import com.nopo.commands.SixSeven
 import com.nopo.commands.TaskList
+import com.nopo.events.AllowChat
 import com.nopo.events.GuiRendering
+import com.nopo.events.ModifyChat
 import com.nopo.events.TickEvent
 import com.nopo.events.WorldChange
 import com.nopo.features.AshwreathReminder
@@ -22,6 +24,7 @@ import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientWorldEvents
+import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements
 import net.hypixel.modapi.HypixelModAPI
@@ -29,6 +32,7 @@ import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacke
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 
 object NopoMod : ModInitializer {
@@ -96,6 +100,34 @@ object NopoMod : ModInitializer {
                     module.render(context)
                 }
             }
+        }
+
+        ClientReceiveMessageEvents.ALLOW_GAME.register { component, actionBar ->
+            var allowed = true
+            for (module in modules) {
+                if (module is AllowChat) {
+                    if (!module.onChat(component, actionBar)) {
+                        allowed = false
+                    }
+                }
+            }
+            allowed
+        }
+
+        ClientReceiveMessageEvents.MODIFY_GAME.register { component, actionBar ->
+            var newComponent: Component = component.copy()
+            var hasChanged = false
+            for (module in modules) {
+                if (module is ModifyChat) {
+                    val newComp = module.onModifyChat(newComponent, actionBar)
+                    if (newComp != null) {
+                        newComponent = newComp
+                        hasChanged = true
+                    }
+                }
+            }
+            if (hasChanged) newComponent
+            else component
         }
     }
 
