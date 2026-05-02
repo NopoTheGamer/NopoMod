@@ -3,13 +3,12 @@
 	"id": "nopo",
 	"version": "${version}",
 	"name": "Nopo Mod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "idk i wanted to make my own mod so here we are",
 	"authors": [
-		"Me!"
+		"nopo"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/NopoTheGamer/NopoMod"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/nopo/icon.png",
@@ -27,7 +26,7 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.19.2",
-		"minecraft": "~1.21.11",
+		"minecraft": "1.21.11",
 		"java": ">=21",
 		"fabric-api": "*",
 		"fabric-language-kotlin": "*",
