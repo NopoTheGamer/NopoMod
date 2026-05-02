@@ -1,5 +1,6 @@
 package com.nopo
 
+import com.nopo.commands.ListConfigCommand
 import com.nopo.config.Config
 import com.nopo.config.ConfigManager
 import com.nopo.events.CommandRegistration
@@ -53,6 +54,7 @@ object NopoMod : ModInitializer {
             FirstTImeGreeting,
             AshwreathReminder,
             DelayedRuns,
+            ListConfigCommand,
         )
 
         HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket::class.java)
