@@ -15,6 +15,7 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+	maven("https://jitpack.io/")
 	maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1") {
 		content {
 			includeGroup("me.djtheredstoner")
@@ -50,6 +51,8 @@ dependencies {
 	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.2")
 	implementation("net.hypixel:mod-api:1.0.1")
 	modImplementation("maven.modrinth:hypixel-mod-api:1.0.1+build.1+mc1.21")
+	implementation("com.github.Stivais:Commodore:1.0.0")
+	include("com.github.Stivais:Commodore:1.0.0")
 }
 
 tasks.processResources {
@@ -68,6 +71,7 @@ tasks.withType<JavaCompile>().configureEach {
 kotlin {
 	compilerOptions {
 		jvmTarget = JvmTarget.JVM_21
+		freeCompilerArgs.add("-Xlambdas=class")
 	}
 }
 

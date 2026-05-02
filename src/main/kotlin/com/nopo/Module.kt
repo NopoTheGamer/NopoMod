@@ -1,49 +1,45 @@
 package com.nopo
 
+import com.github.stivais.commodore.Commodore
 import com.google.gson.annotations.Expose
-import com.mojang.brigadier.CommandDispatcher
-import com.nopo.utils.Utils.componentBuilder
-import com.nopo.utils.Utils.withColor
 import com.nopo.config.ConfigManager
 import com.nopo.config.ModuleConfig
 import com.nopo.utils.Utils
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
-import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
+import com.nopo.utils.Utils.componentBuilder
+import com.nopo.utils.Utils.withColor
 import net.minecraft.ChatFormatting
-import net.minecraft.commands.CommandBuildContext
 
 open class Module(
-    val name: String,
+    val moduleName: String,
     @Expose var config: ModuleConfig = NopoMod.config.dummyConfig,
     val needsToggle: Boolean = true,
     val dev: Boolean = false
 ) {
 
-    open fun onCommandRegister(
-        dispatcher: CommandDispatcher<FabricClientCommandSource>,
-        registry: CommandBuildContext
-    ) {
-        if (!needsToggle) return
-        if (dev && !Utils.isDevAllowed()) return
-        dispatcher.register(
-            ClientCommandManager.literal("nopo")
-                .then(ClientCommandManager.literal("feature").then(
-                ClientCommandManager.literal(name).executes {
-                    config.enabled = !config.enabled
-                    Utils.sendMessageToPlayer(
-                        componentBuilder {
-                            append("$name module ")
-                            if (config.enabled) {
-                                append("enabled")
-                            } else {
-                                append("disabled")
+    open fun registerToggleCommand(): Commodore? {
+        if (!needsToggle) return null
+        if (dev && !Utils.isDevAllowed()) return null
+        return Commodore("nopo") {
+            literal("feature") {
+                literal(moduleName) {
+                    runs {
+                        config.enabled = !config.enabled
+                        Utils.sendMessageToPlayer(
+                            componentBuilder {
+                                append("$moduleName module ")
+                                if (config.enabled) {
+                                    append("enabled")
+                                } else {
+                                    append("disabled")
+                                }
+                                withColor(ChatFormatting.YELLOW)
                             }
-                            withColor(ChatFormatting.YELLOW)
-                        })
-                    ConfigManager.save()
-                    1
-                }))
-        )
+                        )
+                        ConfigManager.save()
+                    }
+                }
+            }
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package com.nopo.config
 
 import com.google.gson.annotations.Expose
+import com.nopo.commands.TaskConfig
 
 class Config {
 
@@ -12,6 +13,9 @@ class Config {
 
     @Expose
     var overflowPetLevel = ModuleConfig()
+
+    @Expose
+    var tasks = TaskConfig()
 
     @Expose
     var debug = ModuleConfig(false)
