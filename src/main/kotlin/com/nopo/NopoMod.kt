@@ -7,6 +7,7 @@ import com.nopo.features.DebugModule
 import com.nopo.features.OverflowPetLevels
 import com.nopo.commands.SixSeven
 import com.nopo.commands.TaskList
+import com.nopo.features.FirstTImeGreeting
 import com.nopo.features.WokeName
 import com.nopo.features.emoji.EmojiReplace
 import com.nopo.module.Module
@@ -35,6 +36,7 @@ object NopoMod : ModInitializer {
             HypixelUtils,
             OverflowPetLevels,
             TaskList,
+            FirstTImeGreeting,
         )
 
         HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket::class.java)

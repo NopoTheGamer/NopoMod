@@ -6,6 +6,9 @@ import com.nopo.commands.TaskConfig
 class Config {
 
     @Expose
+    var firstTime = true
+
+    @Expose
     var wokeConfig = ModuleConfig()
 
     @Expose
