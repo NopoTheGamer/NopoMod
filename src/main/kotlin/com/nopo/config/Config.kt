@@ -11,6 +11,9 @@ class Config {
     var chatEmojis = ModuleConfig()
 
     @Expose
+    var overflowPetLevel = ModuleConfig()
+
+    @Expose
     var debug = ModuleConfig(false)
 
     // dont try saving stuff here

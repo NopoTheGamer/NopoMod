@@ -3,6 +3,7 @@ package com.nopo
 import com.nopo.config.Config
 import com.nopo.config.ConfigManager
 import com.nopo.features.DebugModule
+import com.nopo.features.OverflowPetLevels
 import com.nopo.features.SixSeven
 import com.nopo.features.WokeName
 import com.nopo.features.emoji.EmojiReplace
@@ -31,6 +32,7 @@ object NopoMod : ModInitializer {
             EmojiReplace,
             DebugModule,
             HypixelUtils,
+            OverflowPetLevels,
         )
 
         HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket::class.java)
