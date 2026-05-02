@@ -1,7 +1,7 @@
 package com.nopo.commands
 
 import com.github.stivais.commodore.Commodore
-import com.nopo.Module
+import com.nopo.module.Module
 import com.nopo.events.CommandRegistration
 import com.nopo.utils.Utils
 

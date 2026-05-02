@@ -9,6 +9,7 @@ import com.nopo.commands.SixSeven
 import com.nopo.commands.TaskList
 import com.nopo.features.WokeName
 import com.nopo.features.emoji.EmojiReplace
+import com.nopo.module.Module
 import com.nopo.utils.HypixelUtils
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback

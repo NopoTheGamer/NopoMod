@@ -1,11 +1,11 @@
-package com.nopo
+package com.nopo.module
 
 import com.github.stivais.commodore.Commodore
 import com.google.gson.annotations.Expose
+import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
 import com.nopo.config.ModuleConfig
 import com.nopo.utils.Utils
-import com.nopo.utils.Utils.componentBuilder
 import com.nopo.utils.Utils.withColor
 import net.minecraft.ChatFormatting
 
@@ -25,7 +25,7 @@ open class Module(
                     runs {
                         config.enabled = !config.enabled
                         Utils.sendMessageToPlayer(
-                            componentBuilder {
+                            Utils.componentBuilder {
                                 append("$moduleName module ")
                                 if (config.enabled) {
                                     append("enabled")

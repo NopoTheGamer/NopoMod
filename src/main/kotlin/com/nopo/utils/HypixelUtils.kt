@@ -1,6 +1,6 @@
 package com.nopo.utils
 
-import com.nopo.Module
+import com.nopo.module.Module
 import com.nopo.NopoMod
 import com.nopo.events.IslandChange
 import net.hypixel.modapi.HypixelModAPI

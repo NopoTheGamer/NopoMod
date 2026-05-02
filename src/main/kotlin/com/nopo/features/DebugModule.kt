@@ -1,6 +1,6 @@
 package com.nopo.features
 
-import com.nopo.Module
+import com.nopo.module.Module
 import com.nopo.NopoMod
 import com.nopo.events.IslandChange
 import com.nopo.utils.IslandType

@@ -2,7 +2,7 @@ package com.nopo.features
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.nopo.Module
+import com.nopo.module.Module
 import com.nopo.NopoMod
 import com.nopo.utils.Utils.append
 import com.nopo.utils.Utils.componentBuilder

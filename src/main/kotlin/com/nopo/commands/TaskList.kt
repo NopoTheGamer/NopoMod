@@ -1,7 +1,7 @@
 package com.nopo.commands
 
 import com.google.gson.annotations.Expose
-import com.nopo.Module
+import com.nopo.module.Module
 import com.nopo.config.ModuleConfig
 import com.github.stivais.commodore.Commodore
 import com.github.stivais.commodore.utils.GreedyString
