@@ -7,6 +7,7 @@ import com.nopo.commands.TaskList
 import com.nopo.config.Config
 import com.nopo.config.ConfigManager
 import com.nopo.events.AllowChat
+import com.nopo.events.ChatEvent
 import com.nopo.events.CommandRegistration
 import com.nopo.events.GuiRendering
 import com.nopo.events.ModifyChat
@@ -125,8 +126,11 @@ object NopoMod : ModInitializer {
         ClientReceiveMessageEvents.ALLOW_GAME.register { component, actionBar ->
             var allowed = true
             for (module in modules) {
+                if (module is ChatEvent) {
+                    module.onChat(component, actionBar)
+                }
                 if (module is AllowChat) {
-                    if (!module.onChat(component, actionBar)) {
+                    if (!module.onAllowChat(component, actionBar)) {
                         allowed = false
                     }
                 }

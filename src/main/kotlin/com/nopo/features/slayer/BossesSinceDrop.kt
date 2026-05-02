@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
 import com.nopo.config.ModuleConfig
-import com.nopo.events.AllowChat
+import com.nopo.events.ChatEvent
 import com.nopo.events.WorldChange
 import com.nopo.module.Module
 import com.nopo.utils.DelayedRuns
@@ -14,7 +14,7 @@ import com.nopo.utils.Utils.cleanColor
 import com.nopo.utils.Utils.componentBuilder
 import net.minecraft.network.chat.Component
 
-object BossesSinceDrop : Module("killsSinceSlayerDrop", NopoMod.config.bossesSinceDrop), AllowChat, WorldChange {
+object BossesSinceDrop : Module("killsSinceSlayerDrop", NopoMod.config.bossesSinceDrop), ChatEvent, WorldChange {
 
     private fun getConfig() = config as BossesSinceDropConfig
 
@@ -43,9 +43,9 @@ object BossesSinceDrop : Module("killsSinceSlayerDrop", NopoMod.config.bossesSin
         }
     }
 
-    override fun onChat(message: Component, actionBar: Boolean): Boolean {
-        if (actionBar) return true
-        if (!HypixelUtils.onSkyblock()) return true
+    override fun onChat(message: Component, actionBar: Boolean) {
+        if (actionBar) return
+        if (!HypixelUtils.onSkyblock()) return
         val string = message.string.cleanColor()
         if (bossTypeRegex.matches(string)) {
             val group = bossTypeRegex.matchEntire(string)?.groups["slayer"]?.value
@@ -57,7 +57,7 @@ object BossesSinceDrop : Module("killsSinceSlayerDrop", NopoMod.config.bossesSin
             }
             getConfig().bossMap[currentBoss]?.kills++
             ConfigManager.save()
-            return true
+            return
         }
 
         if (dropRegex.matches(string)) {
@@ -88,7 +88,7 @@ object BossesSinceDrop : Module("killsSinceSlayerDrop", NopoMod.config.bossesSin
                 ConfigManager.save()
             }
         }
-        return true
+        return
     }
 
     override fun onWorldChange() {
