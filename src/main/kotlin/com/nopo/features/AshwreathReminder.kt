@@ -67,7 +67,7 @@ object AshwreathReminder : Module("ashwreath", NopoMod.config.ashwreath), TickEv
         if (!getConfig().enabled) return
         if (newIsland != IslandType.GARDEN) return
         if (shouldTell()) {
-            DelayedRuns.schedule(450) {
+            DelayedRuns.schedule(200) {
                 Utils.sendMessageToPlayer("Ashwreath Time!!")
             }
         }

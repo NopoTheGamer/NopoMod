@@ -16,7 +16,7 @@ object DelayedRuns : Module("delayed run", needsToggle = false), TickEvent {
     override fun onTick(totalTicks: Int) {
         currentTicks = totalTicks
         map.removeIf {
-            if (it.second > currentTicks) {
+            if (currentTicks > it.second) {
                 Minecraft.getInstance().schedule(it.first)
                 true
             } else {
