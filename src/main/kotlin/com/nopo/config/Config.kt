@@ -2,7 +2,7 @@ package com.nopo.config
 
 import com.google.gson.annotations.Expose
 import com.nopo.commands.TaskConfig
-import com.nopo.features.AshwreathConfig
+import com.nopo.features.garden.AshwreathConfig
 import com.nopo.features.slayer.BossesSinceDropConfig
 
 class Config {
