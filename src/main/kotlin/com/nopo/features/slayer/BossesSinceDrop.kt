@@ -73,7 +73,7 @@ object BossesSinceDrop : Module("killsSinceSlayerDrop", NopoMod.config.bossesSin
                 val currentKills = bossData?.kills ?: 0
                 val lastDropped = bossData?.drops[drop] ?: 0
                 bossData?.drops[drop] = currentKills
-                val dropComponent = Utils.matcher(message, drop) ?: Component.literal(drop)
+                val dropComponent = Utils.matcherOrString(message, drop)
                 val sinceLast = currentKills - lastDropped
                 if (!config.enabled) return@schedule
                 Utils.sendMessageToPlayer(

@@ -361,6 +361,10 @@ object Utils {
         return this.copyIfNeeded().append(newText)
     }
 
+    fun matcherOrString(component: Component, match: String): Component {
+        return matcher(component, match) ?: Component.literal(match)
+    }
+
     fun matcher(component: Component, match: String): Component? {
         var index = 0
         var newComponent: Component = Component.empty()

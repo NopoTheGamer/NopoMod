@@ -10,7 +10,9 @@ import com.nopo.utils.HypixelUtils
 import com.nopo.utils.IslandType
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.cleanColor
+import com.nopo.utils.Utils.componentBuilder
 import net.minecraft.network.chat.Component
+import kotlin.time.Duration.Companion.milliseconds
 
 object RareCropTracker : Module("rareCropTracker", NopoMod.config.rareCrop), ChatEvent {
 
@@ -30,17 +32,42 @@ object RareCropTracker : Module("rareCropTracker", NopoMod.config.rareCrop), Cha
         if (!IslandType.GARDEN.isActive()) return
         val string = message.string.cleanColor()
 
-        if (string.matches(rareCropRegex)) {
-            val crop = rareCropRegex.matchEntire(string)?.groups["crop"]?.value?.trim() ?: return
-            if (NopoMod.config.debug.enabled) {
-                DelayedRuns.schedule(5) {
-                    Utils.sendMessageToPlayer("Found crop $crop")
-                }
+        if (!string.matches(rareCropRegex)) return
+        val crop = rareCropRegex.matchEntire(string)?.groups["crop"]?.value?.trim() ?: return
+        if (NopoMod.config.debug.enabled) {
+            DelayedRuns.schedule(5) {
+                Utils.sendMessageToPlayer("Found crop $crop")
             }
-            if (getConfig().dropTimes[crop] == null) {
-                getConfig().dropTimes[crop] = mutableListOf(System.currentTimeMillis())
-            } else {
-                getConfig().dropTimes[crop]!!.add(System.currentTimeMillis())
+        }
+        val currentTime = System.currentTimeMillis()
+        if (getConfig().dropTimes[crop] == null) {
+            getConfig().dropTimes[crop] = mutableListOf(currentTime)
+        } else {
+            val lastDrop = getConfig().dropTimes[crop]?.maxOrNull() ?: currentTime
+            getConfig().dropTimes[crop]!!.add(currentTime)
+            if (lastDrop != currentTime) {
+                val timeSince = currentTime - lastDrop
+                Utils.sendMessageToPlayer(
+                    componentBuilder {
+                        append("Took ")
+                        timeSince.milliseconds.toComponents { days, hours, minutes, seconds, _ ->
+                            if (days > 0) {
+                                append("$days days ")
+                            }
+                            if (hours > 0) {
+                                append("$hours hours ")
+                            }
+                            if (minutes > 0) {
+                                append("$minutes minutes ")
+                            }
+                            if (seconds > 0) {
+                                append("$seconds seconds ")
+                            }
+                        }
+                        append("to drop ")
+                        append(Utils.matcherOrString(message, crop))
+                    }
+                )
             }
         }
     }
