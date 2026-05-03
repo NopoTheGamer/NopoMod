@@ -2,6 +2,7 @@ package com.nopo.features.garden
 
 import com.google.gson.annotations.Expose
 import com.nopo.NopoMod
+import com.nopo.config.ConfigManager
 import com.nopo.config.ModuleConfig
 import com.nopo.events.ChatEvent
 import com.nopo.module.Module
@@ -70,6 +71,7 @@ object RareCropTracker : Module("rareCropTracker", NopoMod.config.rareCrop), Cha
                 )
             }
         }
+        ConfigManager.save()
     }
 
 
