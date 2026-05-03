@@ -54,7 +54,7 @@ object RareCropTracker : Module("rareCropTracker", NopoMod.config.rareCrop), Cha
                         componentBuilder {
                             append("Took ")
                             append(timeSince.format())
-                            append("to drop ")
+                            append(" to drop ")
                             append(Utils.matcherOrString(message, crop))
                         }
                     )
