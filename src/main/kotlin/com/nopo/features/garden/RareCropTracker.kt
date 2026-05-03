@@ -49,14 +49,16 @@ object RareCropTracker : Module("rareCropTracker", NopoMod.config.rareCrop), Cha
             getConfig().dropTimes[crop]!!.add(currentTime)
             if (lastDrop != currentTime) {
                 val timeSince = (currentTime - lastDrop).milliseconds
-                Utils.sendMessageToPlayer(
-                    componentBuilder {
-                        append("Took ")
-                        append(timeSince.format())
-                        append("to drop ")
-                        append(Utils.matcherOrString(message, crop))
-                    }
-                )
+                DelayedRuns.schedule(5) {
+                    Utils.sendMessageToPlayer(
+                        componentBuilder {
+                            append("Took ")
+                            append(timeSince.format())
+                            append("to drop ")
+                            append(Utils.matcherOrString(message, crop))
+                        }
+                    )
+                }
             }
         }
         ConfigManager.save()
