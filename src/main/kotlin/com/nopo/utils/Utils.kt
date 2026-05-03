@@ -24,9 +24,14 @@ import java.awt.Color
 import java.lang.reflect.Type
 import java.net.URI
 import java.nio.file.Files
+import java.text.NumberFormat
 import java.util.Optional
 import kotlin.concurrent.atomics.AtomicBoolean
 import kotlin.concurrent.atomics.ExperimentalAtomicApi
+import kotlin.math.absoluteValue
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 object Utils {
 
@@ -415,5 +420,80 @@ object Utils {
             e.printStackTrace()
             return null
         }
+    }
+
+    private const val FACTOR_SECONDS = 1000L
+    private const val FACTOR_MINUTES = FACTOR_SECONDS * 60
+    private const val FACTOR_HOURS = FACTOR_MINUTES * 60
+    private const val FACTOR_DAYS = FACTOR_HOURS * 24
+    private const val FACTOR_YEARS = (FACTOR_DAYS * 365.25).toLong()
+
+    enum class TimeUnit(val factor: Long, private val shortName: String, private val longName: String) {
+        YEAR(FACTOR_YEARS, "y", "Year"),
+        DAY(FACTOR_DAYS, "d", "Day"),
+        HOUR(FACTOR_HOURS, "h", "Hour"),
+        MINUTE(FACTOR_MINUTES, "m", "Minute"),
+        SECOND(FACTOR_SECONDS, "s", "Second"),
+        ;
+
+        fun getName(value: Int, longFormat: Boolean) = if (longFormat) {
+            " $longName" + if (value == 1) "" else "s"
+        } else shortName
+    }
+
+    fun Duration.format(
+        biggestUnit: TimeUnit = TimeUnit.YEAR,
+        showMilliSeconds: Boolean = this.absoluteValue < 1.seconds,
+        longName: Boolean = false,
+        maxUnits: Int = -1,
+        showSmallerUnits: Boolean = false,
+        showNegativeAsSoon: Boolean = true,
+    ): String {
+        var millis = inWholeMilliseconds.absoluteValue
+        val prefix = if (isNegative()) {
+            if (showNegativeAsSoon) return "Soon"
+            "-"
+        } else ""
+        val parts = mutableMapOf<TimeUnit, Int>()
+
+        for (unit in TimeUnit.entries) {
+            if (unit.ordinal >= biggestUnit.ordinal) {
+                val factor = unit.factor
+                parts[unit] = (millis / factor).toInt()
+                millis %= factor
+            }
+        }
+
+        val largestNonZeroUnit = parts.firstNotNullOfOrNull { if (it.value != 0) it.key else null } ?: TimeUnit.SECOND
+
+        if (absoluteValue < 1.seconds) {
+            val formattedMillis = (millis / 100).toInt()
+            return "${prefix}0.${formattedMillis}${TimeUnit.SECOND.getName(formattedMillis, longName)}"
+        }
+
+        var currentUnits = 0
+        val result = buildString {
+            for ((unit, value) in parts) {
+                val showUnit = value != 0 || (showSmallerUnits && unit.factor <= largestNonZeroUnit.factor)
+
+                if (showUnit) {
+                    val formatted = value.addSeparators()
+                    val text = if (unit == TimeUnit.SECOND && showMilliSeconds) {
+                        val formattedMillis = (millis / 100).toInt()
+                        "$formatted.$formattedMillis"
+                    } else formatted
+
+                    val name = unit.getName(value, longName)
+                    append("$text$name ")
+                    if (maxUnits != -1 && ++currentUnits == maxUnits) break
+                }
+            }
+        }
+        return prefix + result.trim()
+    }
+
+    fun Number.addSeparators(): String {
+        return NumberFormat.getNumberInstance().format(this)
+
     }
 }

@@ -12,6 +12,7 @@ import com.nopo.utils.IslandType
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.cleanColor
 import com.nopo.utils.Utils.componentBuilder
+import com.nopo.utils.Utils.format
 import net.minecraft.network.chat.Component
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -47,24 +48,11 @@ object RareCropTracker : Module("rareCropTracker", NopoMod.config.rareCrop), Cha
             val lastDrop = getConfig().dropTimes[crop]?.maxOrNull() ?: currentTime
             getConfig().dropTimes[crop]!!.add(currentTime)
             if (lastDrop != currentTime) {
-                val timeSince = currentTime - lastDrop
+                val timeSince = (currentTime - lastDrop).milliseconds
                 Utils.sendMessageToPlayer(
                     componentBuilder {
                         append("Took ")
-                        timeSince.milliseconds.toComponents { days, hours, minutes, seconds, _ ->
-                            if (days > 0) {
-                                append("$days days ")
-                            }
-                            if (hours > 0) {
-                                append("$hours hours ")
-                            }
-                            if (minutes > 0) {
-                                append("$minutes minutes ")
-                            }
-                            if (seconds > 0) {
-                                append("$seconds seconds ")
-                            }
-                        }
+                        append(timeSince.format())
                         append("to drop ")
                         append(Utils.matcherOrString(message, crop))
                     }
