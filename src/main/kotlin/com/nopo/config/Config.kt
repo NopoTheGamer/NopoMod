@@ -3,6 +3,7 @@ package com.nopo.config
 import com.google.gson.annotations.Expose
 import com.nopo.commands.TaskConfig
 import com.nopo.features.garden.AshwreathConfig
+import com.nopo.features.garden.RareCropConfig
 import com.nopo.features.slayer.BossesSinceDropConfig
 
 class Config {
@@ -27,6 +28,9 @@ class Config {
 
     @Expose
     var ashwreath = AshwreathConfig(false)
+
+    @Expose
+    var rareCrop = RareCropConfig()
 
     @Expose
     var tasks = TaskConfig()

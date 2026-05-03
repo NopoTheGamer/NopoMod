@@ -19,6 +19,7 @@ import com.nopo.features.FirstTImeGreeting
 import com.nopo.features.OverflowPetLevels
 import com.nopo.features.WokeName
 import com.nopo.features.emoji.EmojiReplace
+import com.nopo.features.garden.RareCropTracker
 import com.nopo.features.slayer.BossesSinceDrop
 import com.nopo.module.Module
 import com.nopo.utils.Data
@@ -70,6 +71,7 @@ object NopoMod : ModInitializer {
             DelayedRuns,
             ListConfigCommand,
             BossesSinceDrop,
+            RareCropTracker,
         )
 
         if (config.useLocalJson != true) {
