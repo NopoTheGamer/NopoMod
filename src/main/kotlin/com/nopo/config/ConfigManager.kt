@@ -19,7 +19,7 @@ import java.nio.file.StandardCopyOption
 object ConfigManager {
 
     val configFolder = File(FabricLoader.getInstance().configDir.toFile(), "nopo")
-    val configFile = File(configFolder, "nopo.json")
+    val configFile = File(configFolder, "config.json")
     val gson = GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create()
 
     fun init(): Config {
