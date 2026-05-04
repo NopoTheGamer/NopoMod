@@ -17,6 +17,7 @@ import com.nopo.features.garden.AshwreathReminder
 import com.nopo.features.DebugModule
 import com.nopo.features.FirstTImeGreeting
 import com.nopo.features.OverflowPetLevels
+import com.nopo.features.PartyFinderKickButton
 import com.nopo.features.WokeName
 import com.nopo.features.emoji.EmojiReplace
 import com.nopo.features.garden.RareCropTracker
@@ -72,6 +73,7 @@ object NopoMod : ModInitializer {
             ListConfigCommand,
             BossesSinceDrop,
             RareCropTracker,
+            PartyFinderKickButton,
         )
 
         if (config.useLocalJson != true) {

@@ -39,6 +39,9 @@ class Config {
     var bossesSinceDrop = BossesSinceDropConfig()
 
     @Expose
+    var partyFinderKickButton = ModuleConfig()
+
+    @Expose
     var debug = ModuleConfig(false)
 
     // dont try saving stuff here
