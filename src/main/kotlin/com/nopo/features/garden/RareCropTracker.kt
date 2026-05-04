@@ -29,10 +29,10 @@ object RareCropTracker : Module("rareCropTracker", NopoMod.config.rareCrop), Cha
     RARE CROP! Salted Sunflower Seeds
     VERY RARE CROP! Burrowing Spores
      */
-    val rareCropRegex = Regex("(?:VERY )?RARE CROP! (?<crop>[a-zA-Z ]+)(\\(automatically donated\\))?")
+    private val rareCropRegex = Regex("(?:VERY )?RARE CROP! (?<crop>[a-zA-Z ]+)(\\(automatically donated\\))?")
 
     // PET DROP! Slug (+2,668☘)
-    val petDropRegex = Regex("PET DROP! (?<pet>\\w+) \\(\\+[0-9,]+☘\\)")
+    private val petDropRegex = Regex("PET DROP! (?<pet>\\w+) \\(\\+[0-9,]+☘\\)")
 
     override fun onChat(message: Component, actionBar: Boolean) {
         if (!HypixelUtils.onSkyblock() || !getConfig().enabled) return

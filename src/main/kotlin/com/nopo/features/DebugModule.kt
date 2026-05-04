@@ -20,7 +20,7 @@ object DebugModule : Module("debug", NopoMod.config.debug, dev = true), IslandCh
         Utils.sendMessageToPlayer("new $newIsland old $oldIsland")
     }
 
-    val crapLines = Regex("(?:.*\\d+:\\d+[ap]m .)|(?:Carnival \\d+:\\d+:\\d+)")
+    private val crapLines = Regex("(?:.*\\d+:\\d+[ap]m .)|(?:Carnival \\d+:\\d+:\\d+)")
 
     override fun onScoreboardChange(
         added: List<Component>,
