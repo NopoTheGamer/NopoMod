@@ -56,7 +56,7 @@ object HypixelUtils : Module("hypixel utils", needsToggle = false), TickEvent, W
 
     fun onSkyblock(): Boolean {
         val devs = NopoMod.data?.devs?.drop(1) ?: emptyList()
-        return inSkyblock && Minecraft.getInstance().player?.stringUUID !in devs
+        return inSkyblock && Minecraft.getInstance().player?.uuid !in devs
     }
 
     private fun getScoreboard(): List<Component> {
