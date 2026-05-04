@@ -2,23 +2,22 @@ package com.nopo.features.emoji
 
 import com.google.common.reflect.TypeToken
 import com.nopo.NopoMod
+import com.nopo.events.ModifyChat
 import com.nopo.module.Module
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.replace
-import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents
 import net.minecraft.network.chat.Component
 import java.lang.reflect.Type
 
-object EmojiReplace : Module("chatEmojis", NopoMod.config.chatEmojis) {
+object EmojiReplace : Module("chatEmojis", NopoMod.config.chatEmojis), ModifyChat {
 
-    val EMOJI_TYPE: Type? = object : TypeToken<Emojis>() {}.type
+    private val EMOJI_TYPE: Type? = object : TypeToken<Emojis>() {}.type
     @JvmStatic
     var emojis = listOf<Emoji>()
     @JvmStatic
     val chatList = mutableListOf<String>()
 
     init {
-        ClientReceiveMessageEvents.MODIFY_GAME.register(::onModify)
         val json = Utils.getJsonFromJar<Emojis>("emojis.json", EMOJI_TYPE)
         emojis = json?.emojis ?: emptyList()
         for (emoji in emojis) {
@@ -28,7 +27,7 @@ object EmojiReplace : Module("chatEmojis", NopoMod.config.chatEmojis) {
         }
     }
 
-    private fun onModify(message: Component, actionBar: Boolean): Component {
+    override fun onModifyChat(message: Component, actionBar: Boolean): Component {
         if (actionBar || !config.enabled) return message
         try {
             var component = message.copy()
