@@ -14,6 +14,8 @@ import com.nopo.utils.Utils.cleanColor
 import com.nopo.utils.Utils.componentBuilder
 import com.nopo.utils.Utils.format
 import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.Style
+import java.util.Optional
 import kotlin.time.Duration.Companion.milliseconds
 
 object RareCropTracker : Module("rareCropTracker", NopoMod.config.rareCrop), ChatEvent {
@@ -29,10 +31,27 @@ object RareCropTracker : Module("rareCropTracker", NopoMod.config.rareCrop), Cha
      */
     val rareCropRegex = Regex("(?:VERY )?RARE CROP! (?<crop>[a-zA-Z ]+)(\\(automatically donated\\))?")
 
+    // PET DROP! Slug (+2,668☘)
+    val petDropRegex = Regex("PET DROP! (?<pet>\\w+) \\(\\+[0-9,]+☘\\)")
+
     override fun onChat(message: Component, actionBar: Boolean) {
         if (!HypixelUtils.onSkyblock() || !getConfig().enabled) return
         if (!IslandType.GARDEN.isActive()) return
         val string = message.string.cleanColor()
+
+        if (string.matches(petDropRegex)) {
+            val pet = petDropRegex.matchEntire(string)?.groups["pet"]?.value?.trim() ?: return
+            // lf hypixel using components...
+            val rarity = if (message.string.contains("§5$pet")) {
+                "Epic"
+            } else if (message.string.contains("§6$pet")) {
+                "Legendary"
+            } else {
+                "Unknown"
+            }
+            addRareDrop("$rarity $pet", message)
+            return
+        }
 
         if (!string.matches(rareCropRegex)) return
         val crop = rareCropRegex.matchEntire(string)?.groups["crop"]?.value?.trim() ?: return
@@ -41,12 +60,16 @@ object RareCropTracker : Module("rareCropTracker", NopoMod.config.rareCrop), Cha
                 Utils.sendMessageToPlayer("Found crop $crop")
             }
         }
+        addRareDrop(crop, message)
+    }
+
+    fun addRareDrop(drop: String, message: Component) {
         val currentTime = System.currentTimeMillis()
-        if (getConfig().dropTimes[crop] == null) {
-            getConfig().dropTimes[crop] = mutableListOf(currentTime)
+        if (getConfig().dropTimes[drop] == null) {
+            getConfig().dropTimes[drop] = mutableListOf(currentTime)
         } else {
-            val lastDrop = getConfig().dropTimes[crop]?.maxOrNull() ?: currentTime
-            getConfig().dropTimes[crop]!!.add(currentTime)
+            val lastDrop = getConfig().dropTimes[drop]?.maxOrNull() ?: currentTime
+            getConfig().dropTimes[drop]!!.add(currentTime)
             if (lastDrop != currentTime) {
                 val timeSince = (currentTime - lastDrop).milliseconds
                 DelayedRuns.schedule(5) {
@@ -55,13 +78,14 @@ object RareCropTracker : Module("rareCropTracker", NopoMod.config.rareCrop), Cha
                             append("Took ")
                             append(timeSince.format())
                             append(" to drop ")
-                            append(Utils.matcherOrString(message, crop))
+                            append(Utils.matcherOrString(message, drop))
                         }
                     )
                 }
             }
         }
         ConfigManager.save()
+
     }
 
 

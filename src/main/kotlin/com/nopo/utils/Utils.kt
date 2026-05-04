@@ -494,6 +494,27 @@ object Utils {
 
     fun Number.addSeparators(): String {
         return NumberFormat.getNumberInstance().format(this)
+    }
 
+    fun getRarityByComponent(component: Component, match: String): String {
+        var rarity = "Unknown"
+        matcher(component, match)?.visit({ style: Style, value: String ->
+            if (match == value) {
+                rarity = when (style.color?.name) {
+                    "dark_red" -> "Ultimate"
+                    "red" -> "Special" // special and very special are the same name
+                    "aqua" -> "Divine"
+                    "light_purple" -> "Mythic"
+                    "gold" -> "Legendary"
+                    "dark_purple" -> "Epic"
+                    "blue" -> "Rare"
+                    "green" -> "Uncommon"
+                    "white" -> "Common"
+                    else -> "Unknown"
+                }
+            }
+            Optional.empty<Component>()
+        }, Style.EMPTY)
+        return rarity
     }
 }

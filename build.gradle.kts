@@ -86,6 +86,7 @@ java {
 }
 
 loom {
+	accessWidenerPath = file("src/main/resources/nopo.accesswidener")
 	runs {
 		removeIf { it.name == "server" }
 	}
