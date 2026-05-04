@@ -1,19 +1,20 @@
 {
-	"required": true,
-	"minVersion": "0.8",
-	"package": "com.nopo.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-	],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"overwrites": {
-		"requireAnnotations": true
-	},
-	"client": [
-		"MixinCommandSuggestions",
-		"MixinSuggestionsList",
-		"accessor.AccessorCommandSuggestions"
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.nopo.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "MixinPlayerEntity"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "client": [
+    "MixinCommandSuggestions",
+    "MixinSuggestionsList",
+    "accessor.AccessorCommandSuggestions"
 	]
 }

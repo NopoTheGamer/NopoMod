@@ -9,6 +9,7 @@ import com.nopo.config.ConfigManager
 import com.nopo.events.AllowChat
 import com.nopo.events.ChatEvent
 import com.nopo.events.CommandRegistration
+import com.nopo.events.EntityNameEvent
 import com.nopo.events.GuiRendering
 import com.nopo.events.ModifyChat
 import com.nopo.events.TickEvent
@@ -19,6 +20,7 @@ import com.nopo.features.FirstTImeGreeting
 import com.nopo.features.OverflowPetLevels
 import com.nopo.features.PartyFinderKickButton
 import com.nopo.features.WokeName
+import com.nopo.features.emoji.EmojiName
 import com.nopo.features.emoji.EmojiReplace
 import com.nopo.features.garden.RareCropTracker
 import com.nopo.features.slayer.BossesSinceDrop
@@ -41,6 +43,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
+import net.minecraft.world.entity.player.Player
 import java.io.StringReader
 import java.net.URI
 import java.net.URL
@@ -74,6 +77,7 @@ object NopoMod : ModInitializer {
             BossesSinceDrop,
             RareCropTracker,
             PartyFinderKickButton,
+            EmojiName,
         )
 
         if (config.useLocalJson != true) {
@@ -157,6 +161,23 @@ object NopoMod : ModInitializer {
             if (hasChanged) newComponent
             else component
         }
+    }
+
+    @JvmStatic
+    fun postEntityEvent(entity: Player, original: Component): Component? {
+        var newComponent: Component = original.copy()
+        var hasChanged = false
+        for (module in modules) {
+            if (module is EntityNameEvent) {
+                val newComp = module.onEntityName(entity, newComponent)
+                if (newComp != null) {
+                    newComponent = newComp
+                    hasChanged = true
+                }
+            }
+        }
+        if (hasChanged) return newComponent
+        else return null
     }
 
 

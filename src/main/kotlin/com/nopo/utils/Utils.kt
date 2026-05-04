@@ -261,7 +261,7 @@ object Utils {
 
     fun isDevAllowed(): Boolean {
         if (NopoMod.config.dev == true) return true
-        return FabricLoader.getInstance().isDevelopmentEnvironment || Minecraft.getInstance().player?.stringUUID == NopoMod.data?.devs?.first()
+        return FabricLoader.getInstance().isDevelopmentEnvironment || Minecraft.getInstance().player?.uuid == NopoMod.data?.devs?.first()
     }
 
     fun registerDebugScreenEntry(
