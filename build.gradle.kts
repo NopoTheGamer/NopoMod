@@ -101,6 +101,10 @@ tasks.jar {
 	}
 }
 
+base {
+	archivesName = "NopoMod"
+}
+
 // configure the maven publication
 publishing {
 	publications {

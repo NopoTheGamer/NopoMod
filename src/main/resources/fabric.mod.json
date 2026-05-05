@@ -10,7 +10,7 @@
 	"contact": {
 		"sources": "https://github.com/NopoTheGamer/NopoMod"
 	},
-	"license": "CC0-1.0",
+	"license": "LGPL-2.0",
 	"icon": "assets/nopo/icon.png",
 	"environment": "*",
 	"entrypoints": {
