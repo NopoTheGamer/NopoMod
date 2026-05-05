@@ -12,13 +12,15 @@ import com.nopo.module.Module
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Position
 import com.nopo.utils.Utils
+import com.nopo.utils.Utils.componentBuilder
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.inventory.ContainerScreen
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 
-object EquipmentDisplay : Module("equipmentDisplay", NopoMod.config.equipmentDisplay), GuiRendering, CommandRegistration, TickEvent {
+object EquipmentDisplay : Module("equipmentDisplay", NopoMod.config.equipmentDisplay), GuiRendering,
+    CommandRegistration, TickEvent {
 
     private fun getConfig() = config as EquipmentDisplayConfig
 
@@ -29,6 +31,11 @@ object EquipmentDisplay : Module("equipmentDisplay", NopoMod.config.equipmentDis
         if (!config.enabled) return
         if (!HypixelUtils.onSkyblock()) return
         for ((index, eq) in equipment.withIndex()) {
+            if (getConfig().showArmor) {
+                Minecraft.getInstance().player?.inventory?.getItem(36 + (3 - index))?.let {
+                    context.renderItem(it, getConfig().pos.x - 16, getConfig().pos.y + index * 16)
+                }
+            }
             if (eq == null) continue
             context.renderItem(eq, getConfig().pos.x, getConfig().pos.y + index * 16)
         }
@@ -38,11 +45,28 @@ object EquipmentDisplay : Module("equipmentDisplay", NopoMod.config.equipmentDis
         return Commodore("nopo") {
             "feature" {
                 "equipmentDisplay" {
-                    runs { x: Int, y: Int ->
-                        getConfig().pos.x = x
-                        getConfig().pos.y = y
-                        Utils.sendMessageToPlayer("Updated position")
-                        ConfigManager.save()
+                    "setPos" {
+                        runs { x: Int, y: Int ->
+                            getConfig().pos.x = x
+                            getConfig().pos.y = y
+                            Utils.sendMessageToPlayer("Updated position")
+                            ConfigManager.save()
+                        }
+                    }
+                    "showArmour" {
+                        runs {
+                            Utils.sendMessageToPlayer(
+                                componentBuilder {
+                                    append("Armor is now ")
+                                    getConfig().showArmor = !getConfig().showArmor
+                                    if (getConfig().showArmor) {
+                                        append("shown")
+                                    } else {
+                                        append("hidden")
+                                    }
+                                }
+                            )
+                        }
                     }
                 }
             }
@@ -67,5 +91,9 @@ object EquipmentDisplay : Module("equipmentDisplay", NopoMod.config.equipmentDis
 }
 
 class EquipmentDisplayConfig : ModuleConfig() {
-    @Expose val pos = Position(520, 405)
+    @Expose
+    val pos = Position(540, 405)
+
+    @Expose
+    var showArmor = true
 }
