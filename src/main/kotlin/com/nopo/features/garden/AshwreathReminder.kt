@@ -81,11 +81,13 @@ object AshwreathReminder : Module("ashwreath", NopoMod.config.ashwreath), TickEv
         return Commodore("nopo") {
             "feature" {
                 "ashwreath" {
-                    runs { x: Int, y: Int ->
-                        getConfig().pos.x = x
-                        getConfig().pos.y = y
-                        Utils.sendMessageToPlayer("Updated position")
-                        ConfigManager.save()
+                    "setPos" {
+                        runs { x: Int, y: Int ->
+                            getConfig().pos.x = x
+                            getConfig().pos.y = y
+                            Utils.sendMessageToPlayer("Updated position")
+                            ConfigManager.save()
+                        }
                     }
                 }
             }
