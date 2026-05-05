@@ -14,13 +14,11 @@ import com.nopo.utils.Utils.cleanColor
 import com.nopo.utils.Utils.componentBuilder
 import com.nopo.utils.Utils.format
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.Style
-import java.util.Optional
 import kotlin.time.Duration.Companion.milliseconds
 
 object RareCropTracker : Module("rareCropTracker", NopoMod.config.rareCrop), ChatEvent {
 
-    fun getConfig() = config as RareCropConfig
+    private fun getConfig() = config as RareCropConfig
 
     /*
     RARE CROP! Crystalized Moonlight

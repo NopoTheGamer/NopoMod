@@ -20,7 +20,7 @@ import net.minecraft.network.chat.Component
 
 object TaskList : Module("tasks", NopoMod.config.tasks, needsToggle = false), CommandRegistration {
 
-    fun getConfig() = config as TaskConfig
+    private fun getConfig() = config as TaskConfig
 
     override fun createCommand(): Commodore {
         return Commodore("nopo") {
