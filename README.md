@@ -1,4 +1,4 @@
-# NopoMod
+# NopoMod for Hypixel Skyblock
 
 Idk i made a mod cus i wanted to :)
 
