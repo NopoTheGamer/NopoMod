@@ -16,6 +16,7 @@ import com.nopo.events.TickEvent
 import com.nopo.events.WorldChange
 import com.nopo.features.garden.AshwreathReminder
 import com.nopo.features.DebugModule
+import com.nopo.features.EquipmentDisplay
 import com.nopo.features.FirstTImeGreeting
 import com.nopo.features.OverflowPetLevels
 import com.nopo.features.PartyFinderKickButton
@@ -78,6 +79,7 @@ object NopoMod : ModInitializer {
             RareCropTracker,
             PartyFinderKickButton,
             EmojiName,
+            EquipmentDisplay,
         )
 
         if (config.useLocalJson != true) {
