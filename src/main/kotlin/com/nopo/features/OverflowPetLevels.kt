@@ -56,7 +56,7 @@ object OverflowPetLevels : Module("overflowPetLevels", NopoMod.config.overflowPe
         while (exp > 0) {
             val xp: Int
             if (listOfXp.size > i) {
-                xp = listOfXp.get(i)
+                xp = listOfXp[i]
             } else {
                 xp = 1886700
             }

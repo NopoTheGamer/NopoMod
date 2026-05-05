@@ -30,7 +30,7 @@ public abstract class MixinCommandSuggestions {
     private static final Pattern WHITESPACE_PATTERN = Pattern.compile("(\\s+)");
     @Shadow
     @Final
-    private EditBox input;
+    EditBox input;
 
     @Shadow
     @Nullable

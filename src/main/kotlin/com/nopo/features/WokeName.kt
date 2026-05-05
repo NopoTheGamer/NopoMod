@@ -30,5 +30,3 @@ object WokeName : Module("woke", NopoMod.config.wokeConfig, dev = true) {
         }
     }
 }
-
-class WokeConfig: ModuleConfig()
