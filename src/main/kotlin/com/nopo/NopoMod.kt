@@ -42,6 +42,7 @@ import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacke
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 import net.minecraft.world.entity.player.Player
@@ -58,6 +59,8 @@ object NopoMod : ModInitializer {
     private var ticks = 0
     private const val DATA_JSON = "https://raw.githubusercontent.com/NopoTheGamer/NopoMod/refs/heads/master/src/main/resources/assets/nopo/data.json"
     var data: Data? = null
+    var screenToOpen: Screen? = null
+    var screenTicks = 0
 
 
     override fun onInitialize() {
@@ -106,6 +109,15 @@ object NopoMod : ModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register {
             if (Minecraft.getInstance().player == null) return@register
             if (Minecraft.getInstance().level == null) return@register
+
+            if (screenToOpen != null) {
+                screenTicks++
+                if (screenTicks == 5) {
+                    Minecraft.getInstance().setScreen(screenToOpen)
+                    screenTicks = 0
+                    screenToOpen = null
+                }
+            }
 
             for (module in modules) {
                 if (module is TickEvent) {

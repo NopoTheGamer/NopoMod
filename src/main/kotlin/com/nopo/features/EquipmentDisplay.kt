@@ -9,6 +9,7 @@ import com.nopo.events.CommandRegistration
 import com.nopo.events.GuiRendering
 import com.nopo.events.TickEvent
 import com.nopo.module.Module
+import com.nopo.screens.GuiEditor
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Position
 import com.nopo.utils.Utils
@@ -30,6 +31,10 @@ object EquipmentDisplay : Module("equipmentDisplay", NopoMod.config.equipmentDis
     override fun render(context: GuiGraphics) {
         if (!config.enabled) return
         if (!HypixelUtils.onSkyblock()) return
+        doRender(context)
+    }
+
+    private fun doRender(context: GuiGraphics) {
         for ((index, eq) in equipment.withIndex()) {
             if (getConfig().showArmor) {
                 Minecraft.getInstance().player?.inventory?.getItem(36 + (3 - index))?.let {
@@ -46,11 +51,19 @@ object EquipmentDisplay : Module("equipmentDisplay", NopoMod.config.equipmentDis
             "feature" {
                 "equipmentDisplay" {
                     "setPos" {
-                        runs { x: Int, y: Int ->
-                            getConfig().pos.x = x
-                            getConfig().pos.y = y
-                            Utils.sendMessageToPlayer("Updated position")
-                            ConfigManager.save()
+                        runs { x: Int?, y: Int? ->
+                            if (x == null) {
+                                NopoMod.screenToOpen = GuiEditor(getConfig().pos) {
+                                    doRender(it)
+                                }
+                            } else if (y == null) {
+                                Utils.sendMessageToPlayer("Missing y argument")
+                            } else {
+                                getConfig().pos.x = x
+                                getConfig().pos.y = y
+                                Utils.sendMessageToPlayer("Updated position")
+                                ConfigManager.save()
+                            }
                         }
                     }
                     "showArmour" {

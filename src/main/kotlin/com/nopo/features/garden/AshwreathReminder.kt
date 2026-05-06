@@ -10,6 +10,7 @@ import com.nopo.events.GuiRendering
 import com.nopo.events.IslandChange
 import com.nopo.events.TickEvent
 import com.nopo.module.Module
+import com.nopo.screens.GuiEditor
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.IslandType
@@ -57,10 +58,13 @@ object AshwreathReminder : Module("ashwreath", NopoMod.config.ashwreath), TickEv
     }
 
     override fun render(context: GuiGraphics) {
-        val config = getConfig()
         if (!config.enabled || !HypixelUtils.onSkyblock()) return
+        doRender(context)
+    }
+
+    private fun doRender(context: GuiGraphics) {
         val display = display ?: return
-        context.drawString(Minecraft.getInstance().font, display, config.pos.x, config.pos.y, -1)
+        context.drawString(Minecraft.getInstance().font, display, getConfig().pos.x, getConfig().pos.y, -1)
     }
 
     override fun onWorldSwap(newIsland: IslandType, oldIsland: IslandType) {
@@ -82,11 +86,19 @@ object AshwreathReminder : Module("ashwreath", NopoMod.config.ashwreath), TickEv
             "feature" {
                 "ashwreath" {
                     "setPos" {
-                        runs { x: Int, y: Int ->
-                            getConfig().pos.x = x
-                            getConfig().pos.y = y
-                            Utils.sendMessageToPlayer("Updated position")
-                            ConfigManager.save()
+                        runs { x: Int?, y: Int? ->
+                            if (x == null) {
+                                NopoMod.screenToOpen = GuiEditor(getConfig().pos) {
+                                    doRender(it)
+                                }
+                            } else if (y == null) {
+                                Utils.sendMessageToPlayer("Missing y argument")
+                            } else {
+                                getConfig().pos.x = x
+                                getConfig().pos.y = y
+                                Utils.sendMessageToPlayer("Updated position")
+                                ConfigManager.save()
+                            }
                         }
                     }
                 }
