@@ -58,6 +58,22 @@ object PetDisplay : Module("petDisplay", NopoMod.config.petDisplay), CommandRegi
                             }
                         }
                     }
+                    "chatMessage" {
+                        runs {
+                            Utils.sendMessageToPlayer(
+                                componentBuilder {
+                                    append("Toggled overflow level up messages ")
+                                    getConfig().chatMessage = !getConfig().chatMessage
+                                    if (getConfig().chatMessage) {
+                                        append("on")
+                                    } else {
+                                        append("off")
+                                    }
+                                    withColor(ChatFormatting.YELLOW)
+                                }
+                            )
+                        }
+                    }
                 }
             }
         }
