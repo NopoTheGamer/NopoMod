@@ -102,7 +102,12 @@ object PetDisplay : Module("petDisplay", NopoMod.config.petDisplay), CommandRegi
         val temp = mutableListOf<Component>()
         var level = 100
         var name = ""
+        var legRarity = true
         for (line in TabWidget.PET.lines) {
+            if (!legRarity) {
+                temp.add(line)
+                continue
+            }
             val string = line.string
             if (petNameRegex.matches(string)) {
                 val levelMatch = petNameRegex.group(string, "level")?.formatInt()
@@ -111,6 +116,13 @@ object PetDisplay : Module("petDisplay", NopoMod.config.petDisplay), CommandRegi
                     level = levelMatch
                 }
                 if (nameMatch != null) {
+                    val rarity = Utils.getRarityByComponent(line, nameMatch.replace("✦", "").trim())
+                    println(rarity)
+                    if (rarity != "Legendary" && rarity != "Mythic") {
+                        legRarity = false
+                        temp.add(line)
+                        continue
+                    }
                     name = nameMatch
                     continue
                 }
@@ -152,28 +164,31 @@ object PetDisplay : Module("petDisplay", NopoMod.config.petDisplay), CommandRegi
             temp.add(line)
         }
 
-        val nameComponent = Utils.matcher(TabWidget.PET.lines[1], name) ?: componentBuilder {
-            append(name) {
-                withColor(ChatFormatting.RED)
+        if (legRarity) {
+            val nameComponent = Utils.matcher(TabWidget.PET.lines[1], name) ?: componentBuilder {
+                append(name) {
+                    withColor(ChatFormatting.RED)
+                }
+            }
+            temp.add(1, generateCustomName(level, nameComponent, name))
+
+            if (getConfig().chatMessage && name == currentPet && currentOverflowLevel != level && currentOverflowLevel != -1) {
+                Utils.sendMessageToPlayer(
+                    componentBuilder {
+                        withColor(ChatFormatting.GREEN)
+                        append("Your ")
+                        append(nameComponent)
+                        append(" leveled up to level ")
+                        append("$level") {
+                            withColor(ChatFormatting.BLUE)
+                        }
+                        append("!")
+                    }
+                )
             }
         }
-        temp.add(1, generateCustomName(level, nameComponent, name))
         display = temp
 
-        if (getConfig().chatMessage && name == currentPet && currentOverflowLevel != level && currentOverflowLevel != -1) {
-            Utils.sendMessageToPlayer(
-                componentBuilder {
-                    withColor(ChatFormatting.GREEN)
-                    append("Your ")
-                    append(nameComponent)
-                    append(" leveled up to level ")
-                    append("$level") {
-                        withColor(ChatFormatting.BLUE)
-                    }
-                    append("!")
-                }
-            )
-        }
         currentOverflowLevel = level
         currentPet = name
     }
