@@ -10,6 +10,7 @@ import net.hypixel.data.type.GameType
 import net.hypixel.modapi.HypixelModAPI
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.components.PlayerTabOverlay
 import net.minecraft.network.chat.Component
 import net.minecraft.world.scores.DisplaySlot
 import net.minecraft.world.scores.PlayerScoreEntry
@@ -23,6 +24,8 @@ object HypixelUtils : Module("hypixel utils", needsToggle = false), TickEvent, W
     var mode: String? = null
     var currentIsland: IslandType = IslandType.UNKNOWN
     private var inSkyblock = false
+    var tablist: List<Component> = emptyList()
+        private set
 
     init {
         HypixelModAPI.getInstance().createHandler<ClientboundLocationPacket?>(
@@ -86,6 +89,12 @@ object HypixelUtils : Module("hypixel utils", needsToggle = false), TickEvent, W
 
     override fun onTick(totalTicks: Int) {
         val new = getScoreboard()
+
+        val players = Minecraft.getInstance().connection?.onlinePlayers?.sortedWith(PlayerTabOverlay.PLAYER_COMPARATOR)?.mapNotNull { it.tabListDisplayName }
+        if (players != null) {
+            tablist = players
+            TabWidget.updateWidgets(tablist)
+        }
 
         if (new != scoreboardLines) {
             val old = scoreboardLines

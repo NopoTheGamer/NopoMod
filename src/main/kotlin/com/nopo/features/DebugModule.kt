@@ -1,10 +1,10 @@
 package com.nopo.features
 
-import com.nopo.module.Module
 import com.nopo.NopoMod
 import com.nopo.events.GuiRendering
 import com.nopo.events.IslandChange
 import com.nopo.events.ScoreboardChange
+import com.nopo.module.Module
 import com.nopo.utils.IslandType
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.cleanColor
