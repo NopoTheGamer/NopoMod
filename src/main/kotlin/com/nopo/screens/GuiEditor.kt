@@ -1,5 +1,6 @@
 package com.nopo.screens
 
+import com.nopo.config.ConfigManager
 import com.nopo.utils.Position
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
@@ -38,6 +39,7 @@ class GuiEditor(val pos: Position, val runnable: (GuiGraphics) -> Unit) : Screen
     override fun onClose() {
         pos.x = firstX
         pos.y = firstY
+        ConfigManager.save()
         super.onClose()
     }
 }

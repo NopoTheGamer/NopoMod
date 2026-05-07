@@ -50,21 +50,44 @@ object OverflowPetLevels : Module("overflowPetLevels", NopoMod.config.overflowPe
         })
     }
 
-    private fun calcLevel(xp: Float): Int {
+    fun getCalculativeXpForLevel(level: Int): Int {
+        var xp = 0
+        for (i in 0 until level) {
+            xp += getXpForLevel(i)
+        }
+        return xp
+    }
+
+    fun getXpForLevel(level: Int): Int {
+        return if (listOfXp.size > level) {
+            listOfXp[level]
+        } else {
+            1886700
+        }
+    }
+
+    fun calcLevel(xp: Float): Int {
         var exp = xp
         var i = 0
         while (exp > 0) {
-            val xp: Int
-            if (listOfXp.size > i) {
-                xp = listOfXp[i]
-            } else {
-                xp = 1886700
-            }
+            val xp = getXpForLevel(i)
             exp -= xp
             i++
         }
         if (i < 1) i = 1
         return i
+    }
+
+    fun calcLeftOverXp(xp: Float): Float {
+        var exp = xp
+        var i = 0
+        while (exp > 0) {
+            val xp = getXpForLevel(i)
+            if (exp > xp) exp -= xp
+            else return exp
+            i++
+        }
+        return -1f
     }
 
     private val listOfXp = listOf(

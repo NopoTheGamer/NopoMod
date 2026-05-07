@@ -3,6 +3,7 @@ package com.nopo.config
 import com.google.gson.annotations.Expose
 import com.nopo.commands.TaskConfig
 import com.nopo.features.EquipmentDisplayConfig
+import com.nopo.features.PetConfig
 import com.nopo.features.garden.AshwreathConfig
 import com.nopo.features.garden.RareCropConfig
 import com.nopo.features.slayer.BossesSinceDropConfig
@@ -44,6 +45,9 @@ class Config {
 
     @Expose
     var equipmentDisplay = EquipmentDisplayConfig()
+
+    @Expose
+    var petDisplay = PetConfig()
 
     @Expose
     var debug = ModuleConfig(false)

@@ -20,6 +20,7 @@ import com.nopo.features.EquipmentDisplay
 import com.nopo.features.FirstTImeGreeting
 import com.nopo.features.OverflowPetLevels
 import com.nopo.features.PartyFinderKickButton
+import com.nopo.features.PetDisplay
 import com.nopo.features.WokeName
 import com.nopo.features.emoji.EmojiName
 import com.nopo.features.emoji.EmojiReplace
@@ -83,6 +84,7 @@ object NopoMod : ModInitializer {
             PartyFinderKickButton,
             EmojiName,
             EquipmentDisplay,
+            PetDisplay,
         )
 
         if (config.useLocalJson != true) {

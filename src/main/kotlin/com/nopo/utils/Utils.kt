@@ -25,6 +25,7 @@ import java.lang.reflect.Type
 import java.net.URI
 import java.nio.file.Files
 import java.text.NumberFormat
+import java.util.Locale
 import java.util.Optional
 import kotlin.concurrent.atomics.AtomicBoolean
 import kotlin.concurrent.atomics.ExperimentalAtomicApi
@@ -515,5 +516,17 @@ object Utils {
             Optional.empty<Component>()
         }, Style.EMPTY)
         return rarity
+    }
+
+    fun String.formatDouble(): Double {
+        return NumberFormat.getInstance(Locale.US).parse(this).toDouble()
+    }
+
+    fun String.formatInt(): Int {
+        return this.formatDouble().toInt()
+    }
+
+    fun Regex.group(input: String, group: String): String? {
+        return this.matchEntire(input)?.groups[group]?.value
     }
 }
