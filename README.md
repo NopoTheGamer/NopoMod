@@ -1,26 +1,40 @@
 # NopoMod for Hypixel Skyblock
 
-Idk i made a mod cus i wanted to :)
-
-it has some cool stuff
+I made a mod cus i wanted to :)
 
 I stole some of the features from other mods ive made in the past
+
+# Commands
+
+- /nopo tasks [add/remove/random/lists]
+  - Lets you create tasks in a "todo list"
+  - Let /nopo tasks random guide you into your next Skyblock activity!
+- /nopo feature ["feature name"]
+  - Toggles that feature on/off
+  - Some features have subcommands!
+- /nopo list
+  - Lists all the options and if they are on or off
 
 [//]: # (<details>)
 
 [//]: # (<summary>Feature Images</summary>)
 
 ## Bosses Since Slayer Drop
-![img.png](.github/slayerDrop.png)
+![User dropped a hamster wheel after 12 sven bosses](.github/slayerDrop.png)
 
 ## [Chat Emojis](https://modrinth.com/mod/chat-emoji-mod)
-![img.png](.github/emoji.png)
+![User sending "Hi (Wave)" in chat made out of emojis](.github/emoji.png)
 
 ## [Overflow Pet Levels](https://modrinth.com/mod/overflow-pet-levels)
-![img.png](.github/overflowPetLevel.png)
+![Shows a pet with overflow level 244](.github/overflowPetLevel.png)
+
+## Pet Display With Overflow
+![Pet Display with a pet over level 200](.github/legPetDisplay.png)
+![Pet display with an epic pet with not enough xp to get level 100 legendary](.github/epicPetDisplay.png)
+![Message when the overflow level levels up](.github/overflowMessage.png)
 
 ## Time Since Last Garden Rare Crop
-![img.png](.github/timeSinceRareCrop.png)
+![User found an ethereal vine after 13 seconds](.github/timeSinceRareCrop.png)
 
 [//]: # (</details>)
 
