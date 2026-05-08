@@ -1,6 +1,7 @@
 package com.nopo
 
 import com.google.gson.stream.JsonReader
+import com.nopo.commands.DiscordCommand
 import com.nopo.commands.ListConfigCommand
 import com.nopo.commands.SixSeven
 import com.nopo.commands.TaskList
@@ -85,6 +86,7 @@ object NopoMod : ModInitializer {
             EmojiName,
             EquipmentDisplay,
             PetDisplay,
+            DiscordCommand,
         )
 
         if (config.useLocalJson != true) {
