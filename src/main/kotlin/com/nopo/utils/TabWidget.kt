@@ -14,6 +14,7 @@ enum class TabWidget(title: String) {
     companion object {
 
         fun updateWidgets(tab: List<Component>) {
+            entries.forEach { it.lines.clear() }
             var currentWidget: TabWidget? = null
 
             for (line in tab) {
