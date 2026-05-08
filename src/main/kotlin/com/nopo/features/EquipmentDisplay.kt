@@ -31,18 +31,20 @@ object EquipmentDisplay : Module("equipmentDisplay", NopoMod.config.equipmentDis
     override fun render(context: GuiGraphics) {
         if (!config.enabled) return
         if (!HypixelUtils.onSkyblock()) return
-        doRender(context)
+        getConfig().pos.render(context) {
+            doRender(context)
+        }
     }
 
     private fun doRender(context: GuiGraphics) {
         for ((index, eq) in equipment.withIndex()) {
             if (getConfig().showArmor) {
                 Minecraft.getInstance().player?.inventory?.getItem(36 + (3 - index))?.let {
-                    context.renderItem(it, getConfig().pos.x - 16, getConfig().pos.y + index * 16)
+                    context.renderItem(it, -16, index * 16)
                 }
             }
             if (eq == null) continue
-            context.renderItem(eq, getConfig().pos.x, getConfig().pos.y + index * 16)
+            context.renderItem(eq, 0, index * 16)
         }
     }
 

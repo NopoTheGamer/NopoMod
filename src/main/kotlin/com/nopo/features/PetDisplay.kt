@@ -84,14 +84,16 @@ object PetDisplay : Module("petDisplay", NopoMod.config.petDisplay), CommandRegi
         if (!config.enabled) return
         if (!HypixelUtils.onSkyblock()) return
 
-        doRender(context)
+        getConfig().pos.render(context) {
+            doRender(context)
+        }
     }
 
     private fun doRender(context: GuiGraphics) {
         val display = display ?: return
         val font = Minecraft.getInstance().font
         for ((index, component) in display.withIndex()) {
-            context.drawString(font, component, getConfig().pos.x, getConfig().pos.y + index * 10, -1)
+            context.drawString(font, component, 0, index * 10, -1)
         }
     }
 

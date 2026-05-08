@@ -59,12 +59,14 @@ object AshwreathReminder : Module("ashwreath", NopoMod.config.ashwreath), TickEv
 
     override fun render(context: GuiGraphics) {
         if (!config.enabled || !HypixelUtils.onSkyblock()) return
-        doRender(context)
+        getConfig().pos.render(context) {
+            doRender(context)
+        }
     }
 
     private fun doRender(context: GuiGraphics) {
         val display = display ?: return
-        context.drawString(Minecraft.getInstance().font, display, getConfig().pos.x, getConfig().pos.y, -1)
+        context.drawString(Minecraft.getInstance().font, display, 0, 0, -1)
     }
 
     override fun onWorldSwap(newIsland: IslandType, oldIsland: IslandType) {
