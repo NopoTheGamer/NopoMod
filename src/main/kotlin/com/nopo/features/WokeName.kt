@@ -14,10 +14,13 @@ object WokeName : Module("woke", NopoMod.config.wokeConfig, dev = true) {
     val nameComp by lazy {
         componentBuilder {
             append(Utils.createGradientText( Color(85, 255, 255), Color.MAGENTA, "Throwpo"))
-            append(" ")
-            val trans = Utils.createEmoji("trans")
-            append(trans)
-            append(trans)
+            // TODO: remove on 26.1
+            if (Utils.isDevAllowed()) {
+                append(" ")
+                val trans = Utils.createEmoji("trans")
+                append(trans)
+                append(trans)
+            }
         }
     }
 
