@@ -166,7 +166,7 @@ object PetDisplay : Module("petDisplay", NopoMod.config.petDisplay), CommandRegi
         }
         temp.add(1, generateCustomName(overflowLevel, level, nameComponent, name, rarity))
 
-        if (getConfig().chatMessage && name == currentPet && currentOverflowLevel + 1 == overflowLevel && currentOverflowLevel > 100) {
+        if (getConfig().chatMessage && name == currentPet && currentOverflowLevel + 1 == overflowLevel && level > 100) {
             Utils.sendMessageToPlayer(
                 componentBuilder {
                     withColor(ChatFormatting.GREEN)
