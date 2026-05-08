@@ -105,6 +105,7 @@ object PetDisplay : Module("petDisplay", NopoMod.config.petDisplay), CommandRegi
         var overflowLevel = 100
         var name = ""
         var rarity = Rarity.UNKNOWN
+        var maxLevel = false
         for (line in TabWidget.PET.lines) {
             val string = line.string
             if (petNameRegex.matches(string)) {
@@ -123,6 +124,7 @@ object PetDisplay : Module("petDisplay", NopoMod.config.petDisplay), CommandRegi
                 continue
             }
             if (overflowXpRegex.matches(string)) {
+                maxLevel = true
                 val match = overflowXpRegex.group(string, "xp")
                 if (match == null) {
                     temp.add(line)
@@ -166,7 +168,7 @@ object PetDisplay : Module("petDisplay", NopoMod.config.petDisplay), CommandRegi
         }
         temp.add(1, generateCustomName(overflowLevel, level, nameComponent, name, rarity))
 
-        if (getConfig().chatMessage && name == currentPet && currentOverflowLevel + 1 == overflowLevel && level > 100) {
+        if (getConfig().chatMessage && name == currentPet && currentOverflowLevel + 1 == overflowLevel && maxLevel) {
             Utils.sendMessageToPlayer(
                 componentBuilder {
                     withColor(ChatFormatting.GREEN)
