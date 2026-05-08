@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.nopo.module.Module
 import com.nopo.NopoMod
+import com.nopo.utils.Rarity
 import com.nopo.utils.Utils.append
 import com.nopo.utils.Utils.componentBuilder
 import com.nopo.utils.Utils.withColor
@@ -50,27 +51,28 @@ object OverflowPetLevels : Module("overflowPetLevels", NopoMod.config.overflowPe
         })
     }
 
-    fun getCalculativeXpForLevel(level: Int): Int {
+    fun getCalculativeXpForLevel(level: Int, rarity: Rarity = Rarity.LEGENDARY): Int {
         var xp = 0
         for (i in 0 until level) {
-            xp += getXpForLevel(i)
+            xp += getXpForLevel(i, rarity)
         }
         return xp
     }
 
-    fun getXpForLevel(level: Int): Int {
-        return if (listOfXp.size > level) {
-            listOfXp[level]
+    fun getXpForLevel(level: Int, rarity: Rarity = Rarity.LEGENDARY): Int {
+        val offset = getOffset(rarity) + level
+        return if (listOfXp.size > offset) {
+            listOfXp[offset]
         } else {
             1886700
         }
     }
 
-    fun calcLevel(xp: Float): Int {
+    fun calcLevel(xp: Float, rarity: Rarity = Rarity.LEGENDARY): Int {
         var exp = xp
         var i = 0
         while (exp > 0) {
-            val xp = getXpForLevel(i)
+            val xp = getXpForLevel(i, rarity)
             exp -= xp
             i++
         }
@@ -78,11 +80,11 @@ object OverflowPetLevels : Module("overflowPetLevels", NopoMod.config.overflowPe
         return i
     }
 
-    fun calcLeftOverXp(xp: Float): Float {
+    fun calcLeftOverXp(xp: Float, rarity: Rarity = Rarity.LEGENDARY): Float {
         var exp = xp
         var i = 0
         while (exp > 0) {
-            val xp = getXpForLevel(i)
+            val xp = getXpForLevel(i, rarity)
             if (exp > xp) exp -= xp
             else return exp
             i++
@@ -90,7 +92,37 @@ object OverflowPetLevels : Module("overflowPetLevels", NopoMod.config.overflowPe
         return -1f
     }
 
+    fun getOffset(rarity: Rarity): Int {
+        return when (rarity) {
+            Rarity.COMMON -> 0
+            Rarity.UNCOMMON -> 6
+            Rarity.RARE -> 11
+            Rarity.EPIC -> 15
+            else -> 20
+        }
+    }
+
     private val listOfXp = listOf(
+        100,
+        110,
+        120,
+        130,
+        145,
+        160,
+        175,
+        190,
+        210,
+        230,
+        250,
+        275,
+        300,
+        330,
+        360,
+        400,
+        440,
+        490,
+        540,
+        600,
         660,
         730,
         800,

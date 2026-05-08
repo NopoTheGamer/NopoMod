@@ -13,6 +13,7 @@ import com.nopo.module.Module
 import com.nopo.screens.GuiEditor
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Position
+import com.nopo.utils.Rarity
 import com.nopo.utils.TabWidget
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.addSeparators
@@ -101,28 +102,20 @@ object PetDisplay : Module("petDisplay", NopoMod.config.petDisplay), CommandRegi
         }
         val temp = mutableListOf<Component>()
         var level = 100
+        var overflowLevel = 100
         var name = ""
-        var legRarity = true
+        var rarity = Rarity.UNKNOWN
         for (line in TabWidget.PET.lines) {
-            if (!legRarity) {
-                temp.add(line)
-                continue
-            }
             val string = line.string
             if (petNameRegex.matches(string)) {
                 val levelMatch = petNameRegex.group(string, "level")?.formatInt()
                 val nameMatch = petNameRegex.group(string, "name")
                 if (levelMatch != null) {
                     level = levelMatch
+                    overflowLevel = level
                 }
                 if (nameMatch != null) {
-                    val rarity = Utils.getRarityByComponent(line, nameMatch.replace("✦", "").trim())
-                    println(rarity)
-                    if (rarity != "Legendary" && rarity != "Mythic") {
-                        legRarity = false
-                        temp.add(line)
-                        continue
-                    }
+                    rarity = Rarity.getRarityByComponent(line, nameMatch.replace("✦", "").trim())
                     name = nameMatch
                     continue
                 }
@@ -135,10 +128,9 @@ object PetDisplay : Module("petDisplay", NopoMod.config.petDisplay), CommandRegi
                     temp.add(line)
                     continue
                 }
-                val xp = match.formatDouble().toFloat() + OverflowPetLevels.getCalculativeXpForLevel(level)
-                var overflowLevel = OverflowPetLevels.calcLevel(xp)
+                val xp = match.formatDouble().toFloat() + OverflowPetLevels.getCalculativeXpForLevel(level, rarity)
+                overflowLevel = OverflowPetLevels.calcLevel(xp)
                 if (level == 200) overflowLevel--
-                level = overflowLevel
 
                 val xpComp = componentBuilder {
                     val progressXp = OverflowPetLevels.calcLeftOverXp(xp)
@@ -149,7 +141,9 @@ object PetDisplay : Module("petDisplay", NopoMod.config.petDisplay), CommandRegi
                         withColor(ChatFormatting.GOLD)
                     }
                     val fmt = CompactDecimalFormat.getInstance(Locale.US, CompactDecimalFormat.CompactStyle.SHORT)
-                    val xpForNextLevel = OverflowPetLevels.getXpForLevel(overflowLevel)
+                    // holy shit this is becoming spegetti
+                    val offset = if (rarity < Rarity.LEGENDARY && overflowLevel < 100) 1 else 0
+                    val xpForNextLevel = OverflowPetLevels.getXpForLevel(overflowLevel - offset)
                     append("${fmt.format(xpForNextLevel)} XP") {
                         withColor(ChatFormatting.YELLOW)
                     }
@@ -164,38 +158,43 @@ object PetDisplay : Module("petDisplay", NopoMod.config.petDisplay), CommandRegi
             temp.add(line)
         }
 
-        if (legRarity) {
-            val nameComponent = Utils.matcher(TabWidget.PET.lines[1], name) ?: componentBuilder {
-                append(name) {
-                    withColor(ChatFormatting.RED)
-                }
-            }
-            temp.add(1, generateCustomName(level, nameComponent, name))
 
-            if (getConfig().chatMessage && name == currentPet && currentOverflowLevel != level && currentOverflowLevel != -1) {
-                Utils.sendMessageToPlayer(
-                    componentBuilder {
-                        withColor(ChatFormatting.GREEN)
-                        append("Your ")
-                        append(nameComponent)
-                        append(" leveled up to level ")
-                        append("$level") {
-                            withColor(ChatFormatting.BLUE)
-                        }
-                        append("!")
-                    }
-                )
+        val nameComponent = Utils.matcher(TabWidget.PET.lines[1], name) ?: componentBuilder {
+            append(name) {
+                withColor(ChatFormatting.RED)
             }
+        }
+        temp.add(1, generateCustomName(overflowLevel, level, nameComponent, name, rarity))
+
+        if (getConfig().chatMessage && name == currentPet && currentOverflowLevel + 1 == overflowLevel && currentOverflowLevel != -1) {
+            Utils.sendMessageToPlayer(
+                componentBuilder {
+                    withColor(ChatFormatting.GREEN)
+                    append("Your ")
+                    append(nameComponent)
+                    append(" leveled up to level ")
+                    append("$overflowLevel") {
+                        withColor(ChatFormatting.BLUE)
+                    }
+                    append("!")
+                }
+            )
+
         }
         display = temp
 
-        currentOverflowLevel = level
+        currentOverflowLevel = overflowLevel
         currentPet = name
     }
 
-    fun generateCustomName(level: Int, nameComponent: Component?, nameMatch: String): Component {
+    fun generateCustomName(overflowLevel: Int, realLevel: Int, nameComponent: Component?, nameMatch: String, rarity: Rarity): Component {
         return componentBuilder {
-            append(" [Lvl $level] ") {
+            append {
+                append(" [Lvl $overflowLevel")
+                if (rarity < Rarity.LEGENDARY && realLevel != overflowLevel && overflowLevel < 100) {
+                    append(" ($realLevel)")
+                }
+                append("] ")
                 withColor(ChatFormatting.GRAY)
             }
             if (nameComponent != null) {
@@ -211,7 +210,7 @@ object PetDisplay : Module("petDisplay", NopoMod.config.petDisplay), CommandRegi
 
 class PetConfig : ModuleConfig() {
     @Expose
-    var pos = Position()
+    var pos = Position(660, 420)
 
     @Expose
     var chatMessage = true
