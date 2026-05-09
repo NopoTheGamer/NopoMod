@@ -10,14 +10,12 @@ import com.nopo.utils.Utils.withColor
 import net.minecraft.ChatFormatting
 
 open class Module(
-    val moduleName: String,
+    moduleName: String,
     @Expose var config: ModuleConfig = NopoMod.config.dummyConfig,
-    val needsToggle: Boolean = true,
-    val dev: Boolean = false
-) {
+    dev: Boolean = false
+) : BaseModule(moduleName, dev) {
 
     open fun registerToggleCommand(): Commodore? {
-        if (!needsToggle) return null
         if (dev && !Utils.isDevAllowed()) return null
         return Commodore("nopo") {
             literal("feature") {

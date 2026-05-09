@@ -6,7 +6,7 @@ import com.nopo.events.ScoreboardChange
 import com.nopo.events.SkyblockFirstJoin
 import com.nopo.events.TickEvent
 import com.nopo.events.WorldChange
-import com.nopo.module.Module
+import com.nopo.module.BaseModule
 import net.hypixel.data.type.GameType
 import net.hypixel.modapi.HypixelModAPI
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket
@@ -19,7 +19,7 @@ import net.minecraft.world.scores.Scoreboard
 import kotlin.jvm.optionals.getOrNull
 
 
-object HypixelUtils : Module("hypixel utils", needsToggle = false), TickEvent, WorldChange {
+object HypixelUtils : BaseModule("hypixel utils"), TickEvent, WorldChange {
 
     var map: String? = null
     var mode: String? = null

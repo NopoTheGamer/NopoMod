@@ -18,7 +18,7 @@ import com.nopo.events.WorldChange
 import com.nopo.features.garden.AshwreathReminder
 import com.nopo.features.DebugModule
 import com.nopo.features.EquipmentDisplay
-import com.nopo.features.FirstTImeGreeting
+import com.nopo.features.FirstTimeGreeting
 import com.nopo.features.OverflowPetLevels
 import com.nopo.features.PartyFinderKickButton
 import com.nopo.features.PetDisplay
@@ -32,6 +32,7 @@ import com.nopo.data.Data
 import com.nopo.data.Version
 import com.nopo.data.Version.Companion.toVersion
 import com.nopo.features.UpdateNotification
+import com.nopo.module.BaseModule
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Utils
@@ -60,7 +61,7 @@ object NopoMod : ModInitializer {
 
     const val MOD_ID = "nopo"
     lateinit var config: Config
-    var modules: List<Module> = emptyList()
+    var modules: List<BaseModule> = emptyList()
         private set
     private var ticks = 0
     private const val DATA_JSON = "https://raw.githubusercontent.com/NopoTheGamer/NopoMod/refs/heads/master/src/main/resources/assets/nopo/data.json"
@@ -88,7 +89,7 @@ object NopoMod : ModInitializer {
             HypixelUtils,
             OverflowPetLevels,
             TaskList,
-            FirstTImeGreeting,
+            FirstTimeGreeting,
             AshwreathReminder,
             DelayedRuns,
             ListConfigCommand,
@@ -116,7 +117,9 @@ object NopoMod : ModInitializer {
 
         ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
             for (module in modules) {
-                module.registerToggleCommand()?.register(dispatcher)
+                if (module is Module) {
+                    module.registerToggleCommand()?.register(dispatcher)
+                }
                 if (module is CommandRegistration) {
                     module.createCommand().register(dispatcher)
                 }

@@ -1,10 +1,10 @@
 package com.nopo.utils
 
 import com.nopo.events.TickEvent
-import com.nopo.module.Module
+import com.nopo.module.BaseModule
 import net.minecraft.client.Minecraft
 
-object DelayedRuns : Module("delayed run", needsToggle = false), TickEvent {
+object DelayedRuns : BaseModule("delayed run"), TickEvent {
 
     val map = mutableListOf<Pair<Runnable, Int>>()
     var currentTicks = 0

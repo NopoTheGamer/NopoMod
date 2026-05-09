@@ -2,7 +2,7 @@ package com.nopo.commands
 
 import com.github.stivais.commodore.Commodore
 import com.nopo.events.CommandRegistration
-import com.nopo.module.Module
+import com.nopo.module.BaseModule
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.append
 import com.nopo.utils.Utils.componentBuilder
@@ -10,7 +10,7 @@ import com.nopo.utils.Utils.hover
 import com.nopo.utils.Utils.url
 import net.minecraft.network.chat.Component
 
-object DiscordCommand : Module("discord command", needsToggle = false), CommandRegistration {
+object DiscordCommand : BaseModule("discord command"), CommandRegistration {
     override fun createCommand(): Commodore {
         return Commodore("nopo") {
             "discord" {

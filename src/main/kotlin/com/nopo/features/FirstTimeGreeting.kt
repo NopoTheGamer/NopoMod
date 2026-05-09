@@ -3,7 +3,7 @@ package com.nopo.features
 import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
 import com.nopo.events.IslandChange
-import com.nopo.module.Module
+import com.nopo.module.BaseModule
 import com.nopo.utils.IslandType
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.append
@@ -14,7 +14,7 @@ import com.nopo.utils.Utils.withColor
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 
-object FirstTImeGreeting : Module("first time join", needsToggle = false), IslandChange {
+object FirstTimeGreeting : BaseModule("first time join"), IslandChange {
     override fun onWorldSwap(newIsland: IslandType, oldIsland: IslandType) {
         if (NopoMod.config.firstTime && newIsland == IslandType.HUB) {
             NopoMod.config.firstTime = false

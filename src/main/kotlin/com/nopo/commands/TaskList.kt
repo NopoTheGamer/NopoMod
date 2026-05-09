@@ -1,13 +1,13 @@
 package com.nopo.commands
 
-import com.google.gson.annotations.Expose
-import com.nopo.module.Module
-import com.nopo.config.ModuleConfig
 import com.github.stivais.commodore.Commodore
 import com.github.stivais.commodore.utils.GreedyString
+import com.google.gson.annotations.Expose
 import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
+import com.nopo.config.ModuleConfig
 import com.nopo.events.CommandRegistration
+import com.nopo.module.BaseModule
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.append
 import com.nopo.utils.Utils.appendEmoji
@@ -19,9 +19,9 @@ import com.nopo.utils.Utils.withColor
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 
-object TaskList : Module("tasks", NopoMod.config.tasks, needsToggle = false), CommandRegistration {
+object TaskList : BaseModule("tasks"), CommandRegistration {
 
-    private fun getConfig() = config as TaskConfig
+    private fun getConfig() = NopoMod.config.tasks
 
     override fun createCommand(): Commodore {
         return Commodore("nopo") {

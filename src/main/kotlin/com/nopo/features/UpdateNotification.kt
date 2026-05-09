@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.nopo.NopoMod
 import com.nopo.data.Version
 import com.nopo.events.SkyblockFirstJoin
-import com.nopo.module.Module
+import com.nopo.module.BaseModule
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.append
 import com.nopo.utils.Utils.appendEmoji
@@ -14,7 +14,7 @@ import com.nopo.utils.Utils.withColor
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 
-object UpdateNotification : Module("update notification", needsToggle = false), SkyblockFirstJoin {
+object UpdateNotification : BaseModule("update notification"), SkyblockFirstJoin {
     override fun onSkyblockFirstJoin() {
         val updateNotification = NopoMod.data?.updateNotification ?: return
         val latestVersion = updateNotification.latestVersion ?: return
