@@ -6,6 +6,7 @@ import com.nopo.config.ConfigManager
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.debug.DebugScreenDisplayer
 import net.minecraft.client.gui.components.debug.DebugScreenEntries
 import net.minecraft.client.gui.components.debug.DebugScreenEntry
@@ -506,5 +507,11 @@ object Utils {
 
     fun Regex.group(input: String, group: String): String? {
         return this.matchEntire(input)?.groups[group]?.value
+    }
+
+    fun drawCenteredText(context: GuiGraphics, text: Component, x: Int, y: Int) {
+        val font = Minecraft.getInstance().font
+        val x = Minecraft.getInstance().window.guiScaledWidth / 2 - font.width(text) / 2 + x
+        context.drawString(font, text, x, y, -1)
     }
 }

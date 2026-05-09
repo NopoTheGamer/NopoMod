@@ -2,6 +2,7 @@ package com.nopo.screens
 
 import com.nopo.config.ConfigManager
 import com.nopo.utils.Position
+import com.nopo.utils.Utils
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.input.CharacterEvent
@@ -17,12 +18,20 @@ class GuiEditor(val pos: Position, val runnable: (GuiGraphics) -> Unit) : Screen
     var firstX = pos.x
     var firstY = pos.y
 
-    // TODO write centered text and put some here
+    val tips = listOf(
+        Component.literal("Gui Editor"),
+        Component.literal("Click to place element"),
+        Component.literal("Scroll to rescale element"),
+        Component.literal("Click r to reset scale to 1"),
+    )
 
-    override fun render(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
-        super.render(guiGraphics, i, j, f)
-        pos.render(guiGraphics) {
-            runnable(guiGraphics)
+    override fun render(context: GuiGraphics, mouseX: Int, mouseY: Int, f: Float) {
+        super.render(context, mouseX, mouseY, f)
+        for ((index, component) in tips.withIndex()) {
+            Utils.drawCenteredText(context, component, 0, 10 + index * 10)
+        }
+        pos.render(context) {
+            runnable(context)
         }
     }
 
