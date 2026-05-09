@@ -110,5 +110,5 @@ class EquipmentDisplayConfig : ModuleConfig() {
     val pos = Position(540, 405)
 
     @Expose
-    var showArmor = true
+    var showArmor = false
 }
