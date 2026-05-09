@@ -98,7 +98,7 @@ object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay), Comm
     }
 
     override fun onTick(totalTicks: Int) {
-        if (TabWidget.PET.lines.isEmpty() || (!getConfig().enabled && !getConfig().chatMessage)) {
+        if (TabWidget.PET.lines.size < 2 || (!getConfig().enabled && !getConfig().chatMessage)) {
             display = null
             return
         }
