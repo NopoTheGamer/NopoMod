@@ -52,7 +52,4 @@ class Config {
     @Expose
     var debug = ModuleConfig(false)
 
-    // dont try saving stuff here
-    var dummyConfig = ModuleConfig()
-
 }
