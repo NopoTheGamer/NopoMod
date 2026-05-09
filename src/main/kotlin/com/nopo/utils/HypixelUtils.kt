@@ -3,6 +3,7 @@ package com.nopo.utils
 import com.nopo.NopoMod
 import com.nopo.events.IslandChange
 import com.nopo.events.ScoreboardChange
+import com.nopo.events.SkyblockFirstJoin
 import com.nopo.events.TickEvent
 import com.nopo.events.WorldChange
 import com.nopo.module.Module
@@ -26,6 +27,7 @@ object HypixelUtils : Module("hypixel utils", needsToggle = false), TickEvent, W
     private var inSkyblock = false
     var tablist: List<Component> = emptyList()
         private set
+    private var hasBeenOnSkyblock = false
 
     init {
         HypixelModAPI.getInstance().createHandler<ClientboundLocationPacket?>(
@@ -93,7 +95,8 @@ object HypixelUtils : Module("hypixel utils", needsToggle = false), TickEvent, W
         val players = Minecraft.getInstance().connection?.onlinePlayers?.sortedWith(PlayerTabOverlay.PLAYER_COMPARATOR)?.mapNotNull { it.tabListDisplayName }
         if (players != null) {
             tablist = players
-            TabWidget.updateWidgets(tablist)
+            if (onSkyblock()) TabWidget.updateWidgets(tablist)
+            else TabWidget.reset()
         }
 
         if (new != scoreboardLines) {
@@ -107,6 +110,13 @@ object HypixelUtils : Module("hypixel utils", needsToggle = false), TickEvent, W
                 }
             }
         }
+
+        if (!hasBeenOnSkyblock && onSkyblock()) {
+            for (module in NopoMod.modules) {
+                if (module is SkyblockFirstJoin) module.onSkyblockFirstJoin()
+            }
+            hasBeenOnSkyblock = true
+        }
     }
 
     override fun onWorldChange() {
@@ -118,5 +128,6 @@ object HypixelUtils : Module("hypixel utils", needsToggle = false), TickEvent, W
         map = null
         inSkyblock = false
         currentIsland = IslandType.UNKNOWN
+        TabWidget.reset()
     }
 }

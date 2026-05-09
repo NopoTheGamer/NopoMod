@@ -28,7 +28,10 @@ import com.nopo.features.emoji.EmojiReplace
 import com.nopo.features.garden.RareCropTracker
 import com.nopo.features.slayer.BossesSinceDrop
 import com.nopo.module.Module
-import com.nopo.utils.Data
+import com.nopo.data.Data
+import com.nopo.data.Version
+import com.nopo.data.Version.Companion.toVersion
+import com.nopo.features.UpdateNotification
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Utils
@@ -39,6 +42,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientWorldEvents
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements
+import net.fabricmc.loader.api.FabricLoader
 import net.hypixel.modapi.HypixelModAPI
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket
 import net.minecraft.client.DeltaTracker
@@ -64,6 +68,14 @@ object NopoMod : ModInitializer {
     var screenToOpen: Screen? = null
     var screenTicks = 0
 
+    val CURRENT_VERSION = FabricLoader.getInstance()
+        .getModContainer("nopo")
+        .get()
+        .metadata
+        .version
+        .toString()
+        .toVersion() ?: Version(1, 0, 0)
+
 
     override fun onInitialize() {
         config = ConfigManager.init()
@@ -87,6 +99,7 @@ object NopoMod : ModInitializer {
             EquipmentDisplay,
             PetDisplay,
             DiscordCommand,
+            UpdateNotification,
         )
 
         if (config.useLocalJson != true) {

@@ -4,8 +4,8 @@ import com.nopo.NopoMod
 import com.nopo.events.ModifyChat
 import com.nopo.module.Module
 import com.nopo.utils.HypixelUtils
-import com.nopo.utils.Utils
 import com.nopo.utils.Utils.append
+import com.nopo.utils.Utils.appendEmoji
 import com.nopo.utils.Utils.cleanColor
 import com.nopo.utils.Utils.command
 import com.nopo.utils.Utils.componentBuilder
@@ -32,7 +32,7 @@ object PartyFinderKickButton : Module("partyFinderKickButton", NopoMod.config.pa
             append(message)
             append {
                 append(" [")
-                append(Utils.createEmoji("x")) {
+                appendEmoji("x") {
                     withColor(ChatFormatting.WHITE)
                 }
                 append("]")

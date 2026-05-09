@@ -10,6 +10,7 @@ import com.nopo.config.ConfigManager
 import com.nopo.events.CommandRegistration
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.append
+import com.nopo.utils.Utils.appendEmoji
 import com.nopo.utils.Utils.command
 import com.nopo.utils.Utils.componentBuilder
 import com.nopo.utils.Utils.hover
@@ -67,7 +68,7 @@ object TaskList : Module("tasks", NopoMod.config.tasks, needsToggle = false), Co
                                 append(" ")
                                 append {
                                     append("[")
-                                    append(Utils.createEmoji("repeat")) {
+                                    appendEmoji("repeat") {
                                         withColor(ChatFormatting.WHITE)
                                     }
                                     append("]")
@@ -84,7 +85,7 @@ object TaskList : Module("tasks", NopoMod.config.tasks, needsToggle = false), Co
                         getConfig().tasks.clear()
                         Utils.sendMessageToPlayer(componentBuilder {
                             append("Deleted every task ")
-                            append(Utils.createEmoji("frowning"))
+                            appendEmoji("frowning")
                         })
                         ConfigManager.save()
                     }
@@ -111,7 +112,7 @@ object TaskList : Module("tasks", NopoMod.config.tasks, needsToggle = false), Co
             append(" ")
             append {
                 append("[")
-                append(Utils.createEmoji("x")) {
+                appendEmoji("x") {
                     withColor(ChatFormatting.WHITE)
                 }
                 append("]")

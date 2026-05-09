@@ -4,6 +4,7 @@ import com.github.stivais.commodore.Commodore
 import com.nopo.module.Module
 import com.nopo.events.CommandRegistration
 import com.nopo.utils.Utils
+import com.nopo.utils.Utils.appendEmoji
 
 object SixSeven : Module("sixseven", needsToggle = false), CommandRegistration {
 
@@ -13,7 +14,7 @@ object SixSeven : Module("sixseven", needsToggle = false), CommandRegistration {
                 runs {
                     Utils.sendMessageToPlayer(Utils.componentBuilder {
                         append("really... ")
-                        append(Utils.createEmoji("upside_down"))
+                        appendEmoji("upside_down")
                     })
                 }
             }

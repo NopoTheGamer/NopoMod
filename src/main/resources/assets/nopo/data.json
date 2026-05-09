@@ -4,5 +4,9 @@
   ],
   "emojiName": {
     "9006e774-9e2b-4f68-952b-ab6b4c1dd412": "tropical_fish"
+  },
+  "updateNotification": {
+    "latestVersion": "1.1.1",
+    "download": ""
   }
 }

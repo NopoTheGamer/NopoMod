@@ -16,6 +16,7 @@ import com.nopo.utils.HypixelUtils
 import com.nopo.utils.IslandType
 import com.nopo.utils.Position
 import com.nopo.utils.Utils
+import com.nopo.utils.Utils.appendEmoji
 import com.nopo.utils.Utils.componentBuilder
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -37,7 +38,7 @@ object AshwreathReminder : Module("ashwreath", NopoMod.config.ashwreath), TickEv
          if (shouldTell()) {
              display = componentBuilder {
                  append(Utils.themedGradient("Ashwreath Collection Time! "))
-                 append(Utils.createEmoji("money_mouth"))
+                 appendEmoji("money_mouth")
              }
          } else {
             display = null

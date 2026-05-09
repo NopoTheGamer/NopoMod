@@ -5,6 +5,7 @@ import com.nopo.NopoMod
 import com.nopo.events.CommandRegistration
 import com.nopo.module.Module
 import com.nopo.utils.Utils
+import com.nopo.utils.Utils.appendEmoji
 import com.nopo.utils.Utils.command
 import com.nopo.utils.Utils.componentBuilder
 import com.nopo.utils.Utils.hover
@@ -23,9 +24,9 @@ object ListConfigCommand : Module("list config", needsToggle = false), CommandRe
                             componentBuilder {
                                 append("${module.moduleName} ")
                                 if (module.config.enabled) {
-                                    append(Utils.createEmoji("white_check_mark"))
+                                    appendEmoji("white_check_mark")
                                 } else {
-                                    append(Utils.createEmoji("x"))
+                                    appendEmoji("x")
                                 }
                                 command = "/nopo feature ${module.moduleName}"
                                 hover = Component.literal("Click to toggle")

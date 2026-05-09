@@ -3,6 +3,8 @@ package com.nopo.config
 import com.google.gson.GsonBuilder
 import com.google.gson.stream.JsonReader
 import com.nopo.NopoMod
+import com.nopo.data.Version
+import com.nopo.data.VersionTypeAdapter
 import com.nopo.utils.Utils
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.Minecraft
@@ -20,7 +22,11 @@ object ConfigManager {
 
     val configFolder = File(FabricLoader.getInstance().configDir.toFile(), "nopo")
     val configFile = File(configFolder, "config.json")
-    val gson = GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create()
+    val gson = GsonBuilder()
+        .setPrettyPrinting()
+        .excludeFieldsWithoutExposeAnnotation()
+        .registerTypeAdapter(Version::class.java, VersionTypeAdapter())
+        .create()
 
     fun init(): Config {
         configFolder.mkdirs()

@@ -188,6 +188,10 @@ object Utils {
         return this.append(comp.copyIfNeeded().also(init))
     }
 
+    fun MutableComponent.appendEmoji(emoji: String, init: MutableComponent.() -> Unit = {}): MutableComponent {
+        return this.append(createEmoji(emoji).also { withColor(ChatFormatting.WHITE) }.also(init))
+    }
+
     fun MutableComponent.appendWithColor(string: String = "", color: Int, init: MutableComponent.() -> Unit = {}): MutableComponent {
         return this.append(Component.literal(string).withColor(color).also(init))
     }
@@ -255,7 +259,7 @@ object Utils {
 
     val guiIdentifier = Identifier.withDefaultNamespace("gui")
 
-    fun createEmoji(name: String): Component {
+    fun createEmoji(name: String): MutableComponent {
         val emoji = Identifier.fromNamespaceAndPath(NopoMod.MOD_ID, name)
         return Component.`object`(AtlasSprite(guiIdentifier, emoji))
     }
