@@ -50,6 +50,9 @@ class Config {
     var petDisplay = PetConfig()
 
     @Expose
+    var powderCoatingHider = ModuleConfig()
+
+    @Expose
     var debug = ModuleConfig(false)
 
 }

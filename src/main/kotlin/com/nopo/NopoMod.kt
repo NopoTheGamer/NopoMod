@@ -7,6 +7,9 @@ import com.nopo.commands.SixSeven
 import com.nopo.commands.TaskList
 import com.nopo.config.Config
 import com.nopo.config.ConfigManager
+import com.nopo.data.Data
+import com.nopo.data.Version
+import com.nopo.data.Version.Companion.toVersion
 import com.nopo.events.AllowChat
 import com.nopo.events.ChatEvent
 import com.nopo.events.CommandRegistration
@@ -15,24 +18,22 @@ import com.nopo.events.GuiRendering
 import com.nopo.events.ModifyChat
 import com.nopo.events.TickEvent
 import com.nopo.events.WorldChange
-import com.nopo.features.garden.AshwreathReminder
 import com.nopo.features.DebugModule
 import com.nopo.features.EquipmentDisplay
 import com.nopo.features.FirstTimeGreeting
 import com.nopo.features.OverflowPetLevels
 import com.nopo.features.PartyFinderKickButton
 import com.nopo.features.PetDisplay
+import com.nopo.features.UpdateNotification
 import com.nopo.features.WokeName
 import com.nopo.features.emoji.EmojiName
 import com.nopo.features.emoji.EmojiReplace
+import com.nopo.features.garden.AshwreathReminder
 import com.nopo.features.garden.RareCropTracker
+import com.nopo.features.mining.PowderCoatingParticleHider
 import com.nopo.features.slayer.BossesSinceDrop
-import com.nopo.module.FeatureModule
-import com.nopo.data.Data
-import com.nopo.data.Version
-import com.nopo.data.Version.Companion.toVersion
-import com.nopo.features.UpdateNotification
 import com.nopo.module.BaseModule
+import com.nopo.module.FeatureModule
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Utils
@@ -101,6 +102,7 @@ object NopoMod : ModInitializer {
             PetDisplay,
             DiscordCommand,
             UpdateNotification,
+            PowderCoatingParticleHider,
         )
 
         if (config.useLocalJson != true) {

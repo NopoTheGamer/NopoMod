@@ -13,8 +13,9 @@
     "requireAnnotations": true
   },
   "client": [
+    "MixinClientPacketListener",
     "MixinCommandSuggestions",
     "MixinSuggestionsList",
     "accessor.AccessorCommandSuggestions"
-	]
+  ]
 }
