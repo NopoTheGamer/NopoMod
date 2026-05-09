@@ -9,7 +9,7 @@ import com.nopo.events.CommandRegistration
 import com.nopo.events.GuiRendering
 import com.nopo.events.IslandChange
 import com.nopo.events.TickEvent
-import com.nopo.module.Module
+import com.nopo.module.FeatureModule
 import com.nopo.screens.GuiEditor
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
@@ -28,7 +28,7 @@ import java.time.LocalTime
 import java.time.ZoneId
 
 
-object AshwreathReminder : Module("ashwreath", NopoMod.config.ashwreath), TickEvent, GuiRendering, IslandChange, CommandRegistration {
+object AshwreathReminder : FeatureModule("ashwreath", NopoMod.config.ashwreath), TickEvent, GuiRendering, IslandChange, CommandRegistration {
 
     private fun getConfig() = config as AshwreathConfig
     private var display: Component? = null

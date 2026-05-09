@@ -9,7 +9,7 @@ import com.nopo.utils.Utils
 import com.nopo.utils.Utils.withColor
 import net.minecraft.ChatFormatting
 
-open class Module(
+open class FeatureModule(
     moduleName: String,
     @Expose var config: ModuleConfig = NopoMod.config.dummyConfig,
     dev: Boolean = false

@@ -9,7 +9,7 @@ import com.nopo.config.ModuleConfig
 import com.nopo.events.CommandRegistration
 import com.nopo.events.GuiRendering
 import com.nopo.events.TickEvent
-import com.nopo.module.Module
+import com.nopo.module.FeatureModule
 import com.nopo.screens.GuiEditor
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Position
@@ -29,7 +29,7 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import java.util.Locale
 
-object PetDisplay : Module("petDisplay", NopoMod.config.petDisplay), CommandRegistration, GuiRendering, TickEvent {
+object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay), CommandRegistration, GuiRendering, TickEvent {
 
     private fun getConfig() = config as PetConfig
     private var display: List<Component>? = null

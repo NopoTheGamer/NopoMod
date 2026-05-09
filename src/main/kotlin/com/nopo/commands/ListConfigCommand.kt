@@ -4,7 +4,7 @@ import com.github.stivais.commodore.Commodore
 import com.nopo.NopoMod
 import com.nopo.events.CommandRegistration
 import com.nopo.module.BaseModule
-import com.nopo.module.Module
+import com.nopo.module.FeatureModule
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.appendEmoji
 import com.nopo.utils.Utils.command
@@ -19,7 +19,7 @@ object ListConfigCommand : BaseModule("list config"), CommandRegistration {
                 runs {
                     Utils.sendMessageToPlayer("Current Config:")
                     for (module in NopoMod.modules) {
-                        if (module !is Module) continue
+                        if (module !is FeatureModule) continue
                         if (module.dev && !Utils.isDevAllowed()) continue
                         Utils.sendMessageToPlayer(
                             componentBuilder {

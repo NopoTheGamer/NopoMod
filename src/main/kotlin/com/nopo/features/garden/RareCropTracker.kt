@@ -5,7 +5,7 @@ import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
 import com.nopo.config.ModuleConfig
 import com.nopo.events.ChatEvent
-import com.nopo.module.Module
+import com.nopo.module.FeatureModule
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.IslandType
@@ -16,7 +16,7 @@ import com.nopo.utils.Utils.format
 import net.minecraft.network.chat.Component
 import kotlin.time.Duration.Companion.milliseconds
 
-object RareCropTracker : Module("rareCropTracker", NopoMod.config.rareCrop), ChatEvent {
+object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCrop), ChatEvent {
 
     private fun getConfig() = config as RareCropConfig
 

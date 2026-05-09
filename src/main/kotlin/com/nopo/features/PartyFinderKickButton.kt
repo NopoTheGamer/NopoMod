@@ -2,7 +2,7 @@ package com.nopo.features
 
 import com.nopo.NopoMod
 import com.nopo.events.ModifyChat
-import com.nopo.module.Module
+import com.nopo.module.FeatureModule
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Utils.append
 import com.nopo.utils.Utils.appendEmoji
@@ -14,7 +14,7 @@ import com.nopo.utils.Utils.withColor
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 
-object PartyFinderKickButton : Module("partyFinderKickButton", NopoMod.config.partyFinderKickButton), ModifyChat {
+object PartyFinderKickButton : FeatureModule("partyFinderKickButton", NopoMod.config.partyFinderKickButton), ModifyChat {
 
     private val pfRegex = Regex("Party Finder > (?<name>[a-zA-Z0-9_]+) joined the (?:dungeon )?group! \\((?<class>[a-zA-Z]+) Level \\d+\\)")
 

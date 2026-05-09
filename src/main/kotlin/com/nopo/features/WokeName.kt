@@ -1,15 +1,14 @@
 package com.nopo.features
 
-import com.nopo.module.Module
+import com.nopo.module.FeatureModule
 import com.nopo.NopoMod
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.componentBuilder
 import com.nopo.utils.Utils.replace
-import com.nopo.config.ModuleConfig
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents
 import java.awt.Color
 
-object WokeName : Module("woke", NopoMod.config.wokeConfig, dev = true) {
+object WokeName : FeatureModule("woke", NopoMod.config.wokeConfig, dev = true) {
 
     val nameComp by lazy {
         componentBuilder {

@@ -27,7 +27,7 @@ import com.nopo.features.emoji.EmojiName
 import com.nopo.features.emoji.EmojiReplace
 import com.nopo.features.garden.RareCropTracker
 import com.nopo.features.slayer.BossesSinceDrop
-import com.nopo.module.Module
+import com.nopo.module.FeatureModule
 import com.nopo.data.Data
 import com.nopo.data.Version
 import com.nopo.data.Version.Companion.toVersion
@@ -117,7 +117,7 @@ object NopoMod : ModInitializer {
 
         ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
             for (module in modules) {
-                if (module is Module) {
+                if (module is FeatureModule) {
                     module.registerToggleCommand()?.register(dispatcher)
                 }
                 if (module is CommandRegistration) {

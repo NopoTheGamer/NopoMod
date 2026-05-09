@@ -8,7 +8,7 @@ import com.nopo.config.ModuleConfig
 import com.nopo.events.CommandRegistration
 import com.nopo.events.GuiRendering
 import com.nopo.events.TickEvent
-import com.nopo.module.Module
+import com.nopo.module.FeatureModule
 import com.nopo.screens.GuiEditor
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Position
@@ -20,7 +20,7 @@ import net.minecraft.client.gui.screens.inventory.ContainerScreen
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 
-object EquipmentDisplay : Module("equipmentDisplay", NopoMod.config.equipmentDisplay), GuiRendering,
+object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equipmentDisplay), GuiRendering,
     CommandRegistration, TickEvent {
 
     private fun getConfig() = config as EquipmentDisplayConfig

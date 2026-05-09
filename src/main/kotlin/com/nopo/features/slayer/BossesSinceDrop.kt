@@ -6,7 +6,7 @@ import com.nopo.config.ConfigManager
 import com.nopo.config.ModuleConfig
 import com.nopo.events.ChatEvent
 import com.nopo.events.WorldChange
-import com.nopo.module.Module
+import com.nopo.module.FeatureModule
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Utils
@@ -14,7 +14,7 @@ import com.nopo.utils.Utils.cleanColor
 import com.nopo.utils.Utils.componentBuilder
 import net.minecraft.network.chat.Component
 
-object BossesSinceDrop : Module("killsSinceSlayerDrop", NopoMod.config.bossesSinceDrop), ChatEvent, WorldChange {
+object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bossesSinceDrop), ChatEvent, WorldChange {
 
     private fun getConfig() = config as BossesSinceDropConfig
 
