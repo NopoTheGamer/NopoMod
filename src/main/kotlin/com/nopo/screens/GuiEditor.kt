@@ -17,6 +17,7 @@ class GuiEditor(val pos: Position, val runnable: (GuiGraphics) -> Unit) : Screen
 
     var firstX = pos.x
     var firstY = pos.y
+    var firstScale = pos.scale
 
     val tips = listOf(
         Component.literal("Gui Editor"),
@@ -46,6 +47,7 @@ class GuiEditor(val pos: Position, val runnable: (GuiGraphics) -> Unit) : Screen
         if (mouseEvent.button() != 0) return false
         firstX = mouseEvent.x().toInt()
         firstY = mouseEvent.y().toInt()
+        firstScale = pos.scale
         onClose()
         return true
     }
@@ -67,6 +69,7 @@ class GuiEditor(val pos: Position, val runnable: (GuiGraphics) -> Unit) : Screen
     override fun onClose() {
         pos.x = firstX
         pos.y = firstY
+        pos.scale = firstScale
         ConfigManager.save()
         super.onClose()
     }
