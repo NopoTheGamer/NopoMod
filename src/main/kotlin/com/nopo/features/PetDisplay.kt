@@ -8,6 +8,7 @@ import com.nopo.config.ConfigManager
 import com.nopo.config.ModuleConfig
 import com.nopo.events.CommandRegistration
 import com.nopo.events.GuiRendering
+import com.nopo.events.ListCommandExtras
 import com.nopo.events.TickEvent
 import com.nopo.module.FeatureModule
 import com.nopo.screens.GuiEditor
@@ -18,10 +19,13 @@ import com.nopo.utils.TabWidget
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.addSeparators
 import com.nopo.utils.Utils.append
+import com.nopo.utils.Utils.appendEmoji
+import com.nopo.utils.Utils.command
 import com.nopo.utils.Utils.componentBuilder
 import com.nopo.utils.Utils.formatDouble
 import com.nopo.utils.Utils.formatInt
 import com.nopo.utils.Utils.group
+import com.nopo.utils.Utils.hover
 import com.nopo.utils.Utils.withColor
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
@@ -29,7 +33,7 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import java.util.Locale
 
-object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay), CommandRegistration, GuiRendering, TickEvent {
+object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay), CommandRegistration, GuiRendering, TickEvent, ListCommandExtras {
 
     private fun getConfig() = config as PetConfig
     private var display: List<Component>? = null
@@ -206,6 +210,33 @@ object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay), Comm
             } else {
                 append(nameMatch) {
                     withColor(ChatFormatting.RED)
+                }
+            }
+        }
+    }
+
+    override fun addListCommandData(): Component {
+        return componentBuilder {
+            append(Utils.createPositionEditorButton(moduleName))
+            append(" ")
+            appendEmoji("speech_balloon") {
+                command = "/nopo feature $moduleName chatMessage"
+                hover = componentBuilder {
+                    append("Click to toggle sending level up messages\n")
+                    append("i.e. ")
+                    append(Utils.chatPrefix)
+                    append {
+                        withColor(ChatFormatting.GREEN)
+                        append("Your ")
+                        append("Golden Dragon") {
+                            withColor(ChatFormatting.GOLD)
+                        }
+                        append(" leveled up to level ")
+                        append("257") {
+                            withColor(ChatFormatting.BLUE)
+                        }
+                        append("!")
+                    }
                 }
             }
         }

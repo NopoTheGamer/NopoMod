@@ -36,7 +36,7 @@ import kotlin.time.Duration.Companion.seconds
 
 object Utils {
 
-    private val chatPrefix = componentBuilder {
+    val chatPrefix = componentBuilder {
         append("[") {
             withColor(1279794)
         }
@@ -258,10 +258,16 @@ object Utils {
     }
 
     val guiIdentifier = Identifier.withDefaultNamespace("gui")
+    val itemsIdentifier = Identifier.withDefaultNamespace("items")
 
     fun createEmoji(name: String): MutableComponent {
         val emoji = Identifier.fromNamespaceAndPath(NopoMod.MOD_ID, name)
         return Component.`object`(AtlasSprite(guiIdentifier, emoji))
+    }
+
+    fun createItem(name: String): MutableComponent {
+        val emoji = Identifier.withDefaultNamespace("item/$name")
+        return Component.`object`(AtlasSprite(itemsIdentifier, emoji))
     }
 
     fun isDevAllowed(): Boolean {
@@ -517,5 +523,15 @@ object Utils {
         val font = Minecraft.getInstance().font
         val x = Minecraft.getInstance().window.guiScaledWidth / 2 - font.width(text) / 2 + x
         context.drawString(font, text, x, y, -1)
+    }
+
+    fun createPositionEditorButton(moduleName: String): Component {
+        return componentBuilder {
+            append(" ")
+            appendEmoji("left_right_arrow") {
+                command = "/nopo feature $moduleName setPos"
+                hover = Component.literal("Click to edit position")
+            }
+        }
     }
 }

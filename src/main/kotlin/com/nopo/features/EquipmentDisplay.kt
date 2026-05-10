@@ -7,21 +7,26 @@ import com.nopo.config.ConfigManager
 import com.nopo.config.ModuleConfig
 import com.nopo.events.CommandRegistration
 import com.nopo.events.GuiRendering
+import com.nopo.events.ListCommandExtras
 import com.nopo.events.TickEvent
 import com.nopo.module.FeatureModule
 import com.nopo.screens.GuiEditor
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Position
 import com.nopo.utils.Utils
+import com.nopo.utils.Utils.append
+import com.nopo.utils.Utils.command
 import com.nopo.utils.Utils.componentBuilder
+import com.nopo.utils.Utils.hover
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.inventory.ContainerScreen
+import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 
 object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equipmentDisplay), GuiRendering,
-    CommandRegistration, TickEvent {
+    CommandRegistration, TickEvent, ListCommandExtras {
 
     private fun getConfig() = config as EquipmentDisplayConfig
 
@@ -100,6 +105,17 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
             val stack = slots[index.value].item
             if (stack.item != Items.LIGHT_GRAY_STAINED_GLASS_PANE) {
                 equipment[index.index] = stack
+            }
+        }
+    }
+
+    override fun addListCommandData(): Component {
+        return componentBuilder {
+            append(Utils.createPositionEditorButton(moduleName))
+            append(" ")
+            append(Utils.createItem("copper_chestplate")) {
+                command = "/nopo feature $moduleName showArmour"
+                hover = Component.literal("Click to toggle showing armour in equipment display")
             }
         }
     }

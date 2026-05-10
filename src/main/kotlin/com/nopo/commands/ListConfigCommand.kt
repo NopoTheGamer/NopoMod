@@ -3,6 +3,7 @@ package com.nopo.commands
 import com.github.stivais.commodore.Commodore
 import com.nopo.NopoMod
 import com.nopo.events.CommandRegistration
+import com.nopo.events.ListCommandExtras
 import com.nopo.module.BaseModule
 import com.nopo.module.FeatureModule
 import com.nopo.utils.Utils
@@ -29,6 +30,7 @@ object ListConfigCommand : BaseModule("list config"), CommandRegistration {
                                 } else {
                                     appendEmoji("x")
                                 }
+                                if (module is ListCommandExtras) append(module.addListCommandData())
                                 command = "/nopo feature ${module.moduleName}"
                                 hover = Component.literal("Click to toggle")
                             }
