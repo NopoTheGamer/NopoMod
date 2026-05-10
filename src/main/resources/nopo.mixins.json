@@ -4,7 +4,8 @@
   "package": "com.nopo.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "MixinPlayerEntity"
+    "MixinPlayerEntity",
+    "MixinSkyHanniItemTracker"
   ],
   "injectors": {
     "defaultRequire": 1
