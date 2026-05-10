@@ -262,10 +262,7 @@ object Utils {
 
     fun createEmoji(name: String): MutableComponent {
         val emoji = Identifier.fromNamespaceAndPath(NopoMod.MOD_ID, name)
-        return componentBuilder {
-            append(Component.`object`(AtlasSprite(guiIdentifier, emoji)))
-            hover = Component.literal(name)
-        }.copy()
+        return Component.`object`(AtlasSprite(guiIdentifier, emoji))
     }
 
     fun createItem(name: String): MutableComponent {
