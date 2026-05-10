@@ -53,6 +53,9 @@ class Config {
     var powderCoatingHider = ModuleConfig()
 
     @Expose
+    var skyhanniTrackerTotem = ModuleConfig(false)
+
+    @Expose
     var debug = ModuleConfig(false)
 
 }

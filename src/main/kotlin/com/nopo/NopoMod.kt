@@ -24,6 +24,7 @@ import com.nopo.features.FirstTimeGreeting
 import com.nopo.features.OverflowPetLevels
 import com.nopo.features.PartyFinderKickButton
 import com.nopo.features.PetDisplay
+import com.nopo.features.SkyHanniTrackerTitleTotemItem
 import com.nopo.features.UpdateNotification
 import com.nopo.features.WokeName
 import com.nopo.features.emoji.EmojiName
@@ -82,6 +83,17 @@ object NopoMod : ModInitializer {
     override fun onInitialize() {
         config = ConfigManager.init()
         ConfigManager.save()
+
+        if (config.useLocalJson != true) {
+            try {
+                val json = URL.of(URI.create(DATA_JSON), null).readText()
+                data = ConfigManager.gson.fromJson<Data>(JsonReader(StringReader(json)), Data::class.java)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        if (data == null) data = Utils.getJsonFromJar<Data>("data.json")
+
         modules = listOf(
             WokeName,
             SixSeven,
@@ -103,17 +115,8 @@ object NopoMod : ModInitializer {
             DiscordCommand,
             UpdateNotification,
             PowderCoatingParticleHider,
+            SkyHanniTrackerTitleTotemItem,
         )
-
-        if (config.useLocalJson != true) {
-            try {
-                val json = URL.of(URI.create(DATA_JSON), null).readText()
-                data = ConfigManager.gson.fromJson<Data>(JsonReader(StringReader(json)), Data::class.java)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-        if (data == null) data = Utils.getJsonFromJar<Data>("data.json")
 
         HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket::class.java)
 

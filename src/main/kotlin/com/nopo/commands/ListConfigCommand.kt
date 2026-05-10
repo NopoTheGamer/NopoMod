@@ -21,7 +21,7 @@ object ListConfigCommand : BaseModule("list config"), CommandRegistration {
                     Utils.sendMessageToPlayer("Current Config:")
                     for (module in NopoMod.modules) {
                         if (module !is FeatureModule) continue
-                        if (module.dev && !Utils.isDevAllowed()) continue
+                        if (module.shouldBeHidden()) continue
                         Utils.sendMessageToPlayer(
                             componentBuilder {
                                 append("${module.moduleName} ")

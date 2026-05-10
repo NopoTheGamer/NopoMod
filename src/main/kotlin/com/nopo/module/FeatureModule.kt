@@ -11,11 +11,11 @@ import net.minecraft.ChatFormatting
 open class FeatureModule(
     moduleName: String,
     @Expose var config: ModuleConfig,
-    dev: Boolean = false
-) : BaseModule(moduleName, dev) {
+    shouldBeHidden: () -> Boolean = { false }
+) : BaseModule(moduleName, shouldBeHidden) {
 
     open fun registerToggleCommand(): Commodore? {
-        if (dev && !Utils.isDevAllowed()) return null
+        if (shouldBeHidden()) return null
         return Commodore("nopo") {
             literal("feature") {
                 literal(moduleName) {

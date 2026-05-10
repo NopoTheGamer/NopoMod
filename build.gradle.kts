@@ -51,8 +51,13 @@ dependencies {
 	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.2")
 	implementation("net.hypixel:mod-api:1.0.1")
 	modImplementation("maven.modrinth:hypixel-mod-api:1.0.1+build.1+mc1.21")
+
+	// for commands
 	implementation("com.github.Stivais:Commodore:1.0.0")
 	include("com.github.Stivais:Commodore:1.0.0")
+
+	// for a mixin into skyhanni, its not required
+	modCompileOnly("maven.modrinth:skyhanni:7.19.0")
 }
 
 tasks.processResources {

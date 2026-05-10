@@ -13,7 +13,7 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.ChatScreen
 import net.minecraft.network.chat.Component
 
-object DebugModule : FeatureModule("debug", NopoMod.config.debug, dev = true), IslandChange, ScoreboardChange, GuiRendering {
+object DebugModule : FeatureModule("debug", NopoMod.config.debug, shouldBeHidden = { !Utils.isDevAllowed() }), IslandChange, ScoreboardChange, GuiRendering {
 
     override fun onWorldSwap(newIsland: IslandType, oldIsland: IslandType) {
         if (!config.enabled) return
