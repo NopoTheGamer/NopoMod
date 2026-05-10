@@ -37,6 +37,51 @@ object ListConfigCommand : BaseModule("list config"), CommandRegistration {
                         )
                     }
                 }
+                "modules" {
+                    runs {
+                        val featureModules = mutableListOf<String>()
+                        val commandModules = mutableListOf<String>()
+                        val hiddenModules = mutableListOf<String>()
+                        val otherModules = mutableListOf<String>()
+                        for (module in NopoMod.modules) {
+                            if (module.shouldBeHidden()) {
+                                hiddenModules.add(module.moduleName)
+                            } else if (module is FeatureModule) {
+                                featureModules.add(module.moduleName)
+                            } else if (module is CommandRegistration) {
+                                commandModules.add(module.moduleName)
+                            } else {
+                                otherModules.add(module.moduleName)
+                            }
+                        }
+
+                        if (featureModules.isNotEmpty()) {
+                            Utils.sendMessageToPlayer("Features (${featureModules.size})")
+                            featureModules.forEach {
+                                Utils.sendMessageToPlayer(it)
+                            }
+                        }
+                        if (commandModules.isNotEmpty()) {
+                            Utils.sendMessageToPlayer("Commands (${commandModules.size})")
+                            commandModules.forEach {
+                                Utils.sendMessageToPlayer(it)
+                            }
+                        }
+                        if (otherModules.isNotEmpty()) {
+                            Utils.sendMessageToPlayer("Other Modules (${otherModules.size})")
+                            otherModules.forEach {
+                                Utils.sendMessageToPlayer(it)
+                            }
+                        }
+                        if (Utils.isDevAllowed() && hiddenModules.isNotEmpty()) {
+                            Utils.sendMessageToPlayer("Hidden Modules (${hiddenModules.size})")
+                            hiddenModules.forEach {
+                                Utils.sendMessageToPlayer(it)
+                            }
+                        }
+
+                    }
+                }
             }
         }
     }
