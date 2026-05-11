@@ -5,7 +5,6 @@ import com.nopo.commands.TaskConfig
 import com.nopo.features.EquipmentDisplayConfig
 import com.nopo.features.PetConfig
 import com.nopo.features.garden.AshwreathConfig
-import com.nopo.features.garden.RareCropConfig
 import com.nopo.features.slayer.BossesSinceDropConfig
 
 class Config {
@@ -32,7 +31,7 @@ class Config {
     var ashwreath = AshwreathConfig(false)
 
     @Expose
-    var rareCrop = RareCropConfig()
+    var rareCrop = ModuleConfig()
 
     @Expose
     var tasks = TaskConfig()

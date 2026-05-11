@@ -3,7 +3,6 @@ package com.nopo.features.garden
 import com.google.gson.annotations.Expose
 import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
-import com.nopo.config.ModuleConfig
 import com.nopo.events.ChatEvent
 import com.nopo.module.FeatureModule
 import com.nopo.utils.DelayedRuns
@@ -18,7 +17,7 @@ import kotlin.time.Duration.Companion.milliseconds
 
 object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCrop), ChatEvent {
 
-    private fun getConfig() = config as RareCropConfig
+    private fun getConfig() = NopoMod.rareCropConfig.cropConfig
 
     /*
     RARE CROP! Crystalized Moonlight
@@ -33,7 +32,7 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
     private val petDropRegex = Regex("PET DROP! (?<pet>\\w+) \\(\\+[0-9,]+☘\\)")
 
     override fun onChat(message: Component, actionBar: Boolean) {
-        if (!HypixelUtils.onSkyblock() || !getConfig().enabled) return
+        if (!HypixelUtils.onSkyblock() || !config.enabled) return
         if (!IslandType.GARDEN.isActive()) return
         val string = message.string.cleanColor()
 
@@ -82,14 +81,14 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
                 }
             }
         }
-        ConfigManager.save()
+        ConfigManager.saveRareCrops()
 
     }
 
 
 }
 
-class RareCropConfig : ModuleConfig() {
+class RareCropConfig {
     @Expose
     var dropTimes = mutableMapOf<String, MutableList<Long>>()
 }

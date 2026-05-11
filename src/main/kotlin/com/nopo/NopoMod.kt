@@ -7,6 +7,7 @@ import com.nopo.commands.SixSeven
 import com.nopo.commands.TaskList
 import com.nopo.config.Config
 import com.nopo.config.ConfigManager
+import com.nopo.config.RareCropConfigHolder
 import com.nopo.data.Data
 import com.nopo.data.Version
 import com.nopo.data.Version.Companion.toVersion
@@ -63,6 +64,7 @@ object NopoMod : ModInitializer {
 
     const val MOD_ID = "nopo"
     lateinit var config: Config
+    lateinit var rareCropConfig: RareCropConfigHolder
     var modules: List<BaseModule> = emptyList()
         private set
     private var ticks = 0
@@ -82,7 +84,9 @@ object NopoMod : ModInitializer {
 
     override fun onInitialize() {
         config = ConfigManager.init()
+        rareCropConfig = ConfigManager.initRareCrops()
         ConfigManager.save()
+        ConfigManager.saveRareCrops()
 
         if (config.useLocalJson != true) {
             try {

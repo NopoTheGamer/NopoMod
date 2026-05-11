@@ -22,6 +22,7 @@ object ConfigManager {
 
     val configFolder = File(FabricLoader.getInstance().configDir.toFile(), "nopo")
     val configFile = File(configFolder, "config.json")
+    val rareCropConfigFile = File(configFolder, "rareCropData.json")
     val gson = GsonBuilder()
         .setPrettyPrinting()
         .excludeFieldsWithoutExposeAnnotation()
@@ -37,6 +38,16 @@ object ConfigManager {
         return data
     }
 
+    // this is crap but i dont want to do some abstracted nonsense
+    fun initRareCrops(): RareCropConfigHolder {
+        configFolder.mkdirs()
+        rareCropConfigFile.createNewFile()
+        val reader = JsonReader(FileReader(rareCropConfigFile))
+        var data = gson.fromJson<RareCropConfigHolder>(reader, RareCropConfigHolder::class.java)
+        if (data == null) data = RareCropConfigHolder()
+        return data
+    }
+
     fun save() {
         val unit = configFolder.resolve("configField.json.temp")
         unit.createNewFile()
@@ -44,6 +55,15 @@ object ConfigManager {
             writer.write(gson.toJson(NopoMod.config))
         }
         move(unit, configFile)
+    }
+
+    fun saveRareCrops() {
+        val unit = configFolder.resolve("rareCropData.json.temp")
+        unit.createNewFile()
+        BufferedWriter(OutputStreamWriter(FileOutputStream(unit), StandardCharsets.UTF_8)).use { writer ->
+            writer.write(gson.toJson(NopoMod.rareCropConfig))
+        }
+        move(unit, rareCropConfigFile)
     }
 
     private fun move(source: File, target: File, count: Int = 0) {
