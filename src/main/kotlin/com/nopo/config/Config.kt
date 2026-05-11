@@ -5,6 +5,7 @@ import com.nopo.commands.TaskConfig
 import com.nopo.features.EquipmentDisplayConfig
 import com.nopo.features.garden.AshwreathConfig
 import com.nopo.features.pets.PetConfig
+import com.nopo.features.silly.ParrotConfig
 import com.nopo.features.slayer.BossesSinceDropConfig
 
 class Config {
@@ -53,6 +54,12 @@ class Config {
 
     @Expose
     var skyhanniTrackerTotem = ModuleConfig(false)
+
+    @Expose
+    var riftShenOutbid = ModuleConfig()
+
+    @Expose
+    var parrotConfig = ParrotConfig()
 
     @Expose
     var debug = ModuleConfig(false)

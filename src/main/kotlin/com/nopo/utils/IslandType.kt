@@ -4,6 +4,7 @@ enum class IslandType(val map: String, val mode: String) {
 
     HUB("Hub", "hub"),
     GARDEN("Garden", "garden"),
+    RIFT("The Rift", "rift"),
     UNKNOWN("null", "null"),
 
     ;
