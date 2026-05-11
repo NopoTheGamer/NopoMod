@@ -33,6 +33,7 @@ import com.nopo.features.meta.UpdateNotification
 import com.nopo.features.mining.PowderCoatingParticleHider
 import com.nopo.features.pets.OverflowPetLevels
 import com.nopo.features.pets.PetDisplay
+import com.nopo.features.rift.ShensOutbidNotification
 import com.nopo.features.silly.ParrotCommand
 import com.nopo.features.slayer.BossesSinceDrop
 import com.nopo.module.BaseModule
@@ -122,6 +123,7 @@ object NopoMod : ModInitializer {
             PowderCoatingParticleHider,
             SkyHanniTrackerTitleTotemItem,
             ParrotCommand,
+            ShensOutbidNotification,
         )
 
         HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket::class.java)

@@ -5,6 +5,7 @@ import net.minecraft.network.chat.Component
 enum class TabWidget(title: String) {
     PET("Pet:"),
     SKILLS("Skills:"),
+    SHENS("Shen: \\(.*\\)"),
     ;
 
     val regex = Regex(title)
