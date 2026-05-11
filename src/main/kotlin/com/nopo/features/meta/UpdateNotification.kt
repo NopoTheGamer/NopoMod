@@ -1,4 +1,4 @@
-package com.nopo.features
+package com.nopo.features.meta
 
 import com.google.gson.annotations.Expose
 import com.nopo.NopoMod

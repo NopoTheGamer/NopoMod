@@ -2,7 +2,7 @@ package com.nopo.data
 
 import com.google.gson.annotations.Expose
 import com.nopo.NopoMod
-import com.nopo.features.UpdateNotificationData
+import com.nopo.features.meta.UpdateNotificationData
 import java.util.UUID
 
 data class Data(

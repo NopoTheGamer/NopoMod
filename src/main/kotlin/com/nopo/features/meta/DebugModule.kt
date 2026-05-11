@@ -1,4 +1,4 @@
-package com.nopo.features
+package com.nopo.features.meta
 
 import com.nopo.NopoMod
 import com.nopo.events.GuiRendering

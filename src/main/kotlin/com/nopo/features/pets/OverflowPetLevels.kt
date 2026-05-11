@@ -1,9 +1,9 @@
-package com.nopo.features
+package com.nopo.features.pets
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.nopo.module.FeatureModule
 import com.nopo.NopoMod
+import com.nopo.module.FeatureModule
 import com.nopo.utils.Rarity
 import com.nopo.utils.Utils.append
 import com.nopo.utils.Utils.componentBuilder
