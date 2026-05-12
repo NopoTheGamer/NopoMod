@@ -3,6 +3,7 @@ package com.nopo
 import com.google.gson.stream.JsonReader
 import com.nopo.commands.DiscordCommand
 import com.nopo.commands.ListConfigCommand
+import com.nopo.commands.MainCommand
 import com.nopo.commands.SixSeven
 import com.nopo.commands.TaskList
 import com.nopo.config.Config
@@ -124,6 +125,7 @@ object NopoMod : ModInitializer {
             SkyHanniTrackerTitleTotemItem,
             ParrotCommand,
             ShensOutbidNotification,
+            MainCommand,
         )
 
         HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket::class.java)
