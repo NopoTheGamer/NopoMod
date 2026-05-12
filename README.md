@@ -12,8 +12,10 @@ I stole some of the features from other mods ive made in the past
 - /nopo feature ["feature name"]
   - Toggles that feature on/off
   - Some features have subcommands!
-- /nopo list
+- /nopo list <- use this as the config menu im too lazy to make one
   - Lists all the options and if they are on or off
+- /nopo parrot
+  - Gives you a client side parrot, how neat!
 
 [//]: # (<details>)
 
