@@ -6,14 +6,14 @@ I stole some of the features from other mods ive made in the past
 
 # Commands
 
-- /nopo tasks [add/remove/random/lists]
-  - Lets you create tasks in a "todo list"
-  - Let /nopo tasks random guide you into your next Skyblock activity!
+- /nopo list <- use this as the config menu im too lazy to make one
+  - Lists all the options and if they are on or off
 - /nopo feature ["feature name"]
   - Toggles that feature on/off
   - Some features have subcommands!
-- /nopo list <- use this as the config menu im too lazy to make one
-  - Lists all the options and if they are on or off
+- /nopo tasks [add/remove/random/lists]
+  - Lets you create tasks in a "todo list"
+  - Let /nopo tasks random guide you into your next Skyblock activity!
 - /nopo parrot
   - Gives you a client side parrot, how neat!
 
