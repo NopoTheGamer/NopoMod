@@ -5,6 +5,8 @@ import com.nopo.NopoMod
 import com.nopo.events.ModifyChat
 import com.nopo.module.FeatureModule
 import com.nopo.utils.Utils
+import com.nopo.utils.Utils.appendEmoji
+import com.nopo.utils.Utils.hover
 import com.nopo.utils.Utils.replace
 import net.minecraft.network.chat.Component
 import java.lang.reflect.Type
@@ -39,7 +41,11 @@ object EmojiReplace : FeatureModule("chatEmojis", NopoMod.config.chatEmojis), Mo
             for (part in split) {
                 for (emoji in emojis) {
                     if (emoji.isEmoji(part)) {
-                        component = component.replace(":$part:", Utils.createEmoji(emoji.name)) ?: continue
+                        val emojiComp = Utils.componentBuilder {
+                            appendEmoji(emoji.name)
+                            hover = Component.literal(emoji.name)
+                        }
+                        component = component.replace(":$part:", emojiComp) ?: continue
                         hasDone = true
                     }
                 }
