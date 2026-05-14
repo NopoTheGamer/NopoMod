@@ -32,6 +32,7 @@ object ShensOutbidNotification : FeatureModule("riftShenOutbidNotification", Nop
                             appendEmoji("rotating_light")
                         }
                     )
+                    break
                 }
             }
         }
