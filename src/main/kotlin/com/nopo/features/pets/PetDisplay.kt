@@ -107,8 +107,8 @@ object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay), Comm
             return
         }
         val temp = mutableListOf<Component>()
-        var level = 100
-        var overflowLevel = 100
+        var level = -1
+        var overflowLevel = -1
         var name = ""
         var rarity = Rarity.UNKNOWN
         var maxLevel = false
@@ -172,7 +172,9 @@ object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay), Comm
                 withColor(ChatFormatting.RED)
             }
         }
-        temp.add(1, generateCustomName(overflowLevel, level, nameComponent, name, rarity))
+        if (level != -1) {
+            temp.add(1, generateCustomName(overflowLevel, level, nameComponent, name, rarity))
+        }
 
         if (getConfig().chatMessage && name == currentPet && currentOverflowLevel + 1 == overflowLevel && maxLevel) {
             Utils.sendMessageToPlayer(
