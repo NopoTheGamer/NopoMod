@@ -37,8 +37,8 @@ public class MixinAvatarRenderer<AvatarlikeEntity extends Avatar & ClientAvatarE
 
     @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;bakeLayer(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;", ordinal = 0))
     private static ModelPart makeBabyPlayerModel(EntityRendererProvider.Context instance, ModelLayerLocation modelLayerLocation, Operation<ModelPart> original, @Local(argsOnly = true) EntityRendererProvider.Context context, @Local(argsOnly = true) boolean bl) {
-        SmallPlayers.setPLAYER_MODEL(new PlayerModel(context.bakeLayer(SmallPlayers.getPLAYER_BABY()), bl));
-        SmallPlayers.setPLAYER_MODEL_SLIM(new PlayerModel(context.bakeLayer(SmallPlayers.getPLAYER_BABY_SLIM()), bl));
+        SmallPlayers.setPLAYER_MODEL(new PlayerModel(context.bakeLayer(Objects.requireNonNull(SmallPlayers.getPLAYER_BABY())), bl));
+        SmallPlayers.setPLAYER_MODEL_SLIM(new PlayerModel(context.bakeLayer(Objects.requireNonNull(SmallPlayers.getPLAYER_BABY_SLIM())), bl));
         return original.call(instance, modelLayerLocation);
     }
 
