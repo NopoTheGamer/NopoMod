@@ -13,12 +13,14 @@ import com.nopo.utils.Utils.withColor
 import net.minecraft.ChatFormatting
 
 object ShensOutbidNotification : FeatureModule("riftShenOutbidNotification", NopoMod.config.riftShenOutbid), IslandChange {
+
+    val outbidRegex = Regex(" .*: Outbid")
+
     override fun onWorldSwap(newIsland: IslandType, oldIsland: IslandType) {
         if (newIsland != IslandType.RIFT) return
         DelayedRuns.schedule(400) {
             for (line in TabWidget.SHENS.lines) {
-                // have not tested this yet (lol)
-                if (line.string == " Outbid") {
+                if (line.string.matches(outbidRegex)) {
                     Utils.sendMessageToPlayer(
                         Utils.componentBuilder {
                             appendEmoji("rotating_light")
