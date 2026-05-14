@@ -36,6 +36,7 @@ import com.nopo.features.pets.OverflowPetLevels
 import com.nopo.features.pets.PetDisplay
 import com.nopo.features.rift.ShensOutbidNotification
 import com.nopo.features.silly.ParrotCommand
+import com.nopo.features.silly.SmallPlayers
 import com.nopo.features.slayer.BossesSinceDrop
 import com.nopo.module.BaseModule
 import com.nopo.module.FeatureModule
@@ -126,6 +127,7 @@ object NopoMod : ModInitializer {
             ParrotCommand,
             ShensOutbidNotification,
             MainCommand,
+            SmallPlayers,
         )
 
         HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket::class.java)

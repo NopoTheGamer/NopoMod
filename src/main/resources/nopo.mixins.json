@@ -17,6 +17,9 @@
     "MixinAvatarRenderer",
     "MixinClientPacketListener",
     "MixinCommandSuggestions",
+    "MixinLayerDefinitions",
+    "MixinLivingEntityRenderer",
+    "MixinModelLayers",
     "MixinSuggestionsList",
     "accessor.AccessorCommandSuggestions"
   ]
