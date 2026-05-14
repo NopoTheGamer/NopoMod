@@ -3,6 +3,7 @@ package com.nopo.features.silly
 import com.github.stivais.commodore.Commodore
 import com.google.gson.annotations.Expose
 import com.nopo.NopoMod
+import com.nopo.config.ConfigManager
 import com.nopo.config.ModuleConfig
 import com.nopo.events.CommandRegistration
 import com.nopo.module.FeatureModule
@@ -44,6 +45,7 @@ object SmallPlayers : FeatureModule("small", NopoMod.config.smallConfig), Comman
                                         append("big")
                                     }
                                     withColor(ChatFormatting.YELLOW)
+                                    ConfigManager.save()
                                 }
                             )
                         }
