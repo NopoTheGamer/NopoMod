@@ -7,6 +7,7 @@ import com.mojang.authlib.GameProfile;
 import com.nopo.NopoMod;
 import com.nopo.features.silly.Shoulder;
 import com.nopo.features.silly.SmallPlayers;
+import com.nopo.silly.layers.BabyCapeLayer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.ClientAvatarEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -50,6 +51,7 @@ public class MixinAvatarRenderer<AvatarlikeEntity extends Avatar & ClientAvatarE
                 ArmorModelSet.bake(Objects.requireNonNull(bl ? SmallPlayers.getPLAYER_BABY_SLIM_ARMOR() : SmallPlayers.getPLAYER_BABY_ARMOR()), context.getModelSet(), modelPart -> new PlayerModel(modelPart, bl)),
                 context.getEquipmentRenderer()
         );
+        original.call(instance, new BabyCapeLayer(instance, context.getModelSet(), context.getEquipmentAssets()));
         return original.call(instance, humanoidArmorLayer);
     }
 
