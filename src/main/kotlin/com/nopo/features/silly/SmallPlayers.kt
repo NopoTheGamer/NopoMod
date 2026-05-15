@@ -18,7 +18,7 @@ import net.minecraft.client.renderer.entity.ArmorModelSet
 
 object SmallPlayers : FeatureModule("small", NopoMod.config.smallConfig), CommandRegistration {
 
-    fun getConfig() = config as SmallConfig
+    private fun getConfig() = config as SmallConfig
 
     @JvmStatic var PLAYER_BABY_ARMOR: ArmorModelSet<ModelLayerLocation>? = null
     @JvmStatic var PLAYER_BABY: ModelLayerLocation? = null

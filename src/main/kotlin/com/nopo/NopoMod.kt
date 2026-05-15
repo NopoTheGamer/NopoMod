@@ -35,6 +35,7 @@ import com.nopo.features.mining.PowderCoatingParticleHider
 import com.nopo.features.pets.OverflowPetLevels
 import com.nopo.features.pets.PetDisplay
 import com.nopo.features.rift.ShensOutbidNotification
+import com.nopo.features.silly.BabyDollModel
 import com.nopo.features.silly.ParrotCommand
 import com.nopo.features.silly.SmallPlayers
 import com.nopo.features.slayer.BossesSinceDrop
@@ -128,6 +129,7 @@ object NopoMod : ModInitializer {
             ShensOutbidNotification,
             MainCommand,
             SmallPlayers,
+            BabyDollModel,
         )
 
         HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket::class.java)

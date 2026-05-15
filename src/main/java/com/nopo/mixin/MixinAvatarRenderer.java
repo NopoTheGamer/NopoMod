@@ -5,9 +5,11 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.authlib.GameProfile;
 import com.nopo.NopoMod;
+import com.nopo.features.silly.BabyDollModel;
 import com.nopo.features.silly.Shoulder;
 import com.nopo.features.silly.SmallPlayers;
 import com.nopo.silly.layers.BabyCapeLayer;
+import com.nopo.silly.layers.PlayerOnShoulderLayer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.ClientAvatarEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -52,6 +54,7 @@ public class MixinAvatarRenderer<AvatarlikeEntity extends Avatar & ClientAvatarE
                 context.getEquipmentRenderer()
         );
         original.call(instance, new BabyCapeLayer(instance, context.getModelSet(), context.getEquipmentAssets()));
+        original.call(instance, new PlayerOnShoulderLayer(instance, context.getModelSet(), context.getEquipmentAssets()));
         return original.call(instance, humanoidArmorLayer);
     }
 
@@ -61,7 +64,8 @@ public class MixinAvatarRenderer<AvatarlikeEntity extends Avatar & ClientAvatarE
         if (avatarRenderState.isInvisibleToPlayer) return;
         if (avatar instanceof AbstractClientPlayer entity) {
             GameProfile profile = entity.getGameProfile();
-            if (profile.id().equals(NopoMod.INSTANCE.getData().getDevs().getFirst())) {
+            boolean everyoneSmall = NopoMod.config.getSmallConfig().getEveryone();
+            if (!everyoneSmall && profile.id().equals(NopoMod.INSTANCE.getData().getDevs().getFirst())) {
                 avatarRenderState.parrotOnRightShoulder = Parrot.Variant.YELLOW_BLUE;
             }
             if (profile.id() == Minecraft.getInstance().player.getUUID()) {
@@ -69,6 +73,9 @@ public class MixinAvatarRenderer<AvatarlikeEntity extends Avatar & ClientAvatarE
                     avatarRenderState.isBaby = true;
                     avatarRenderState.ageScale = 0.5f;
                     avatarRenderState.setData(SmallPlayers.getKey(), true);
+                }
+                if (NopoMod.config.getBabyDollConfig().getEnabled()) {
+                    avatarRenderState.setData(BabyDollModel.getKey(), true);
                 }
                 Map<@NotNull Shoulder, Parrot.@Nullable Variant> parrotMap = NopoMod.config.getParrotConfig().getParrots();
                 if (parrotMap == null) return;
@@ -79,10 +86,13 @@ public class MixinAvatarRenderer<AvatarlikeEntity extends Avatar & ClientAvatarE
                     avatarRenderState.parrotOnRightShoulder = parrotMap.get(Shoulder.RIGHT);
                 }
             } else {
-                if (NopoMod.config.getSmallConfig().getEveryone()) {
+                if (everyoneSmall) {
                     avatarRenderState.isBaby = true;
                     avatarRenderState.ageScale = 0.5f;
                     avatarRenderState.setData(SmallPlayers.getKey(), true);
+                }
+                if (NopoMod.config.getBabyDollConfig().getEveryone()) {
+                    avatarRenderState.setData(BabyDollModel.getKey(), true);
                 }
             }
         }
