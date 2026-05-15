@@ -25,8 +25,8 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
      */
     private val rareCropRegex = Regex("(?:VERY )?RARE CROP! (?<crop>[a-zA-Z ]+) \\(\\+\\d+☀\\)( \\(automatically donated\\))?")
 
-    // PET DROP! Slug (+2,668☘)
-    private val petDropRegex = Regex("PET DROP! (?<pet>\\w+) \\(\\+[0-9,]+☘\\)")
+    // PET DROP! LEGENDARY Slug (+136☀)
+    private val petDropRegex = Regex("PET DROP! (?<pet>\\w+) \\(\\+[0-9,.]+☀\\)")
 
     override fun onChat(message: Component, actionBar: Boolean) {
         if (!HypixelUtils.onSkyblock() || !config.enabled) return
