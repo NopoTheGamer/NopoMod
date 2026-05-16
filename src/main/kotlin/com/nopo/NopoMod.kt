@@ -23,6 +23,7 @@ import com.nopo.events.WorldChange
 import com.nopo.features.EquipmentDisplay
 import com.nopo.features.SkyHanniTrackerTitleTotemItem
 import com.nopo.features.WokeName
+import com.nopo.features.combat.CocoonWarning
 import com.nopo.features.dungeons.PartyFinderKickButton
 import com.nopo.features.emoji.EmojiName
 import com.nopo.features.emoji.EmojiReplace
@@ -130,6 +131,7 @@ object NopoMod : ModInitializer {
             MainCommand,
             SmallPlayers,
             BabyDollModel,
+            CocoonWarning,
         )
 
         HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket::class.java)
