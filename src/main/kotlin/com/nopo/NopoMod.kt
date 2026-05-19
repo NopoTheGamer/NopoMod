@@ -12,14 +12,7 @@ import com.nopo.config.RareCropConfigHolder
 import com.nopo.data.Data
 import com.nopo.data.Version
 import com.nopo.data.Version.Companion.toVersion
-import com.nopo.events.AllowChat
-import com.nopo.events.ChatEvent
-import com.nopo.events.CommandRegistration
-import com.nopo.events.EntityNameEvent
-import com.nopo.events.GuiRendering
-import com.nopo.events.ModifyChat
-import com.nopo.events.TickEvent
-import com.nopo.events.WorldChange
+import com.nopo.events.FabricEvents
 import com.nopo.features.EquipmentDisplay
 import com.nopo.features.SkyHanniTrackerTitleTotemItem
 import com.nopo.features.WokeName
@@ -41,28 +34,13 @@ import com.nopo.features.silly.ParrotCommand
 import com.nopo.features.silly.SmallPlayers
 import com.nopo.features.slayer.BossesSinceDrop
 import com.nopo.module.BaseModule
-import com.nopo.module.FeatureModule
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.PartyApi
 import com.nopo.utils.Utils
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientWorldEvents
-import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents
-import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry
-import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements
 import net.fabricmc.loader.api.FabricLoader
-import net.hypixel.modapi.HypixelModAPI
-import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket
-import net.minecraft.client.DeltaTracker
-import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
-import net.minecraft.network.chat.Component
-import net.minecraft.resources.Identifier
-import net.minecraft.world.entity.player.Player
 import java.io.StringReader
 import java.net.URI
 import java.net.URL
@@ -74,11 +52,9 @@ object NopoMod : ModInitializer {
     lateinit var rareCropConfig: RareCropConfigHolder
     var modules: List<BaseModule> = emptyList()
         private set
-    private var ticks = 0
     private const val DATA_JSON = "https://raw.githubusercontent.com/NopoTheGamer/NopoMod/refs/heads/master/src/main/resources/assets/nopo/data.json"
     var data: Data? = null
     var screenToOpen: Screen? = null
-    var screenTicks = 0
 
     val CURRENT_VERSION = FabricLoader.getInstance()
         .getModContainer("nopo")
@@ -106,6 +82,7 @@ object NopoMod : ModInitializer {
         if (data == null) data = Utils.getJsonFromJar<Data>("data.json")
 
         modules = listOf(
+            FabricEvents,
             WokeName,
             SixSeven,
             EmojiReplace,
@@ -135,107 +112,5 @@ object NopoMod : ModInitializer {
             CocoonWarning,
             PartyApi,
         )
-
-        HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket::class.java)
-
-        ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
-            for (module in modules) {
-                if (module is FeatureModule) {
-                    module.registerToggleCommand()?.register(dispatcher)
-                }
-                if (module is CommandRegistration) {
-                    module.createCommand().register(dispatcher)
-                }
-            }
-        }
-
-        ClientTickEvents.END_CLIENT_TICK.register {
-            if (Minecraft.getInstance().player == null) return@register
-            if (Minecraft.getInstance().level == null) return@register
-
-            if (screenToOpen != null) {
-                screenTicks++
-                if (screenTicks == 5) {
-                    Minecraft.getInstance().setScreen(screenToOpen)
-                    screenTicks = 0
-                    screenToOpen = null
-                }
-            }
-
-            for (module in modules) {
-                if (module is TickEvent) {
-                    module.onTick(++ticks)
-                }
-            }
-        }
-
-        ClientWorldEvents.AFTER_CLIENT_WORLD_CHANGE.register { _, _ ->
-            for (module in modules) {
-                if (module is WorldChange) {
-                    module.onWorldChange()
-                }
-            }
-        }
-
-        HudElementRegistry.attachElementBefore(
-            VanillaHudElements.SLEEP,
-            Identifier.fromNamespaceAndPath(MOD_ID, "rendering")
-        ) { context: GuiGraphics, _: DeltaTracker ->
-            for (module in modules) {
-                if (module is GuiRendering) {
-                    module.render(context)
-                }
-            }
-        }
-
-        ClientReceiveMessageEvents.ALLOW_GAME.register { component, actionBar ->
-            var allowed = true
-            for (module in modules) {
-                if (module is ChatEvent) {
-                    module.onChat(component, actionBar)
-                }
-                if (module is AllowChat) {
-                    if (!module.onAllowChat(component, actionBar)) {
-                        allowed = false
-                    }
-                }
-            }
-            allowed
-        }
-
-        ClientReceiveMessageEvents.MODIFY_GAME.register { component, actionBar ->
-            var newComponent: Component = component.copy()
-            var hasChanged = false
-            for (module in modules) {
-                if (module is ModifyChat) {
-                    val newComp = module.onModifyChat(newComponent, actionBar)
-                    if (newComp != null) {
-                        newComponent = newComp
-                        hasChanged = true
-                    }
-                }
-            }
-            if (hasChanged) newComponent
-            else component
-        }
     }
-
-    @JvmStatic
-    fun postEntityEvent(entity: Player, original: Component): Component? {
-        var newComponent: Component = original.copy()
-        var hasChanged = false
-        for (module in modules) {
-            if (module is EntityNameEvent) {
-                val newComp = module.onEntityName(entity, newComponent)
-                if (newComp != null) {
-                    newComponent = newComp
-                    hasChanged = true
-                }
-            }
-        }
-        if (hasChanged) return newComponent
-        else return null
-    }
-
-
 }
