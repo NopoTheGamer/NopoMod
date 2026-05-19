@@ -10,9 +10,12 @@ import com.nopo.events.ChatEvent
 import com.nopo.events.CommandRegistration
 import com.nopo.events.ModifyChat
 import com.nopo.module.FeatureModule
+import com.nopo.utils.HypixelUtils
+import com.nopo.utils.PartyApi
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.append
 import com.nopo.utils.Utils.appendEmoji
+import com.nopo.utils.Utils.appendWithColor
 import com.nopo.utils.Utils.command
 import com.nopo.utils.Utils.componentBuilder
 import com.nopo.utils.Utils.group
@@ -27,8 +30,8 @@ object CocoonWarning : FeatureModule("cocoonTitle", NopoMod.config.cocoonConfig)
 
     private fun getConfig() = config as CocoonConfig
 
-    private fun getTrackedMobs(): List<String> {
-        return getConfig().trackedMobs.map { it.lowercase() }
+    private fun getTrackedMobs(): Map<String, CocoonWarningOptions> {
+        return getConfig().trackedMobs
     }
 
     /**
@@ -43,12 +46,40 @@ object CocoonWarning : FeatureModule("cocoonTitle", NopoMod.config.cocoonConfig)
                 moduleName {
                     "add" {
                         runs { name: GreedyString ->
-                            getConfig().trackedMobs.add(name.string.lowercase())
+                            getConfig().trackedMobs[name.string.lowercase()] = CocoonWarningOptions()
                             Utils.sendMessageToPlayer("Added ${name.string} to Cocoon Warnings")
                             ConfigManager.save()
                         }
                     }
-                    "remove" {
+                    literal("partyMessage").executable {
+                        param("name").suggests {
+                            getTrackedMobs().map { it.key }
+                        }
+                        runs { name: GreedyString ->
+                            val options = getConfig().trackedMobs[name.string.lowercase()]
+                            if (options == null) {
+                                Utils.sendMessageToPlayer(
+                                    componentBuilder {
+                                        appendWithColor("This mob is not tracked", ChatFormatting.RED)
+                                        command = "/nopo feature $moduleName add $name"
+                                        hover = Component.literal("Click to track this mob")
+                                    }
+                                )
+                                return@runs
+                            }
+                            options.sendToPartyChat = !options.sendToPartyChat
+                            if (options.sendToPartyChat) {
+                                Utils.sendMessageToPlayer("You will share ${name.string} to Party Chat")
+                            } else {
+                                Utils.sendMessageToPlayer("You will no longer share ${name.string} to Party Chat")
+                            }
+                            ConfigManager.save()
+                        }
+                    }
+                    literal("remove").executable {
+                        param("name").suggests {
+                            getTrackedMobs().map { it.key }
+                        }
                         runs { name: GreedyString ->
                             getConfig().trackedMobs.remove(name.string.lowercase())
                             Utils.sendMessageToPlayer("Removed ${name.string} from Cocoon Warnings")
@@ -82,18 +113,19 @@ object CocoonWarning : FeatureModule("cocoonTitle", NopoMod.config.cocoonConfig)
 
     override fun onChat(message: Component, actionBar: Boolean) {
         if (actionBar) return
+        if (!HypixelUtils.onSkyblock()) return
         if (!getConfig().enabled) return
         val string = message.string
         val mobName = cocoonRegex.group(string, "mobName") ?: return
-
-        if (mobName.lowercase() in getTrackedMobs()) {
-            Minecraft.getInstance().gui.setTitle(
-                componentBuilder {
-                    append("Cocooned $mobName") {
-                        withColor(ChatFormatting.RED)
-                    }
-                }
-            )
+        val mob = getTrackedMobs()[mobName.lowercase()] ?: return
+        if (!mob.enabled) return
+        Minecraft.getInstance().gui.setSubtitle(
+            componentBuilder {
+                appendWithColor("Cocooned $mobName", ChatFormatting.RED)
+            }
+        )
+        if (mob.sendToPartyChat) {
+            PartyApi.sendPartyMessage("I cocooned $mobName!")
         }
     }
 
@@ -102,6 +134,7 @@ object CocoonWarning : FeatureModule("cocoonTitle", NopoMod.config.cocoonConfig)
         actionBar: Boolean
     ): Component? {
         if (actionBar) return null
+        if (!HypixelUtils.onSkyblock()) return null
         if (!getConfig().enabled) return null
         val string = message.string
         val mobName = cocoonRegex.group(string, "mobName") ?: return null
@@ -121,23 +154,19 @@ object CocoonWarning : FeatureModule("cocoonTitle", NopoMod.config.cocoonConfig)
     private fun sendEmptyMessage() {
         Utils.sendMessageToPlayer(componentBuilder {
             append("No mobs tracked. Add some with ")
-            append("/nopo feature $moduleName add") {
-                withColor(ChatFormatting.YELLOW)
-            }
-            append(" (or click on the message when you cocoon a mob)") {
-                withColor(ChatFormatting.DARK_GRAY)
-            }
-            suggest = "/nopo tasks add "
+            appendWithColor("/nopo feature $moduleName add", ChatFormatting.YELLOW)
+            appendWithColor(" (or click on the message when you cocoon a mob)", ChatFormatting.DARK_GRAY)
+            suggest = "/nopo feature $moduleName add "
             hover = Component.literal("Click to insert into chat bar")
         })
     }
 
     private fun buildTaskList(): List<Component> {
         val list = mutableListOf<Component>()
-        getConfig().trackedMobs.forEach { mobs ->
+        getConfig().trackedMobs.forEach { mob ->
             list.add(
                 componentBuilder {
-                    append(mobs)
+                    append(mob.key)
                     append(" ")
                     append {
                         append("[")
@@ -146,8 +175,19 @@ object CocoonWarning : FeatureModule("cocoonTitle", NopoMod.config.cocoonConfig)
                         }
                         append("]")
                         withColor(ChatFormatting.GRAY)
-                        command = "/nopo feature $moduleName remove $mobs"
+                        command = "/nopo feature $moduleName remove ${mob.key}"
                         hover = Component.literal("Delete this mob")
+                    }
+                    append {
+                        append("[")
+                        appendEmoji("speech_balloon") {
+                            withColor(ChatFormatting.WHITE)
+                        }
+                        append("]")
+                        if (mob.value.sendToPartyChat) withColor(ChatFormatting.GREEN)
+                        else withColor(ChatFormatting.RED)
+                        command = "/nopo feature $moduleName partyMessage ${mob.key}"
+                        hover = Component.literal("Toggle sending this mob to party chat")
                     }
                 }
             )
@@ -158,5 +198,12 @@ object CocoonWarning : FeatureModule("cocoonTitle", NopoMod.config.cocoonConfig)
 
 class CocoonConfig : ModuleConfig() {
     @Expose
-    var trackedMobs: MutableList<String> = mutableListOf("lord jawbus")
+    var trackedMobs: MutableMap<String, CocoonWarningOptions> = mutableMapOf("lord jawbus" to CocoonWarningOptions())
+}
+
+class CocoonWarningOptions {
+    @Expose
+    var enabled = true
+    @Expose
+    var sendToPartyChat = true
 }
