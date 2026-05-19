@@ -13,5 +13,8 @@
   "updateNotification": {
     "latestVersion": "1.4.0",
     "download": "https://modrinth.com/mod/nopo-mod/version/1.4.0"
-  }
+  },
+  "disabledFeatures": [
+    "ashwreath"
+  ]
 }
