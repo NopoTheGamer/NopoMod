@@ -21,8 +21,7 @@ object PartyApi : BaseModule("party api") {
             memberMap = packet.memberMap
         }
 
-        Utils.registerDebugScreenEntry("party_data", { true }) {
-            add("[Nopo] In Party: $isInParty")
+        Utils.registerDebugScreenEntry("party_data", { inParty() }) {
             add("[Nopo] Party Size: ${memberMap.size}")
         }
     }
