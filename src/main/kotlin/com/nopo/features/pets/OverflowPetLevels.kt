@@ -3,52 +3,49 @@ package com.nopo.features.pets
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.nopo.NopoMod
+import com.nopo.events.TooltipEvent
 import com.nopo.module.FeatureModule
+import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Rarity
 import com.nopo.utils.Utils.append
+import com.nopo.utils.Utils.appendWithColor
 import com.nopo.utils.Utils.componentBuilder
 import com.nopo.utils.Utils.withColor
-import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
 import net.minecraft.ChatFormatting
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.TooltipFlag
 
-object OverflowPetLevels : FeatureModule("overflowPetLevels", NopoMod.config.overflowPetLevel) {
+object OverflowPetLevels : FeatureModule("overflowPetLevels", NopoMod.config.overflowPetLevel), TooltipEvent {
 
-    init {
-        ItemTooltipCallback.EVENT.register(ItemTooltipCallback { itemStack: ItemStack, tooltipContext: Item.TooltipContext, tooltipType: TooltipFlag?, list: MutableList<Component> ->
-            if (!config.enabled) return@ItemTooltipCallback
-            if (itemStack.item != Items.PLAYER_HEAD) return@ItemTooltipCallback
-            val nbt = itemStack.get(DataComponents.CUSTOM_DATA)?.copyTag() ?: return@ItemTooltipCallback
-            if (!nbt.contains("petInfo")) return@ItemTooltipCallback
-            val petinfo = nbt.get("petInfo")?.asString()?.orElse(null) ?: return@ItemTooltipCallback
-            val json: JsonObject = Gson().fromJson(petinfo, JsonObject::class.java)
-            if (json.has("exp")) {
-                val xp = json.get("exp")?.asFloat ?: return@ItemTooltipCallback
-                for ((index, text) in list.withIndex()) {
-                    if (text.string.contains("MAX LEVEL")) {
-                        val newComponent = componentBuilder {
-                            append("MAX LEVEL") {
-                                withColor(ChatFormatting.AQUA)
-                                withStyle(ChatFormatting.BOLD)
-                            }
-                            append(" [")
-                            append("${calcLevel(xp)}✦") {
-                                withColor(ChatFormatting.GOLD)
-                            }
-                            append("]")
-                            withColor(ChatFormatting.GRAY)
+    override fun onTooltip(itemStack: ItemStack, lore: MutableList<Component>) {
+        if (!config.enabled) return
+        if (!HypixelUtils.onSkyblock()) return
+        if (itemStack.item != Items.PLAYER_HEAD) return
+        val nbt = itemStack.get(DataComponents.CUSTOM_DATA)?.copyTag() ?: return
+        if (!nbt.contains("petInfo")) return
+        val petinfo = nbt.get("petInfo")?.asString()?.orElse(null) ?: return
+        val json: JsonObject = Gson().fromJson(petinfo, JsonObject::class.java)
+        if (json.has("exp")) {
+            val xp = json.get("exp")?.asFloat ?: return
+            for ((index, text) in lore.withIndex()) {
+                if (text.string.contains("MAX LEVEL")) {
+                    val newComponent = componentBuilder {
+                        append("MAX LEVEL") {
+                            withColor(ChatFormatting.AQUA)
+                            withStyle(ChatFormatting.BOLD)
                         }
-                        list[index] = newComponent
-                        return@ItemTooltipCallback
+                        append(" [")
+                        appendWithColor("${calcLevel(xp)}✦", ChatFormatting.GOLD)
+                        append("]")
+                        withColor(ChatFormatting.GRAY)
                     }
+                    lore[index] = newComponent
+                    return
                 }
             }
-        })
+        }
     }
 
     fun getCalculativeXpForLevel(level: Int, rarity: Rarity = Rarity.LEGENDARY): Int {

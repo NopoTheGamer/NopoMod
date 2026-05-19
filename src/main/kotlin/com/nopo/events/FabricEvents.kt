@@ -8,6 +8,7 @@ import com.nopo.module.FeatureModule
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientWorldEvents
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements
@@ -19,6 +20,9 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.TooltipFlag
 
 object FabricEvents : BaseModule("fabric events") {
 
@@ -108,6 +112,12 @@ object FabricEvents : BaseModule("fabric events") {
             if (hasChanged) newComponent
             else component
         }
+
+        ItemTooltipCallback.EVENT.register(ItemTooltipCallback { itemStack: ItemStack, _: Item.TooltipContext, _: TooltipFlag?, lore: MutableList<Component> ->
+            for (module in modules) {
+                if (module is TooltipEvent) module.onTooltip(itemStack, lore)
+            }
+        })
     }
 
     @JvmStatic
