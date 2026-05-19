@@ -9,6 +9,7 @@ import com.nopo.features.silly.BabyDollModel;
 import com.nopo.features.silly.Shoulder;
 import com.nopo.features.silly.SmallPlayers;
 import com.nopo.silly.layers.BabyCapeLayer;
+import com.nopo.silly.layers.ParrotOnBabyShoulderLayer;
 import com.nopo.silly.layers.PlayerOnShoulderLayer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.ClientAvatarEntity;
@@ -46,7 +47,7 @@ public class MixinAvatarRenderer<AvatarlikeEntity extends Avatar & ClientAvatarE
     }
 
     @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/player/AvatarRenderer;addLayer(Lnet/minecraft/client/renderer/entity/layers/RenderLayer;)Z", ordinal = 0))
-    private static boolean addBabyArmourLayer(AvatarRenderer instance, RenderLayer renderLayer, Operation<Boolean> original, @Local(argsOnly = true) EntityRendererProvider.Context context, @Local(argsOnly = true) boolean bl) {
+    private static boolean addExtraRenderLayers(AvatarRenderer instance, RenderLayer renderLayer, Operation<Boolean> original, @Local(argsOnly = true) EntityRendererProvider.Context context, @Local(argsOnly = true) boolean bl) {
         HumanoidArmorLayer humanoidArmorLayer = new HumanoidArmorLayer<>(
                 instance,
                 ArmorModelSet.bake(bl ? ModelLayers.PLAYER_SLIM_ARMOR : ModelLayers.PLAYER_ARMOR, context.getModelSet(), modelPart -> new PlayerModel(modelPart, bl)),
@@ -55,6 +56,7 @@ public class MixinAvatarRenderer<AvatarlikeEntity extends Avatar & ClientAvatarE
         );
         original.call(instance, new BabyCapeLayer(instance, context.getModelSet(), context.getEquipmentAssets()));
         original.call(instance, new PlayerOnShoulderLayer(instance, context.getModelSet(), context.getEquipmentAssets()));
+        original.call(instance, new ParrotOnBabyShoulderLayer(instance, context.getModelSet()));
         return original.call(instance, humanoidArmorLayer);
     }
 
@@ -64,8 +66,7 @@ public class MixinAvatarRenderer<AvatarlikeEntity extends Avatar & ClientAvatarE
         if (avatarRenderState.isInvisibleToPlayer) return;
         if (avatar instanceof AbstractClientPlayer entity) {
             GameProfile profile = entity.getGameProfile();
-            boolean everyoneSmall = NopoMod.config.getSmallConfig().getEveryone();
-            if (!everyoneSmall && profile.id().equals(NopoMod.INSTANCE.getData().getDevs().getFirst())) {
+            if (profile.id().equals(NopoMod.INSTANCE.getData().getDevs().getFirst())) {
                 avatarRenderState.parrotOnRightShoulder = Parrot.Variant.YELLOW_BLUE;
             }
             if (profile.id() == Minecraft.getInstance().player.getUUID()) {
@@ -86,7 +87,7 @@ public class MixinAvatarRenderer<AvatarlikeEntity extends Avatar & ClientAvatarE
                     avatarRenderState.parrotOnRightShoulder = parrotMap.get(Shoulder.RIGHT);
                 }
             } else {
-                if (everyoneSmall) {
+                if (NopoMod.config.getSmallConfig().getEveryone()) {
                     avatarRenderState.isBaby = true;
                     avatarRenderState.ageScale = 0.5f;
                     avatarRenderState.setData(SmallPlayers.getKey(), true);

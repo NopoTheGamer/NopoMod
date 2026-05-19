@@ -21,6 +21,7 @@
     "MixinLayerDefinitions",
     "MixinLivingEntityRenderer",
     "MixinModelLayers",
+    "MixinParrotOnShoulderLayer",
     "MixinSuggestionsList",
     "accessor.AccessorCommandSuggestions"
   ]
