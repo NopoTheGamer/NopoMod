@@ -29,7 +29,7 @@ import java.time.LocalTime
 import java.time.ZoneId
 
 
-object AshwreathReminder : FeatureModule("ashwreath", NopoMod.config.ashwreath), TickEvent, GuiRendering, IslandChange, CommandRegistration, ListCommandExtras {
+object AshwreathReminder : FeatureModule("ashwreath", NopoMod.config.ashwreath, shouldBeHidden = { !Utils.isDevAllowed() }), TickEvent, GuiRendering, IslandChange, CommandRegistration, ListCommandExtras {
 
     private fun getConfig() = config as AshwreathConfig
     private var display: Component? = null
