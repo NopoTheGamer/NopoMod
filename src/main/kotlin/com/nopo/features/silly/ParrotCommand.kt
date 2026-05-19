@@ -23,7 +23,11 @@ object ParrotCommand : BaseModule("parrot"), CommandRegistration {
                     param("parrotType") {
                         suggests("red_blue", "blue", "green", "yellow_blue", "gray", "none")
                     }
-                    runs { shoulder: String, parrotType: String ->
+                    runs { shoulder: String?, parrotType: String? ->
+                        if (shoulder == null || parrotType == null) {
+                            Utils.sendMessageToPlayer("Do /nopo parrot <left|right> <side>")
+                            return@runs
+                        }
                         if (getConfig().parrots == null) getConfig().parrots = mutableMapOf()
                         val side = Shoulder.getShoulder(shoulder)
                         if (side == null) {
