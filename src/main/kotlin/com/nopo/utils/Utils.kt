@@ -56,6 +56,10 @@ object Utils {
         sendMessageToPlayer(message)
     }
 
+    fun sendCommandToServer(command: String) {
+        Minecraft.getInstance().connection?.sendCommand(command)
+    }
+
     fun sendMessageToPlayer(message: String, prefix: Boolean = true) {
         sendMessageToPlayer(Component.literal(message), prefix)
     }

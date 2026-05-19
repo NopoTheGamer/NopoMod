@@ -44,6 +44,7 @@ import com.nopo.module.BaseModule
 import com.nopo.module.FeatureModule
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
+import com.nopo.utils.PartyApi
 import com.nopo.utils.Utils
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
@@ -132,6 +133,7 @@ object NopoMod : ModInitializer {
             SmallPlayers,
             BabyDollModel,
             CocoonWarning,
+            PartyApi,
         )
 
         HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket::class.java)
