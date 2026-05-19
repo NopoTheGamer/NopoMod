@@ -14,10 +14,12 @@ object EmojiName : BaseModule("emoji name"), EntityNameEvent {
         original: Component
     ): Component? {
         val uuid = entity.gameProfile.id
-        val emoji = NopoMod.data?.emojiName?.get(uuid) ?: return null
+        val emojis = NopoMod.data?.emojisName?.get(uuid) ?: return null
         return componentBuilder {
             append(original)
-            appendEmoji(emoji)
+            for (emoji in emojis) {
+                appendEmoji(emoji)
+            }
         }
     }
 }
