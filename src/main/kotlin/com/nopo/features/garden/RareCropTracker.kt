@@ -23,7 +23,7 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
     RARE CROP! Seasoning (+131☀) (automatically donated)
     RARE CROP! Melon Juice (+162☀)
      */
-    private val rareCropRegex = Regex("(?:VERY )?RARE CROP! (?<crop>[a-zA-Z ]+) \\(\\+\\d+☀\\)( \\(automatically donated\\))?")
+    private val rareCropRegex = Regex("(?:VERY )?RARE CROP! (?<crop>[a-zA-Z ]+) \\(\\+[0-9,.]+☀\\)( \\(automatically donated\\))?")
 
     // PET DROP! LEGENDARY Slug (+136☀)
     private val petDropRegex = Regex("PET DROP! (?<pet>\\w+) \\(\\+[0-9,.]+☀\\)")
