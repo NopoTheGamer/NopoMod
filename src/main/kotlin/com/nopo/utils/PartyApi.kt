@@ -32,7 +32,6 @@ object PartyApi : BaseModule("party api") {
         sendPartyPacket()
         DelayedRuns.schedule(30) {
             if (inParty()) Utils.sendCommandToServer("pc $message")
-            else Utils.debug("not in party")
         }
     }
 
