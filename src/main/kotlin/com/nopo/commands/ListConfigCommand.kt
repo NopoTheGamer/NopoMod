@@ -34,7 +34,7 @@ object ListConfigCommand : BaseModule("list config"), CommandRegistration {
                                 if (module.config is PositionConfig) {
                                     append(" ")
                                     appendEmoji("left_right_arrow") {
-                                        command = "/nopo feature $moduleName setPos"
+                                        command = "/nopo feature ${module.moduleName} setPos"
                                         hover = Component.literal("Click to edit position")
                                     }
                                 }
