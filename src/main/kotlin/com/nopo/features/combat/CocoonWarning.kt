@@ -5,13 +5,15 @@ import com.github.stivais.commodore.utils.GreedyString
 import com.google.gson.annotations.Expose
 import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
-import com.nopo.config.ModuleConfig
+import com.nopo.config.PositionConfig
 import com.nopo.events.ChatEvent
 import com.nopo.events.CommandRegistration
 import com.nopo.events.ModifyChat
 import com.nopo.module.FeatureModule
+import com.nopo.screens.GuiEditor
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.PartyApi
+import com.nopo.utils.TitleApi
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.append
 import com.nopo.utils.Utils.appendEmoji
@@ -106,6 +108,30 @@ object CocoonWarning : FeatureModule("cocoonTitle", NopoMod.config.cocoonConfig)
                             ConfigManager.save()
                         }
                     }
+                    "setPos" {
+                        runs { x: Int?, y: Int? ->
+                            if (x == null) {
+                                NopoMod.screenToOpen = GuiEditor(getConfig().pos) {
+                                    it.drawString(
+                                        Minecraft.getInstance().font,
+                                        componentBuilder {
+                                            appendWithColor("Cocooned Zombie", ChatFormatting.RED)
+                                        },
+                                        0,
+                                        0,
+                                        -1
+                                    )
+                                }
+                            } else if (y == null) {
+                                Utils.sendMessageToPlayer("Missing y argument")
+                            } else {
+                                getConfig().pos.x = x
+                                getConfig().pos.y = y
+                                Utils.sendMessageToPlayer("Updated position")
+                                ConfigManager.save()
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -119,10 +145,11 @@ object CocoonWarning : FeatureModule("cocoonTitle", NopoMod.config.cocoonConfig)
         val mobName = cocoonRegex.group(string, "mobName") ?: return
         val mob = getTrackedMobs()[mobName.lowercase()] ?: return
         if (!mob.enabled) return
-        Minecraft.getInstance().gui.setSubtitle(
+        TitleApi.displayTitle(
             componentBuilder {
                 appendWithColor("Cocooned $mobName", ChatFormatting.RED)
-            }
+            },
+            getConfig().pos
         )
         if (mob.sendToPartyChat) {
             PartyApi.sendPartyMessage("I cocooned $mobName!")
@@ -196,7 +223,7 @@ object CocoonWarning : FeatureModule("cocoonTitle", NopoMod.config.cocoonConfig)
     }
 }
 
-class CocoonConfig : ModuleConfig() {
+class CocoonConfig : PositionConfig(300, 240, 2.5f) {
     @Expose
     var trackedMobs: MutableMap<String, CocoonWarningOptions> = mutableMapOf("lord jawbus" to CocoonWarningOptions())
 }

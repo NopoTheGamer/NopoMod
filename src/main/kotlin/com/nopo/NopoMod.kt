@@ -38,6 +38,7 @@ import com.nopo.module.BaseModule
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.PartyApi
+import com.nopo.utils.TitleApi
 import com.nopo.utils.Utils
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.loader.api.FabricLoader
@@ -113,6 +114,7 @@ object NopoMod : ModInitializer {
             CocoonWarning,
             PartyApi,
             InfernoFuelCalculator,
+            TitleApi,
         )
     }
 }
