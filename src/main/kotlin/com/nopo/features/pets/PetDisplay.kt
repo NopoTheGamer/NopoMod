@@ -219,7 +219,11 @@ object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay), Comm
     override fun addListCommandData(): Component {
         return componentBuilder {
             append(" ")
-            appendEmoji("speech_balloon") {
+            append {
+                append("[")
+                appendEmoji("speech_balloon") {
+                    withColor(ChatFormatting.WHITE)
+                }
                 command = "/nopo feature $moduleName chatMessage"
                 hover = componentBuilder {
                     append("Click to toggle sending level up messages\n")
@@ -238,6 +242,9 @@ object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay), Comm
                         append("!")
                     }
                 }
+                append("]")
+                if (getConfig().chatMessage) withColor(ChatFormatting.GREEN)
+                else withColor(ChatFormatting.RED)
             }
         }
     }

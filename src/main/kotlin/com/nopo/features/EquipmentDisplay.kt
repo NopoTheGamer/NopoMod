@@ -115,8 +115,7 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
             append(" ")
             append {
                 append("[")
-                append {
-                    Utils.createItem("copper_chestplate")
+                append(Utils.createItem("copper_chestplate")) {
                     withColor(ChatFormatting.WHITE)
                 }
                 command = "/nopo feature $moduleName showArmour"
