@@ -1,5 +1,6 @@
 package com.nopo.utils
 
+import at.hannibal2.skyhanni.data.SackApi.getAmountInSacksOrNull
 import at.hannibal2.skyhanni.utils.NeuInternalName.Companion.toInternalName
 import at.hannibal2.skyhanni.utils.NeuItems.getItemStack
 import net.fabricmc.loader.api.FabricLoader
@@ -11,6 +12,19 @@ object SkyHanniUtils {
 
     fun getRepoStack(id: String): ItemStack? {
         if (!isSkyHanniLoaded) return null
-        return id.toInternalName().getItemStack()
+        try {
+            return id.toInternalName().getItemStack()
+        } catch (_: Exception) {
+            return null
+        }
+    }
+
+    fun getAmountInSack(id: String): Int {
+        if (!isSkyHanniLoaded) return 0
+        try {
+            return id.toInternalName().getAmountInSacksOrNull() ?: 0
+        } catch (_: Exception) {
+            return 0
+        }
     }
 }

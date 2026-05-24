@@ -2,6 +2,7 @@ package com.nopo
 
 import com.google.gson.stream.JsonReader
 import com.nopo.commands.DiscordCommand
+import com.nopo.commands.InfernoFuelCalculator
 import com.nopo.commands.ListConfigCommand
 import com.nopo.commands.MainCommand
 import com.nopo.commands.SixSeven
@@ -111,6 +112,7 @@ object NopoMod : ModInitializer {
             BabyDollModel,
             CocoonWarning,
             PartyApi,
+            InfernoFuelCalculator,
         )
     }
 }
