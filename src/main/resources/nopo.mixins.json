@@ -4,6 +4,7 @@
   "package": "com.nopo.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "MixinCopyChat",
     "MixinPlayerEntity",
     "MixinSkyHanniItemTracker"
   ],
