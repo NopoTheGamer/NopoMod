@@ -4,7 +4,7 @@ import com.github.stivais.commodore.Commodore
 import com.google.gson.annotations.Expose
 import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
-import com.nopo.config.ModuleConfig
+import com.nopo.config.PositionConfig
 import com.nopo.events.CommandRegistration
 import com.nopo.events.GuiRendering
 import com.nopo.events.ListCommandExtras
@@ -12,12 +12,13 @@ import com.nopo.events.TickEvent
 import com.nopo.module.FeatureModule
 import com.nopo.screens.GuiEditor
 import com.nopo.utils.HypixelUtils
-import com.nopo.utils.Position
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.append
 import com.nopo.utils.Utils.command
 import com.nopo.utils.Utils.componentBuilder
 import com.nopo.utils.Utils.hover
+import com.nopo.utils.Utils.withColor
+import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.inventory.ContainerScreen
@@ -111,20 +112,24 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
 
     override fun addListCommandData(): Component {
         return componentBuilder {
-            append(Utils.createPositionEditorButton(moduleName))
             append(" ")
-            append(Utils.createItem("copper_chestplate")) {
+            append {
+                append("[")
+                append {
+                    Utils.createItem("copper_chestplate")
+                    withColor(ChatFormatting.WHITE)
+                }
                 command = "/nopo feature $moduleName showArmour"
                 hover = Component.literal("Click to toggle showing armour in equipment display")
+                append("]")
+                if (getConfig().showArmor) withColor(ChatFormatting.GREEN)
+                else withColor(ChatFormatting.RED)
             }
         }
     }
 }
 
-class EquipmentDisplayConfig : ModuleConfig() {
-    @Expose
-    val pos = Position(540, 405)
-
+class EquipmentDisplayConfig : PositionConfig(540, 405) {
     @Expose
     var showArmor = false
 }

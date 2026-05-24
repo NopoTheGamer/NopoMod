@@ -528,14 +528,4 @@ object Utils {
         val x = Minecraft.getInstance().window.guiScaledWidth / 2 - font.width(text) / 2 + x
         context.drawString(font, text, x, y, -1)
     }
-
-    fun createPositionEditorButton(moduleName: String): Component {
-        return componentBuilder {
-            append(" ")
-            appendEmoji("left_right_arrow") {
-                command = "/nopo feature $moduleName setPos"
-                hover = Component.literal("Click to edit position")
-            }
-        }
-    }
 }

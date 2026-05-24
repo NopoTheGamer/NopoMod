@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose
 import com.ibm.icu.text.CompactDecimalFormat
 import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
-import com.nopo.config.ModuleConfig
+import com.nopo.config.PositionConfig
 import com.nopo.events.CommandRegistration
 import com.nopo.events.GuiRendering
 import com.nopo.events.ListCommandExtras
@@ -13,7 +13,6 @@ import com.nopo.events.TickEvent
 import com.nopo.module.FeatureModule
 import com.nopo.screens.GuiEditor
 import com.nopo.utils.HypixelUtils
-import com.nopo.utils.Position
 import com.nopo.utils.Rarity
 import com.nopo.utils.TabWidget
 import com.nopo.utils.Utils
@@ -219,7 +218,6 @@ object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay), Comm
 
     override fun addListCommandData(): Component {
         return componentBuilder {
-            append(Utils.createPositionEditorButton(moduleName))
             append(" ")
             appendEmoji("speech_balloon") {
                 command = "/nopo feature $moduleName chatMessage"
@@ -245,10 +243,7 @@ object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay), Comm
     }
 }
 
-class PetConfig : ModuleConfig() {
-    @Expose
-    var pos = Position(660, 420)
-
+class PetConfig : PositionConfig(660, 420) {
     @Expose
     var chatMessage = true
 }

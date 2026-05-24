@@ -2,6 +2,7 @@ package com.nopo.commands
 
 import com.github.stivais.commodore.Commodore
 import com.nopo.NopoMod
+import com.nopo.config.PositionConfig
 import com.nopo.events.CommandRegistration
 import com.nopo.events.ListCommandExtras
 import com.nopo.module.BaseModule
@@ -29,6 +30,13 @@ object ListConfigCommand : BaseModule("list config"), CommandRegistration {
                                     appendEmoji("white_check_mark")
                                 } else {
                                     appendEmoji("x")
+                                }
+                                if (module.config is PositionConfig) {
+                                    append(" ")
+                                    appendEmoji("left_right_arrow") {
+                                        command = "/nopo feature $moduleName setPos"
+                                        hover = Component.literal("Click to edit position")
+                                    }
                                 }
                                 if (module is ListCommandExtras) append(module.addListCommandData())
                                 command = "/nopo feature ${module.moduleName}"
