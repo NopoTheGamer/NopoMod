@@ -8,6 +8,7 @@ import com.nopo.events.ListCommandExtras
 import com.nopo.module.BaseModule
 import com.nopo.module.FeatureModule
 import com.nopo.utils.Utils
+import com.nopo.utils.Utils.append
 import com.nopo.utils.Utils.appendEmoji
 import com.nopo.utils.Utils.command
 import com.nopo.utils.Utils.componentBuilder
@@ -25,7 +26,16 @@ object ListConfigCommand : BaseModule("list config"), CommandRegistration {
                         if (module.shouldBeHidden()) continue
                         Utils.sendMessageToPlayer(
                             componentBuilder {
-                                append("${module.moduleName} ")
+                                append {
+                                    module.configData?.let { data ->
+                                        append(data.name)
+                                        data.description?.let {
+                                            hover = it
+                                        }
+                                    }
+                                }
+                                if (module.configData == null) append(module.moduleName)
+                                append(" ")
                                 if (module.config.enabled) {
                                     appendEmoji("white_check_mark")
                                 } else {

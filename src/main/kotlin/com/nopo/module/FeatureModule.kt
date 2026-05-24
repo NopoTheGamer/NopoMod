@@ -9,11 +9,13 @@ import com.nopo.utils.DelayedRuns
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.withColor
 import net.minecraft.ChatFormatting
+import net.minecraft.network.chat.Component
 
 open class FeatureModule(
     moduleName: String,
     @Expose var config: ModuleConfig,
-    shouldBeHidden: () -> Boolean = { false }
+    var configData: ConfigData? = null,
+    shouldBeHidden: () -> Boolean = { false },
 ) : BaseModule(moduleName, shouldBeHidden) {
 
     open fun registerToggleCommand(): Commodore? {
@@ -55,3 +57,5 @@ open class FeatureModule(
     }
 
 }
+
+data class ConfigData(val name: Component, val description: Component?)
