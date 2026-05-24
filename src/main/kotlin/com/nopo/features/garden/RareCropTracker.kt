@@ -4,18 +4,26 @@ import com.google.gson.annotations.Expose
 import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
 import com.nopo.events.ChatEvent
+import com.nopo.events.ListCommandExtras
 import com.nopo.module.FeatureModule
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.IslandType
+import com.nopo.utils.PartyApi
 import com.nopo.utils.Utils
+import com.nopo.utils.Utils.append
+import com.nopo.utils.Utils.appendEmoji
 import com.nopo.utils.Utils.cleanColor
+import com.nopo.utils.Utils.command
 import com.nopo.utils.Utils.componentBuilder
 import com.nopo.utils.Utils.format
+import com.nopo.utils.Utils.hover
+import com.nopo.utils.Utils.withColor
+import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import kotlin.time.Duration.Companion.milliseconds
 
-object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCrop), ChatEvent {
+object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCrop), ChatEvent, ListCommandExtras {
 
     private fun getConfig() = NopoMod.rareCropConfig.cropConfig
 
@@ -66,20 +74,39 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
             getConfig().dropTimes[drop]!!.add(currentTime)
             if (lastDrop != currentTime) {
                 val timeSince = (currentTime - lastDrop).milliseconds
+                val message = componentBuilder {
+                    append("Took ")
+                    append(timeSince.format())
+                    append(" to drop ")
+                    append(Utils.matcherOrString(message, drop))
+                }
                 DelayedRuns.schedule(5) {
-                    Utils.sendMessageToPlayer(
-                        componentBuilder {
-                            append("Took ")
-                            append(timeSince.format())
-                            append(" to drop ")
-                            append(Utils.matcherOrString(message, drop))
-                        }
-                    )
+                    Utils.sendMessageToPlayer(message)
+                    if (getConfig().sendToPartyChat) PartyApi.sendPartyMessage(message.string)
                 }
             }
         }
         ConfigManager.saveRareCrops()
 
+    }
+
+    override fun addListCommandData(): Component {
+        return componentBuilder {
+            append(" ")
+            append {
+                append("[")
+                appendEmoji("speech_balloon") {
+                    withColor(ChatFormatting.WHITE)
+                }
+                command = "/nopo feature $moduleName partyMessage"
+                hover = componentBuilder {
+                    append("Click to toggle sending rare crops to party chat")
+                }
+                append("]")
+                if (getConfig().sendToPartyChat) withColor(ChatFormatting.GREEN)
+                else withColor(ChatFormatting.RED)
+            }
+        }
     }
 
 
@@ -88,4 +115,6 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
 class RareCropConfig {
     @Expose
     var dropTimes = mutableMapOf<String, MutableList<Long>>()
+    @Expose
+    var sendToPartyChat = false
 }
