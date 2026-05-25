@@ -9,7 +9,13 @@
     "a7393810-7252-41ba-9374-c1bcd7ac7417": ["frog"],
     "bd082a55-373e-4305-bee3-48b9060e16c9": ["watermelon"],
     "d26cbff5-a83b-4a22-9e39-999019782aae": ["zzz"],
-    "582f3c67-bd78-47e4-8c27-2f664abc1c04": ["poop"]
+    "582f3c67-bd78-47e4-8c27-2f664abc1c04": ["poop"],
+    "6f8c7b61-42d8-4c4a-b4dc-c47e3aa75b30": ["panda_face"],
+    "6d1e196f-0c72-4acc-9c18-6ebfdad1499e": ["bee"],
+    "25b97370-e2ca-40a2-8e39-aed813d43c32": ["bee"],
+    "3b1d21d2-a784-4128-90b5-5e00e4da581a": ["strawberry"],
+    "17bd827d-d0e0-4b76-b798-7bb8a52c632c": ["pleading_face"],
+    "fa6c49a3-cacc-48f8-9d39-d9f876f5b4ed": ["pensive", "skull"]
   },
   "updateNotification": {
     "latestVersion": "1.6.0",
