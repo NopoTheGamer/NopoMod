@@ -1,6 +1,7 @@
 package com.nopo.utils
 
 import com.google.gson.annotations.Expose
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 
 data class Position(
@@ -9,6 +10,7 @@ data class Position(
     @Expose var scale: Float = 1f,
 ) {
     fun render(context: GuiGraphics, block: () -> Unit) {
+        if (Minecraft.getInstance().options.hideGui) return
         context.pose().pushMatrix()
         context.pose().translate(x.toFloat(), y.toFloat())
         if (scale != 1f) context.pose().scale(scale)
