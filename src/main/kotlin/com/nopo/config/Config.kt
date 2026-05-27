@@ -74,6 +74,9 @@ class Config {
     var cocoonConfig = CocoonConfig()
 
     @Expose
+    var trophyFishConfig = PositionConfig()
+
+    @Expose
     var debug = ModuleConfig(false)
 
 }

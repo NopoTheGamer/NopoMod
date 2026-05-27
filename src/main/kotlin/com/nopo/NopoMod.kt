@@ -21,6 +21,7 @@ import com.nopo.features.combat.CocoonWarning
 import com.nopo.features.dungeons.PartyFinderKickButton
 import com.nopo.features.emoji.EmojiName
 import com.nopo.features.emoji.EmojiReplace
+import com.nopo.features.fishing.TrophyFishDisplay
 import com.nopo.features.garden.AshwreathReminder
 import com.nopo.features.garden.RareCropTracker
 import com.nopo.features.meta.DebugModule
@@ -115,6 +116,7 @@ object NopoMod : ModInitializer {
             PartyApi,
             InfernoFuelCalculator,
             TitleApi,
+            TrophyFishDisplay,
         )
     }
 }

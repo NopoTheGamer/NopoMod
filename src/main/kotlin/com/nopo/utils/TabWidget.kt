@@ -6,6 +6,7 @@ enum class TabWidget(title: String) {
     PET("Pet:"),
     SKILLS("Skills:"),
     SHENS("Shen: \\(.*\\)"),
+    TROPHY("Trophy (Frogs|Fish):")
     ;
 
     val regex = Regex(title)
