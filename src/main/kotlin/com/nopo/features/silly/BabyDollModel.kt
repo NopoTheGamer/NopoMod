@@ -6,14 +6,20 @@ import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
 import com.nopo.config.ModuleConfig
 import com.nopo.events.CommandRegistration
+import com.nopo.events.ListCommandExtras
 import com.nopo.module.FeatureModule
 import com.nopo.utils.Utils
+import com.nopo.utils.Utils.append
+import com.nopo.utils.Utils.appendEmoji
+import com.nopo.utils.Utils.command
 import com.nopo.utils.Utils.componentBuilder
+import com.nopo.utils.Utils.hover
 import com.nopo.utils.Utils.withColor
 import net.fabricmc.fabric.api.client.rendering.v1.RenderStateDataKey
 import net.minecraft.ChatFormatting
+import net.minecraft.network.chat.Component
 
-object BabyDollModel : FeatureModule("babyDoll", NopoMod.config.babyDollConfig), CommandRegistration {
+object BabyDollModel : FeatureModule("babyDoll", NopoMod.config.babyDollConfig), CommandRegistration, ListCommandExtras {
 
     private fun getConfig() = config as ShoulderConfig
 
@@ -59,6 +65,23 @@ object BabyDollModel : FeatureModule("babyDoll", NopoMod.config.babyDollConfig),
                         }
                     }
                 }
+            }
+        }
+    }
+
+    override fun addListCommandData(): Component {
+        return componentBuilder {
+            append(" ")
+            append {
+                append("[")
+                appendEmoji("family_wwgg") {
+                    withColor(ChatFormatting.WHITE)
+                }
+                command = "/nopo feature $moduleName everyone"
+                hover = Component.literal("Click to toggle showing baby doll on everyone")
+                append("]")
+                if (getConfig().everyone) withColor(ChatFormatting.GREEN)
+                else withColor(ChatFormatting.RED)
             }
         }
     }
