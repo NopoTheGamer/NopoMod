@@ -22,7 +22,7 @@ object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bo
     * "   Wolf Slayer LVL 8 - Next LVL in 260,232 XP!"
     * "   Zombie Slayer LVL 9 - LVL MAXED OUT!"
      */
-    private val bossTypeRegex = Regex(" +(?<slayer>Wolf|Zombie|Blaze|Vampire|Spider|Enderman) Slayer LVL \\d.*")
+    private val bossTypeRegex = Regex(" +(?<slayer>Wolf|Zombie|Blaze|Vampire|Spider|Enderman|Guardian) Slayer LVL \\d.*")
 
     /*
     * VERY RARE DROP! (Critical VI) (+218% ✯ Magic Find)
@@ -115,5 +115,6 @@ enum class SlayerType(val display: String) {
     WOLF("Wolf"),
     ENDERMAN("Enderman"),
     VAMPIRE("Vampire"),
-    BLAZE("Blaze")
+    BLAZE("Blaze"),
+    GUARDIAN("Guardian"),
 }
