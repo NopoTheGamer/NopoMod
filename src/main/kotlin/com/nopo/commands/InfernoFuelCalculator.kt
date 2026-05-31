@@ -34,8 +34,8 @@ object InfernoFuelCalculator : BaseModule("inferno fuel", { !SkyHanniUtils.isSky
                             append("Fuels Craftable: ${list.min()}\n")
                             append("Coal: $craftableWithCoal\n")
                             append("Sulphur: $craftableWithSulphur\n")
-                            append("Distillate: $craftableWithDistillate\n")
-                            if (veryCrudeGabagoolCount != 0) append("Gabagool: $craftableWithGabagool")
+                            append("Distillate: $craftableWithDistillate")
+                            if (veryCrudeGabagoolCount != 0) append("\nGabagool: $craftableWithGabagool")
                         }
                     )
                 }
