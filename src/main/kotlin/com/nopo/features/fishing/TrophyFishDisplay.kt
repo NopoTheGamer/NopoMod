@@ -7,6 +7,7 @@ import com.nopo.config.PositionConfig
 import com.nopo.events.CommandRegistration
 import com.nopo.events.GuiRendering
 import com.nopo.events.TickEvent
+import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
 import com.nopo.screens.GuiEditor
 import com.nopo.utils.HypixelUtils
@@ -22,7 +23,12 @@ import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
 import java.util.Optional
 
-object TrophyFishDisplay : FeatureModule("trophyFishDisplay", NopoMod.config.trophyFishConfig), GuiRendering, TickEvent, CommandRegistration {
+object TrophyFishDisplay : FeatureModule(
+    "trophyFishDisplay", NopoMod.config.trophyFishConfig, ConfigData(
+        Component.literal("Trophy Frog And Fish Display"),
+        Component.literal("Requires Trophy Tab Widget. Highly recommended to turn on \"Show Total Caught\" in the /tab settings.")
+    )
+), GuiRendering, TickEvent, CommandRegistration {
 
     private fun getConfig() = config as PositionConfig
 
