@@ -30,7 +30,7 @@ object TrophyFishDisplay : FeatureModule(
 
     var display: List<Component>? = mutableListOf()
 
-    val trophyRegex = Regex(" [●○]{4} (?<name>[a-zA-Z ]+)(?: \\((?<count>[\\d,]+)\\))?")
+    val trophyRegex = Regex(" [●○]{4} (?<name>[a-zA-Z\\- ]+)(?: \\((?<count>[\\d,]+)\\))?")
 
     override fun render(context: GuiGraphics) {
         if (!config.enabled) return
