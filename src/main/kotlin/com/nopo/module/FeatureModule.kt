@@ -5,6 +5,9 @@ import com.google.gson.annotations.Expose
 import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
 import com.nopo.config.ModuleConfig
+import com.nopo.config.PositionConfig
+import com.nopo.events.GuiRendering
+import com.nopo.screens.GuiEditor
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.withColor
@@ -50,6 +53,25 @@ open class FeatureModule(
                             }
                         )
                         ConfigManager.save()
+                    }
+                    val posConfig = config as? PositionConfig
+                    if (posConfig != null && this@FeatureModule is GuiRendering) {
+                        "setPos" {
+                            runs { x: Int?, y: Int? ->
+                                if (x == null) {
+                                    NopoMod.screenToOpen = GuiEditor(posConfig.pos) {
+                                        doRender(it)
+                                    }
+                                } else if (y == null) {
+                                    Utils.sendMessageToPlayer("Missing y argument")
+                                } else {
+                                    posConfig.pos.x = x
+                                    posConfig.pos.y = y
+                                    Utils.sendMessageToPlayer("Updated position")
+                                    ConfigManager.save()
+                                }
+                            }
+                        }
                     }
                 }
             }

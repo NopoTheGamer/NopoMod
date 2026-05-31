@@ -1,15 +1,11 @@
 package com.nopo.features.fishing
 
-import com.github.stivais.commodore.Commodore
 import com.nopo.NopoMod
-import com.nopo.config.ConfigManager
 import com.nopo.config.PositionConfig
-import com.nopo.events.CommandRegistration
 import com.nopo.events.GuiRendering
 import com.nopo.events.TickEvent
 import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
-import com.nopo.screens.GuiEditor
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.TabWidget
 import com.nopo.utils.Utils
@@ -28,7 +24,7 @@ object TrophyFishDisplay : FeatureModule(
         Component.literal("Trophy Frog And Fish Display"),
         Component.literal("Requires Trophy Tab Widget. Highly recommended to turn on \"Show Total Caught\" in the /tab settings.")
     )
-), GuiRendering, TickEvent, CommandRegistration {
+), GuiRendering, TickEvent {
 
     private fun getConfig() = config as PositionConfig
 
@@ -45,7 +41,7 @@ object TrophyFishDisplay : FeatureModule(
         }
     }
 
-    private fun doRender(context: GuiGraphics) {
+    override fun doRender(context: GuiGraphics) {
         val display = display ?: return
         val font = Minecraft.getInstance().font
         for ((index, component) in display.withIndex()) {
@@ -145,31 +141,6 @@ object TrophyFishDisplay : FeatureModule(
         if (name == "Exploding Frog") return 300
         if (name == "Puddle Jumper") return 300
         return 600
-    }
-
-    override fun createCommand(): Commodore {
-        return Commodore("nopo") {
-            "feature" {
-                moduleName {
-                    "setPos" {
-                        runs { x: Int?, y: Int? ->
-                            if (x == null) {
-                                NopoMod.screenToOpen = GuiEditor(getConfig().pos) {
-                                    doRender(it)
-                                }
-                            } else if (y == null) {
-                                Utils.sendMessageToPlayer("Missing y argument")
-                            } else {
-                                getConfig().pos.x = x
-                                getConfig().pos.y = y
-                                Utils.sendMessageToPlayer("Updated position")
-                                ConfigManager.save()
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 
     private enum class RARITY {

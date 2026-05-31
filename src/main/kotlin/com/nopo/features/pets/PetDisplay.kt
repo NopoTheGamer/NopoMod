@@ -4,14 +4,12 @@ import com.github.stivais.commodore.Commodore
 import com.google.gson.annotations.Expose
 import com.ibm.icu.text.CompactDecimalFormat
 import com.nopo.NopoMod
-import com.nopo.config.ConfigManager
 import com.nopo.config.PositionConfig
 import com.nopo.events.CommandRegistration
 import com.nopo.events.GuiRendering
 import com.nopo.events.ListCommandExtras
 import com.nopo.events.TickEvent
 import com.nopo.module.FeatureModule
-import com.nopo.screens.GuiEditor
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Rarity
 import com.nopo.utils.TabWidget
@@ -46,22 +44,6 @@ object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay), Comm
         return Commodore("nopo") {
             "feature" {
                 "petDisplay" {
-                    "setPos" {
-                        runs { x: Int?, y: Int? ->
-                            if (x == null) {
-                                NopoMod.screenToOpen = GuiEditor(getConfig().pos) {
-                                    doRender(it)
-                                }
-                            } else if (y == null) {
-                                Utils.sendMessageToPlayer("Missing y argument")
-                            } else {
-                                getConfig().pos.x = x
-                                getConfig().pos.y = y
-                                Utils.sendMessageToPlayer("Updated position")
-                                ConfigManager.save()
-                            }
-                        }
-                    }
                     "chatMessage" {
                         runs {
                             Utils.sendMessageToPlayer(
@@ -92,7 +74,7 @@ object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay), Comm
         }
     }
 
-    private fun doRender(context: GuiGraphics) {
+    override fun doRender(context: GuiGraphics) {
         val display = display ?: return
         val font = Minecraft.getInstance().font
         for ((index, component) in display.withIndex()) {

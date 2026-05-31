@@ -1,16 +1,13 @@
 package com.nopo.features.garden
 
-import com.github.stivais.commodore.Commodore
 import com.google.gson.annotations.Expose
 import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
 import com.nopo.config.PositionConfig
-import com.nopo.events.CommandRegistration
 import com.nopo.events.GuiRendering
 import com.nopo.events.IslandChange
 import com.nopo.events.TickEvent
 import com.nopo.module.FeatureModule
-import com.nopo.screens.GuiEditor
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.IslandType
@@ -27,7 +24,7 @@ import java.time.LocalTime
 import java.time.ZoneId
 
 
-object AshwreathReminder : FeatureModule("ashwreath", NopoMod.config.ashwreath, shouldBeHidden = { !Utils.isDevAllowed() }), TickEvent, GuiRendering, IslandChange, CommandRegistration {
+object AshwreathReminder : FeatureModule("ashwreath", NopoMod.config.ashwreath, shouldBeHidden = { !Utils.isDevAllowed() }), TickEvent, GuiRendering, IslandChange {
 
     private fun getConfig() = config as AshwreathConfig
     private var display: Component? = null
@@ -64,7 +61,7 @@ object AshwreathReminder : FeatureModule("ashwreath", NopoMod.config.ashwreath, 
         }
     }
 
-    private fun doRender(context: GuiGraphics) {
+    override fun doRender(context: GuiGraphics) {
         val display = display ?: return
         context.drawString(Minecraft.getInstance().font, display, 0, 0, -1)
     }
@@ -81,31 +78,6 @@ object AshwreathReminder : FeatureModule("ashwreath", NopoMod.config.ashwreath, 
         getConfig().lastCollected = System.currentTimeMillis()
         display = null
         ConfigManager.save()
-    }
-
-    override fun createCommand(): Commodore {
-        return Commodore("nopo") {
-            "feature" {
-                "ashwreath" {
-                    "setPos" {
-                        runs { x: Int?, y: Int? ->
-                            if (x == null) {
-                                NopoMod.screenToOpen = GuiEditor(getConfig().pos) {
-                                    doRender(it)
-                                }
-                            } else if (y == null) {
-                                Utils.sendMessageToPlayer("Missing y argument")
-                            } else {
-                                getConfig().pos.x = x
-                                getConfig().pos.y = y
-                                Utils.sendMessageToPlayer("Updated position")
-                                ConfigManager.save()
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 }
 

@@ -3,14 +3,12 @@ package com.nopo.features
 import com.github.stivais.commodore.Commodore
 import com.google.gson.annotations.Expose
 import com.nopo.NopoMod
-import com.nopo.config.ConfigManager
 import com.nopo.config.PositionConfig
 import com.nopo.events.CommandRegistration
 import com.nopo.events.GuiRendering
 import com.nopo.events.ListCommandExtras
 import com.nopo.events.TickEvent
 import com.nopo.module.FeatureModule
-import com.nopo.screens.GuiEditor
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.append
@@ -42,7 +40,7 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
         }
     }
 
-    private fun doRender(context: GuiGraphics) {
+    override fun doRender(context: GuiGraphics) {
         for ((index, eq) in equipment.withIndex()) {
             if (getConfig().showArmor) {
                 Minecraft.getInstance().player?.inventory?.getItem(36 + (3 - index))?.let {
@@ -58,22 +56,6 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
         return Commodore("nopo") {
             "feature" {
                 "equipmentDisplay" {
-                    "setPos" {
-                        runs { x: Int?, y: Int? ->
-                            if (x == null) {
-                                NopoMod.screenToOpen = GuiEditor(getConfig().pos) {
-                                    doRender(it)
-                                }
-                            } else if (y == null) {
-                                Utils.sendMessageToPlayer("Missing y argument")
-                            } else {
-                                getConfig().pos.x = x
-                                getConfig().pos.y = y
-                                Utils.sendMessageToPlayer("Updated position")
-                                ConfigManager.save()
-                            }
-                        }
-                    }
                     "showArmour" {
                         runs {
                             Utils.sendMessageToPlayer(
