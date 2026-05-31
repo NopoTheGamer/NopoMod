@@ -1,10 +1,12 @@
 package com.nopo.features.slayer
 
+import com.github.stivais.commodore.Commodore
 import com.google.gson.annotations.Expose
 import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
 import com.nopo.config.ModuleConfig
 import com.nopo.events.ChatEvent
+import com.nopo.events.CommandRegistration
 import com.nopo.events.WorldChange
 import com.nopo.module.FeatureModule
 import com.nopo.utils.DelayedRuns
@@ -14,7 +16,7 @@ import com.nopo.utils.Utils.cleanColor
 import com.nopo.utils.Utils.componentBuilder
 import net.minecraft.network.chat.Component
 
-object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bossesSinceDrop), ChatEvent, WorldChange {
+object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bossesSinceDrop), ChatEvent, WorldChange, CommandRegistration {
 
     private fun getConfig() = config as BossesSinceDropConfig
 
@@ -93,6 +95,28 @@ object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bo
 
     override fun onWorldChange() {
         currentBoss = null
+    }
+
+    override fun createCommand(): Commodore {
+        return Commodore("nopo") {
+            "slayer" {
+                runs {
+                    for (slayer in SlayerType.entries) {
+                        val data = getConfig().bossMap[slayer]
+                        if (slayer == SlayerType.GUARDIAN && (data == null || data.kills == 0)) {
+                            continue
+                        }
+                        val kills = data?.kills ?: 0
+                        Utils.sendMessageToPlayer(
+                            componentBuilder {
+                                append(slayer.display)
+                                append(": $kills kills")
+                            }
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 
