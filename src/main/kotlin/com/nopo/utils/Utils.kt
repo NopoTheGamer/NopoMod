@@ -528,4 +528,26 @@ object Utils {
         val x = Minecraft.getInstance().window.guiScaledWidth / 2 - font.width(text) / 2 + x
         context.drawString(font, text, x, y, -1)
     }
+
+    @JvmStatic
+    fun prideMonthComponent(): Component {
+        return componentBuilder {
+            appendEmoji("rainbow_flag")
+            appendEmoji("rainbow_flag")
+            append(" ")
+            append(createGradientText(Color(91, 206, 250), Color(245, 169, 184), "Happy"))
+            append(" ")
+            append(createGradientText(Color(213, 45, 0), Color(163, 2, 98), "Pride"))
+            append(" ")
+            appendWithColor("M", 14942979)
+            appendWithColor("o", 16747520)
+            appendWithColor("n", 16772352)
+            appendWithColor("t", 32806)
+            appendWithColor("h", 19711)
+            appendWithColor("!", 7547266)
+            append(" ")
+            appendEmoji("trans")
+            appendEmoji("trans")
+        }
+    }
 }

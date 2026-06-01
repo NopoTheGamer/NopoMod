@@ -23,6 +23,7 @@
     "MixinLivingEntityRenderer",
     "MixinModelLayers",
     "MixinParrotOnShoulderLayer",
+    "MixinSplashManager",
     "MixinSuggestionsList",
     "accessor.AccessorCommandSuggestions"
   ]
