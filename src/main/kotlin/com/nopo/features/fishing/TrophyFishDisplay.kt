@@ -10,6 +10,7 @@ import com.nopo.utils.HypixelUtils
 import com.nopo.utils.TabWidget
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.appendWithColor
+import com.nopo.utils.Utils.clearObfuscated
 import com.nopo.utils.Utils.formatInt
 import com.nopo.utils.Utils.group
 import net.minecraft.ChatFormatting
@@ -30,7 +31,7 @@ object TrophyFishDisplay : FeatureModule(
 
     var display: List<Component>? = mutableListOf()
 
-    val trophyRegex = Regex(" [●○]{4} (?<name>[a-zA-Z\\- ]+)(?: \\((?<count>[\\d,]+)\\))?")
+    val trophyRegex = Regex(" [●○]{4} (?<name>[a-zA-Z0-9\\- ]+)(?: \\((?<count>[\\d,]+)\\))?")
 
     override fun render(context: GuiGraphics) {
         if (!config.enabled) return
@@ -94,7 +95,7 @@ object TrophyFishDisplay : FeatureModule(
                 Optional.empty()
             }, Style.EMPTY)
 
-            if (raritiesFound[RARITY.DIAMOND] == true) continue
+            if (raritiesFound[RARITY.DIAMOND] == true && !NopoMod.config.debug.enabled) continue
 
             temp += Utils.componentBuilder {
                 append(" ")
@@ -118,7 +119,7 @@ object TrophyFishDisplay : FeatureModule(
                 } else {
                     append("  ")
                 }
-                append(Utils.matcherOrString(line, name))
+                append(Utils.matcherOrString(line, name).clearObfuscated())
                 val count = trophyRegex.group(line.string, "count")?.formatInt()
                 if (count != null) {
                     appendWithColor(" $count/${getPity(name)}", ChatFormatting.GRAY)

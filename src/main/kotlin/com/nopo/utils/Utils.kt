@@ -550,4 +550,13 @@ object Utils {
             appendEmoji("trans")
         }
     }
+
+    fun Component.clearObfuscated(): Component {
+        val new = Component.empty()
+        this.visit({ style: Style, string: String ->
+            new.append(string).withStyle(style.withObfuscated(false))
+            Optional.empty()
+        }, Style.EMPTY)
+        return new
+    }
 }
