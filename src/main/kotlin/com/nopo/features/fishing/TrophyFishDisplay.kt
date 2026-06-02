@@ -15,7 +15,7 @@ import com.nopo.utils.Utils.formatInt
 import com.nopo.utils.Utils.group
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
 import java.util.Optional
@@ -33,7 +33,7 @@ object TrophyFishDisplay : FeatureModule(
 
     val trophyRegex = Regex(" [●○]{4} (?<name>[a-zA-Z0-9\\- ]+)(?: \\((?<count>[\\d,]+)\\))?")
 
-    override fun render(context: GuiGraphics) {
+    override fun render(context: GuiGraphicsExtractor) {
         if (!config.enabled) return
         if (!HypixelUtils.onSkyblock()) return
 
@@ -42,11 +42,11 @@ object TrophyFishDisplay : FeatureModule(
         }
     }
 
-    override fun doRender(context: GuiGraphics) {
+    override fun doRender(context: GuiGraphicsExtractor) {
         val display = display ?: return
         val font = Minecraft.getInstance().font
         for ((index, component) in display.withIndex()) {
-            context.drawString(font, component, 0, index * 10, -1)
+            context.text(font, component, 0, index * 10, -1)
         }
     }
 

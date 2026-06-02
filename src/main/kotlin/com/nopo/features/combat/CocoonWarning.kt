@@ -112,7 +112,7 @@ object CocoonWarning : FeatureModule("cocoonTitle", NopoMod.config.cocoonConfig)
                         runs { x: Int?, y: Int? ->
                             if (x == null) {
                                 NopoMod.screenToOpen = GuiEditor(getConfig().pos) {
-                                    it.drawString(
+                                    it.text(
                                         Minecraft.getInstance().font,
                                         componentBuilder {
                                             appendWithColor("Cocooned Zombie", ChatFormatting.RED)

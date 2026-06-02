@@ -26,7 +26,7 @@ import com.nopo.utils.Utils.hover
 import com.nopo.utils.Utils.withColor
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.network.chat.Component
 import java.util.Locale
 
@@ -65,7 +65,7 @@ object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay), Comm
         }
     }
 
-    override fun render(context: GuiGraphics) {
+    override fun render(context: GuiGraphicsExtractor) {
         if (!config.enabled) return
         if (!HypixelUtils.onSkyblock()) return
 
@@ -74,11 +74,11 @@ object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay), Comm
         }
     }
 
-    override fun doRender(context: GuiGraphics) {
+    override fun doRender(context: GuiGraphicsExtractor) {
         val display = display ?: return
         val font = Minecraft.getInstance().font
         for ((index, component) in display.withIndex()) {
-            context.drawString(font, component, 0, index * 10, -1)
+            context.text(font, component, 0, index * 10, -1)
         }
     }
 

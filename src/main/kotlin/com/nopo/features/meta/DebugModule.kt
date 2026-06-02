@@ -9,7 +9,7 @@ import com.nopo.utils.IslandType
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.cleanColor
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.screens.ChatScreen
 import net.minecraft.network.chat.Component
 
@@ -49,7 +49,7 @@ object DebugModule : FeatureModule("debug", NopoMod.config.debug, shouldBeHidden
     var lastX = 0
     var lastY = 0
 
-    override fun render(context: GuiGraphics) {
+    override fun render(context: GuiGraphicsExtractor) {
         if (!config.enabled) return
         val screen = Minecraft.getInstance().screen
         if (screen != null && screen !is ChatScreen) {
@@ -58,7 +58,7 @@ object DebugModule : FeatureModule("debug", NopoMod.config.debug, shouldBeHidden
             lastX = x
             lastY = y
         }
-        context.drawString(Minecraft.getInstance().font, "x: $lastX y: $lastY", lastX, lastY, -1)
+        context.text(Minecraft.getInstance().font, "x: $lastX y: $lastY", lastX, lastY, -1)
     }
 
 }

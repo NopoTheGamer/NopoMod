@@ -15,7 +15,7 @@ import com.nopo.utils.Utils
 import com.nopo.utils.Utils.appendEmoji
 import com.nopo.utils.Utils.componentBuilder
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.network.chat.Component
 import java.time.Instant
 import java.time.LocalDate
@@ -54,16 +54,16 @@ object AshwreathReminder : FeatureModule("ashwreath", NopoMod.config.ashwreath, 
         return false
     }
 
-    override fun render(context: GuiGraphics) {
+    override fun render(context: GuiGraphicsExtractor) {
         if (!config.enabled || !HypixelUtils.onSkyblock()) return
         getConfig().pos.render(context) {
             doRender(context)
         }
     }
 
-    override fun doRender(context: GuiGraphics) {
+    override fun doRender(context: GuiGraphicsExtractor) {
         val display = display ?: return
-        context.drawString(Minecraft.getInstance().font, display, 0, 0, -1)
+        context.text(Minecraft.getInstance().font, display, 0, 0, -1)
     }
 
     override fun onWorldSwap(newIsland: IslandType, oldIsland: IslandType) {

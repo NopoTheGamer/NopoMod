@@ -4,7 +4,7 @@ import com.nopo.events.GuiRendering
 import com.nopo.events.TickEvent
 import com.nopo.module.BaseModule
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.network.chat.Component
 
 object TitleApi : BaseModule("title api"), TickEvent, GuiRendering {
@@ -26,11 +26,11 @@ object TitleApi : BaseModule("title api"), TickEvent, GuiRendering {
         }
     }
 
-    override fun render(context: GuiGraphics) {
+    override fun render(context: GuiGraphicsExtractor) {
         if (queue.isEmpty()) return
         val (title, position) = queue.entries.first()
         position.render(context) {
-            context.drawString(Minecraft.getInstance().font, title, 0, 0, -1)
+            context.text(Minecraft.getInstance().font, title, 0, 0, -1)
         }
     }
 }

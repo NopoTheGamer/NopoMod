@@ -3,13 +3,13 @@ package com.nopo.screens
 import com.nopo.config.ConfigManager
 import com.nopo.utils.Position
 import com.nopo.utils.Utils
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.input.CharacterEvent
 import net.minecraft.client.input.MouseButtonEvent
 import net.minecraft.network.chat.Component
 
-class GuiEditor(val pos: Position, val runnable: (GuiGraphics) -> Unit) : Screen(Component.literal("Gui Editor")) {
+class GuiEditor(val pos: Position, val runnable: (GuiGraphicsExtractor) -> Unit) : Screen(Component.literal("Gui Editor")) {
 
     override fun init() {
         super.init()
@@ -26,8 +26,8 @@ class GuiEditor(val pos: Position, val runnable: (GuiGraphics) -> Unit) : Screen
         Component.literal("Click r to reset scale to 1"),
     )
 
-    override fun render(context: GuiGraphics, mouseX: Int, mouseY: Int, f: Float) {
-        super.render(context, mouseX, mouseY, f)
+    override fun extractRenderState(context: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, f: Float) {
+        super.extractRenderState(context, mouseX, mouseY, f)
         for ((index, component) in tips.withIndex()) {
             Utils.drawCenteredText(context, component, 0, 10 + index * 10)
         }

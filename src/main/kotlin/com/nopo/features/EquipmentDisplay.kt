@@ -18,7 +18,7 @@ import com.nopo.utils.Utils.hover
 import com.nopo.utils.Utils.withColor
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.screens.inventory.ContainerScreen
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
@@ -32,7 +32,7 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
     var equipment = arrayOfNulls<ItemStack?>(4)
     val slotIndexes = listOf(10, 19, 28, 37)
 
-    override fun render(context: GuiGraphics) {
+    override fun render(context: GuiGraphicsExtractor) {
         if (!config.enabled) return
         if (!HypixelUtils.onSkyblock()) return
         getConfig().pos.render(context) {
@@ -40,15 +40,15 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
         }
     }
 
-    override fun doRender(context: GuiGraphics) {
+    override fun doRender(context: GuiGraphicsExtractor) {
         for ((index, eq) in equipment.withIndex()) {
             if (getConfig().showArmor) {
                 Minecraft.getInstance().player?.inventory?.getItem(36 + (3 - index))?.let {
-                    context.renderItem(it, -16, index * 16)
+                    context.item(it, -16, index * 16)
                 }
             }
             if (eq == null) continue
-            context.renderItem(eq, 0, index * 16)
+            context.item(eq, 0, index * 16)
         }
     }
 

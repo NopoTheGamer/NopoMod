@@ -6,8 +6,8 @@ import com.nopo.NopoMod.modules
 import com.nopo.module.BaseModule
 import com.nopo.module.FeatureModule
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLevelEvents
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientWorldEvents
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry
@@ -16,7 +16,7 @@ import net.hypixel.modapi.HypixelModAPI
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 import net.minecraft.world.entity.player.Player
@@ -63,7 +63,7 @@ object FabricEvents : BaseModule("fabric events") {
             }
         }
 
-        ClientWorldEvents.AFTER_CLIENT_WORLD_CHANGE.register { _, _ ->
+        ClientLevelEvents.AFTER_CLIENT_LEVEL_CHANGE.register { _, _ ->
             for (module in modules) {
                 if (module is WorldChange) {
                     module.onWorldChange()
@@ -74,7 +74,7 @@ object FabricEvents : BaseModule("fabric events") {
         HudElementRegistry.attachElementBefore(
             VanillaHudElements.SLEEP,
             Identifier.fromNamespaceAndPath(MOD_ID, "rendering")
-        ) { context: GuiGraphics, _: DeltaTracker ->
+        ) { context: GuiGraphicsExtractor, _: DeltaTracker ->
             for (module in modules) {
                 if (module is GuiRendering) {
                     module.render(context)

@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-	id("net.fabricmc.fabric-loom-remap")
+	id("net.fabricmc.fabric-loom")
 	`maven-publish`
 	id("org.jetbrains.kotlin.jvm") version "2.3.21"
 }
@@ -41,23 +41,22 @@ repositories {
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft("com.mojang:minecraft:${providers.gradleProperty("minecraft_version").get()}")
-	mappings(loom.officialMojangMappings())
-	modImplementation("net.fabricmc:fabric-loader:${providers.gradleProperty("loader_version").get()}")
+	implementation("net.fabricmc:fabric-loader:${providers.gradleProperty("loader_version").get()}")
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation("net.fabricmc.fabric-api:fabric-api:${providers.gradleProperty("fabric_api_version").get()}")
-	modImplementation("net.fabricmc:fabric-language-kotlin:${providers.gradleProperty("fabric_kotlin_version").get()}")
+	implementation("net.fabricmc.fabric-api:fabric-api:${providers.gradleProperty("fabric_api_version").get()}")
+	implementation("net.fabricmc:fabric-language-kotlin:${providers.gradleProperty("fabric_kotlin_version").get()}")
 
-	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.2")
-	implementation("net.hypixel:mod-api:1.0.1")
-	modImplementation("maven.modrinth:hypixel-mod-api:1.0.1+build.1+mc1.21")
+	runtimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.2")
+	implementation("net.hypixel:mod-api:1.0.2")
+	implementation("maven.modrinth:hypixel-mod-api:1.0.2+build.1+mc26.1")
 
 	// for commands
 	implementation("com.github.Stivais:Commodore:1.0.0")
 	include("com.github.Stivais:Commodore:1.0.0")
 
 	// for a mixin into skyhanni, its not required
-	modCompileOnly("maven.modrinth:skyhanni:7.19.0")
+	compileOnly("maven.modrinth:skyhanni:7.19.0")
 }
 
 tasks.processResources {

@@ -6,7 +6,7 @@ import com.nopo.config.ConfigManager
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.components.debug.DebugScreenDisplayer
 import net.minecraft.client.gui.components.debug.DebugScreenEntries
 import net.minecraft.client.gui.components.debug.DebugScreenEntry
@@ -19,6 +19,7 @@ import net.minecraft.network.chat.TextColor
 import net.minecraft.network.chat.contents.objects.AtlasSprite
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.chunk.LevelChunk
 import java.awt.Color
@@ -72,7 +73,7 @@ object Utils {
                 append(message)
             }
         }
-        Minecraft.getInstance().player?.displayClientMessage(finalMessage, false)
+        Minecraft.getInstance().player?.sendSystemMessage(finalMessage)
     }
 
     fun componentBuilder(init: MutableComponent.() -> Unit): Component {
@@ -314,9 +315,9 @@ object Utils {
     var Component.stackHover: ItemStack?
         get() = this.style.hoverEvent?.takeIf {
             it.action() == HoverEvent.Action.SHOW_ITEM
-        }?.let { (it as HoverEvent.ShowItem).item }
+        }?.let { (it as HoverEvent.ShowItem).item.create() }
         set(value) {
-            value?.let { new -> this.copyIfNeeded().withStyle { it.withHoverEvent(HoverEvent.ShowItem(new)) } }
+            value?.let { new -> this.copyIfNeeded().withStyle { it.withHoverEvent(HoverEvent.ShowItem(ItemStackTemplate.fromNonEmptyStack(new))) } }
         }
 
     var Component.command: String?
@@ -523,10 +524,10 @@ object Utils {
         return this.matchEntire(input)?.groups[group]?.value
     }
 
-    fun drawCenteredText(context: GuiGraphics, text: Component, x: Int, y: Int) {
+    fun drawCenteredText(context: GuiGraphicsExtractor, text: Component, x: Int, y: Int) {
         val font = Minecraft.getInstance().font
         val x = Minecraft.getInstance().window.guiScaledWidth / 2 - font.width(text) / 2 + x
-        context.drawString(font, text, x, y, -1)
+        context.text(font, text, x, y, -1)
     }
 
     @JvmStatic
