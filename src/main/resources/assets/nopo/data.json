@@ -19,7 +19,8 @@
     "fa6c49a3-cacc-48f8-9d39-d9f876f5b4ed": ["pensive", "skull"],
     "54b007f3-1e62-4209-803a-17139063dc71": ["straight_ruler", "ladder"],
     "6619181c-f51d-4c0f-a4e8-6a7cbda6e54d": ["regional_indicator_i", "blue_square", "regional_indicator_a", "regional_indicator_m", "blue_square", "regional_indicator_a", "blue_square", "underage", "blue_square", "regional_indicator_w", "regional_indicator_h", "regional_indicator_o", "blue_square", "regional_indicator_o", "regional_indicator_w", "regional_indicator_n", "regional_indicator_s", "blue_square", "regional_indicator_a", "blue_square", "regional_indicator_p", "regional_indicator_u", "regional_indicator_n", "regional_indicator_c", "regional_indicator_h", "blue_square", "two", "blue_square", "regional_indicator_t", "regional_indicator_e", "regional_indicator_r", "regional_indicator_m", "regional_indicator_i", "regional_indicator_n", "regional_indicator_a", "regional_indicator_t", "regional_indicator_o", "regional_indicator_r"],
-    "e25c5bb4-7c85-484f-b56c-395f790370d9": ["rat", "panda_face"]
+    "e25c5bb4-7c85-484f-b56c-395f790370d9": ["rat", "panda_face"],
+    "fa5393b8-6bf1-4f0f-8f03-7759d9c2df62": ["thinking"]
   },
   "updateNotification": {
     "latestVersion": "1.8.0",
