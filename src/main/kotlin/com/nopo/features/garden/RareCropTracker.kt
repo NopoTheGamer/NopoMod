@@ -1,9 +1,11 @@
 package com.nopo.features.garden
 
+import com.github.stivais.commodore.Commodore
 import com.google.gson.annotations.Expose
 import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
 import com.nopo.events.ChatEvent
+import com.nopo.events.CommandRegistration
 import com.nopo.events.ListCommandExtras
 import com.nopo.module.FeatureModule
 import com.nopo.utils.DelayedRuns
@@ -23,7 +25,7 @@ import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import kotlin.time.Duration.Companion.milliseconds
 
-object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCrop), ChatEvent, ListCommandExtras {
+object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCrop), ChatEvent, ListCommandExtras, CommandRegistration {
 
     private fun getConfig() = NopoMod.rareCropConfig.cropConfig
 
@@ -105,6 +107,32 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
                 append("]")
                 if (getConfig().sendToPartyChat) withColor(ChatFormatting.GREEN)
                 else withColor(ChatFormatting.RED)
+            }
+        }
+    }
+
+    override fun createCommand(): Commodore {
+        return Commodore("nopo") {
+            "feature" {
+                moduleName {
+                    "partyMessage" {
+                        runs {
+                            Utils.sendMessageToPlayer(
+                                componentBuilder {
+                                    append("Sending rare crops to party chat is now ")
+                                    getConfig().sendToPartyChat = !getConfig().sendToPartyChat
+                                    if (getConfig().sendToPartyChat) {
+                                        append("enabled")
+                                    } else {
+                                        append("disabled")
+                                    }
+                                    withColor(ChatFormatting.YELLOW)
+                                    ConfigManager.save()
+                                }
+                            )
+                        }
+                    }
+                }
             }
         }
     }
