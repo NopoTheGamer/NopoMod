@@ -14,6 +14,7 @@ import com.nopo.data.Data
 import com.nopo.data.Version
 import com.nopo.data.Version.Companion.toVersion
 import com.nopo.events.FabricEvents
+import com.nopo.features.AutoPerspective
 import com.nopo.features.EquipmentDisplay
 import com.nopo.features.SkyHanniTrackerTitleTotemItem
 import com.nopo.features.WokeName
@@ -117,6 +118,7 @@ object NopoMod : ModInitializer {
             InfernoFuelCalculator,
             TitleApi,
             TrophyFishDisplay,
+            AutoPerspective,
         )
     }
 }
