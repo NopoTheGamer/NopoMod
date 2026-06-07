@@ -1,10 +1,12 @@
 package com.nopo.config
 
 import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import com.nopo.NopoMod
 import com.nopo.data.Version
 import com.nopo.data.VersionTypeAdapter
+import com.nopo.data.WardrobeData
 import com.nopo.utils.Utils
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.Minecraft
@@ -20,9 +22,10 @@ import java.nio.file.StandardCopyOption
 
 object ConfigManager {
 
-    val configFolder = File(FabricLoader.getInstance().configDir.toFile(), "nopo")
-    val configFile = File(configFolder, "config.json")
-    val rareCropConfigFile = File(configFolder, "rareCropData.json")
+    private val configFolder = File(FabricLoader.getInstance().configDir.toFile(), "nopo")
+    private val configFile = File(configFolder, "config.json")
+    private val rareCropConfigFile = File(configFolder, "rareCropData.json")
+    private val wardrobeKeybindsConfigFile = File(configFolder, "wardrobeKeybinds.json")
     val gson = GsonBuilder()
         .setPrettyPrinting()
         .excludeFieldsWithoutExposeAnnotation()
@@ -45,6 +48,16 @@ object ConfigManager {
         val reader = JsonReader(FileReader(rareCropConfigFile))
         var data = gson.fromJson<RareCropConfigHolder>(reader, RareCropConfigHolder::class.java)
         if (data == null) data = RareCropConfigHolder()
+        return data
+    }
+
+    fun initWardrobeKeybinds(): List<WardrobeData> {
+        configFolder.mkdirs()
+        wardrobeKeybindsConfigFile.createNewFile()
+        val reader = JsonReader(FileReader(wardrobeKeybindsConfigFile))
+        val type = object : TypeToken<List<WardrobeData>>() {}.type
+        val data = gson.fromJson<List<WardrobeData>>(reader, type)
+        if (data == null) return emptyList()
         return data
     }
 

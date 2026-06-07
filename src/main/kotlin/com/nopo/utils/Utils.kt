@@ -10,6 +10,7 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.debug.DebugScreenDisplayer
 import net.minecraft.client.gui.components.debug.DebugScreenEntries
 import net.minecraft.client.gui.components.debug.DebugScreenEntry
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.network.chat.ClickEvent
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.HoverEvent
@@ -18,6 +19,7 @@ import net.minecraft.network.chat.Style
 import net.minecraft.network.chat.TextColor
 import net.minecraft.network.chat.contents.objects.AtlasSprite
 import net.minecraft.resources.Identifier
+import net.minecraft.world.inventory.ClickType
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.chunk.LevelChunk
@@ -558,5 +560,13 @@ object Utils {
             Optional.empty()
         }, Style.EMPTY)
         return new
+    }
+
+    fun clickSlot(slot: Int, button: Int) {
+        val gui = Minecraft.getInstance().screen
+        if (gui is AbstractContainerScreen<*>) {
+            val slotObj = gui.menu.getSlot(slot)
+            gui.slotClicked(slotObj, slot, button, ClickType.PICKUP)
+        }
     }
 }
