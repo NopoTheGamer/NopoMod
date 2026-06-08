@@ -23,7 +23,8 @@
     "fa5393b8-6bf1-4f0f-8f03-7759d9c2df62": ["thinking"],
     "10ebc9da-1875-47b4-871b-e60408d4cc09": ["cat2"],
     "32b42025-5eb0-44d6-9cc9-2069b866fe7a": ["trans", "trans"],
-    "af3f1844-1aa1-4e4e-9eb9-06e6bfef33b2": ["trans", "trans"]
+    "af3f1844-1aa1-4e4e-9eb9-06e6bfef33b2": ["trans", "trans"],
+    "d2caf19c-888f-44c6-9916-c34271869dbd": ["cat_bleh"]
   },
   "updateNotification": {
     "latestVersion": "1.8.1",
