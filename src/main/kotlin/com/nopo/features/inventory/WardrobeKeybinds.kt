@@ -36,8 +36,8 @@ object WardrobeKeybinds : BaseModule("wardrobeKeybinds"), TickEvent, CommandRegi
         var foundValidKeybindSet = false
         for (bind in keybindData) {
             if (foundValidKeybindSet) break
-            if (bind.map != null && HypixelUtils.map != bind.map) continue
-            if (bind.mode != null && HypixelUtils.mode != bind.mode) continue
+            if (bind.map != null && HypixelUtils.map !in bind.map) continue
+            if (bind.mode != null && HypixelUtils.mode !in bind.mode) continue
 
             foundValidKeybindSet = true
             for ((index, key) in bind.getKeys().withIndex()) {

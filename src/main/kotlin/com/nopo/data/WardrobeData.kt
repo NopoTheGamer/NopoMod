@@ -3,8 +3,8 @@ package com.nopo.data
 import com.google.gson.annotations.Expose
 
 data class WardrobeData(
-    @Expose val map: String?,
-    @Expose val mode: String?,
+    @Expose val map: List<String>?,
+    @Expose val mode: List<String>?,
     @Expose val allowUnequip: Boolean?,
     @Expose val key1: Int?,
     @Expose val key2: Int?,
