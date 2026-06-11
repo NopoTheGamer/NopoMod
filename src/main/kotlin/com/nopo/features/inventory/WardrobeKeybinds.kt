@@ -72,6 +72,10 @@ object WardrobeKeybinds : BaseModule("wardrobeKeybinds"), TickEvent, CommandRegi
             "wardrobeKeybindsReload" {
                 runs {
                     NopoMod.wardrobeDataConfig = ConfigManager.initWardrobeKeybinds()
+                    if (NopoMod.wardrobeDataConfig.isEmpty()) {
+                        Utils.sendMessageToPlayer("Reloaded keybinds but none were found :(")
+                        return@runs
+                    }
                     Utils.sendMessageToPlayer("Reloaded wardrobe keybind data :)")
                 }
             }
