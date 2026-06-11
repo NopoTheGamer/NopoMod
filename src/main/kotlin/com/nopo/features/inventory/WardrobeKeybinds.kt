@@ -29,6 +29,7 @@ object WardrobeKeybinds : BaseModule("wardrobeKeybinds"), TickEvent, CommandRegi
     @JvmStatic
     fun onKeyPress(screen: Screen): Boolean {
         if (!HypixelUtils.onSkyblock()) return false
+        if (keybindData.isEmpty()) return false
         if (cooldown > 0) return false
         if (screen !is ContainerScreen) return false
         if (!screen.title.string.startsWith("Wardrobe (")) return false
