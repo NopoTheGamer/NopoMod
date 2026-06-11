@@ -5,7 +5,9 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "MixinCopyChat",
+    "MixinLevelRenderer",
     "MixinPlayerEntity",
+    "MixinSheep",
     "MixinSkyHanniItemTracker"
   ],
   "injectors": {
