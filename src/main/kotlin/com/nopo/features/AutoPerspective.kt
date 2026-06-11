@@ -25,7 +25,7 @@ object AutoPerspective : FeatureModule("autoPerspective", NopoMod.config.perspec
 
     fun getConfig() = config as PerspectiveConfig
 
-    fun getDegreesNeeded() = 90 - (getConfig().degreesFromBottom ?: 20)
+    fun getDegreesNeeded() = 90 - (getConfig().degreesFromBottom ?: 10)
 
     var settingF5 = false
 
@@ -57,8 +57,8 @@ object AutoPerspective : FeatureModule("autoPerspective", NopoMod.config.perspec
                     "setDegrees" {
                         runs { degrees: Int? ->
                             if (degrees == null) {
-                                getConfig().degreesFromBottom = 20
-                                Utils.sendMessageToPlayer("Reset degrees to 20")
+                                getConfig().degreesFromBottom = 10
+                                Utils.sendMessageToPlayer("Reset degrees to 10")
                                 ConfigManager.save()
                                 return@runs
                             }
