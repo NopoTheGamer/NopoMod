@@ -24,7 +24,8 @@
     "10ebc9da-1875-47b4-871b-e60408d4cc09": ["cat2"],
     "32b42025-5eb0-44d6-9cc9-2069b866fe7a": ["trans", "trans"],
     "af3f1844-1aa1-4e4e-9eb9-06e6bfef33b2": ["trans", "trans"],
-    "d2caf19c-888f-44c6-9916-c34271869dbd": ["cat_bleh"]
+    "d2caf19c-888f-44c6-9916-c34271869dbd": ["cat_bleh"],
+    "2cb34f42-7317-4b1e-a8bf-3e77a6e720ab": ["nerd", "point_up", "regional_indicator_m", "regional_indicator_e", "regional_indicator_o", "regional_indicator_w"]
   },
   "updateNotification": {
     "latestVersion": "1.9.0",
