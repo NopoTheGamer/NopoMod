@@ -1,6 +1,7 @@
 package com.nopo.features
 
 import com.github.stivais.commodore.Commodore
+import com.google.gson.annotations.Expose
 import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
 import com.nopo.config.ModuleConfig
@@ -91,5 +92,6 @@ object AutoPerspective : FeatureModule("autoPerspective", NopoMod.config.perspec
 }
 
 class PerspectiveConfig(enabled: Boolean) : ModuleConfig(enabled) {
+    @Expose
     var degreesFromBottom: Int? = 20
 }
