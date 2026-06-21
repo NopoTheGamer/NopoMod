@@ -11,6 +11,7 @@ import net.minecraft.client.gui.components.debug.DebugScreenDisplayer
 import net.minecraft.client.gui.components.debug.DebugScreenEntries
 import net.minecraft.client.gui.components.debug.DebugScreenEntry
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
+import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.ClickEvent
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.HoverEvent
@@ -32,6 +33,7 @@ import java.util.Locale
 import java.util.Optional
 import kotlin.concurrent.atomics.AtomicBoolean
 import kotlin.concurrent.atomics.ExperimentalAtomicApi
+import kotlin.jvm.optionals.getOrElse
 import kotlin.math.absoluteValue
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
@@ -568,5 +570,13 @@ object Utils {
             val slotObj = gui.menu.getSlot(slot)
             gui.slotClicked(slotObj, slot, button, ClickType.PICKUP)
         }
+    }
+
+    @JvmStatic
+    fun getItemId(stack: ItemStack): String {
+        val nbt = stack.get(DataComponents.CUSTOM_DATA)?.copyTag() ?: return ""
+        return nbt.get("id")?.asString()?.getOrElse {
+            null
+        } ?: ""
     }
 }

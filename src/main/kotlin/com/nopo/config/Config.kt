@@ -3,6 +3,7 @@ package com.nopo.config
 import com.google.gson.annotations.Expose
 import com.nopo.commands.TaskConfig
 import com.nopo.features.EquipmentDisplayConfig
+import com.nopo.features.FastAOTVConfig
 import com.nopo.features.PerspectiveConfig
 import com.nopo.features.combat.CocoonConfig
 import com.nopo.features.garden.AshwreathConfig
@@ -79,6 +80,9 @@ class Config {
 
     @Expose
     var perspectiveConfig = PerspectiveConfig(false)
+
+    @Expose
+    var fastAotvConfig = FastAOTVConfig(false)
 
     @Expose
     var debug = ModuleConfig(false)

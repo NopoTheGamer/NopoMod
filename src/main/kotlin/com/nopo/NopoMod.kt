@@ -17,6 +17,7 @@ import com.nopo.data.WardrobeData
 import com.nopo.events.FabricEvents
 import com.nopo.features.AutoPerspective
 import com.nopo.features.EquipmentDisplay
+import com.nopo.features.FastAOTV
 import com.nopo.features.SkyHanniTrackerTitleTotemItem
 import com.nopo.features.WokeName
 import com.nopo.features.combat.CocoonWarning
@@ -124,6 +125,7 @@ object NopoMod : ModInitializer {
             TrophyFishDisplay,
             AutoPerspective,
             WardrobeKeybinds,
+            FastAOTV,
         )
     }
 }

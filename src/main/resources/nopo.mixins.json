@@ -23,6 +23,7 @@
     "MixinCommandSuggestions",
     "MixinLayerDefinitions",
     "MixinLivingEntityRenderer",
+    "MixinMinecraft",
     "MixinModelLayers",
     "MixinParrotOnShoulderLayer",
     "MixinScreen",
