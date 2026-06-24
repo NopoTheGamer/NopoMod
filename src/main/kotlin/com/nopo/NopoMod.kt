@@ -27,6 +27,7 @@ import com.nopo.features.emoji.EmojiReplace
 import com.nopo.features.fishing.TrophyFishDisplay
 import com.nopo.features.garden.AshwreathReminder
 import com.nopo.features.garden.RareCropTracker
+import com.nopo.features.inventory.RaffleQuests
 import com.nopo.features.inventory.WardrobeKeybinds
 import com.nopo.features.meta.DebugModule
 import com.nopo.features.meta.FirstTimeGreeting
@@ -126,6 +127,7 @@ object NopoMod : ModInitializer {
             AutoPerspective,
             WardrobeKeybinds,
             FastAOTV,
+            RaffleQuests,
         )
     }
 }

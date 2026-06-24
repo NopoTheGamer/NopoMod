@@ -36,6 +36,9 @@ import kotlin.concurrent.atomics.ExperimentalAtomicApi
 import kotlin.jvm.optionals.getOrElse
 import kotlin.math.absoluteValue
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
 object Utils {
@@ -509,6 +512,17 @@ object Utils {
             }
         }
         return prefix + result.trim()
+    }
+
+    val timeRegex = Regex("(?:(?<y>\\d+) ?y(?:\\w* ?)?)?(?:(?<d>\\d+) ?d(?:\\w* ?)?)?(?:(?<h>\\d+) ?h(?:\\w* ?)?)?(?:(?<m>\\d+) ?m(?:\\w* ?)?)?(?:(?<s>\\d+) ?s(?:\\w* ?)?)?")
+
+    fun String.getDuration(): Duration {
+        val years = timeRegex.group(this, "y")?.toLong()?.days?.times(365) ?: 0.seconds
+        val days = timeRegex.group(this, "d")?.toLong()?.days ?: 0.seconds
+        val hours = timeRegex.group(this, "h")?.toLong()?.hours ?: 0.seconds
+        val minutes = timeRegex.group(this, "m")?.toLong()?.minutes ?: 0.seconds
+        val seconds = timeRegex.group(this, "s")?.toLong()?.seconds ?: 0.seconds
+        return years + days + hours + minutes + seconds
     }
 
     fun Number.addSeparators(): String {

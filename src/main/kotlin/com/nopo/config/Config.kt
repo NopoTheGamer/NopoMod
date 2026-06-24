@@ -85,6 +85,9 @@ class Config {
     var fastAotvConfig = FastAOTVConfig(false)
 
     @Expose
+    var raffleQuestConfig = PositionConfig()
+
+    @Expose
     var debug = ModuleConfig(false)
 
 }
