@@ -21,7 +21,6 @@
     "MixinCapeLayer",
     "MixinClientPacketListener",
     "MixinCommandSuggestions",
-    "MixinHumanoidArmourLayer",
     "MixinLayerDefinitions",
     "MixinLivingEntityRenderer",
     "MixinMinecraft",

@@ -11,7 +11,7 @@ import com.nopo.utils.Utils
 import com.nopo.utils.Utils.cleanColor
 import com.nopo.utils.Utils.group
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.screens.inventory.ContainerScreen
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
@@ -62,7 +62,7 @@ object RaffleQuests : FeatureModule("raffleQuestDisplay", NopoMod.config.raffleQ
         }
     }
 
-    override fun render(context: GuiGraphics) {
+    override fun render(context: GuiGraphicsExtractor) {
         if (!config.enabled) return
         if (!HypixelUtils.onSkyblock()) return
         getConfig().pos.render(context) {
@@ -70,9 +70,9 @@ object RaffleQuests : FeatureModule("raffleQuestDisplay", NopoMod.config.raffleQ
         }
     }
 
-    override fun doRender(context: GuiGraphics) {
+    override fun doRender(context: GuiGraphicsExtractor) {
         for ((index, task) in tasks.entries.withIndex()) {
-            context.drawString(Minecraft.getInstance().font, task.value, 0, index * 10, -1)
+            context.text(Minecraft.getInstance().font, task.value, 0, index * 10, -1)
         }
     }
 

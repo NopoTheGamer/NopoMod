@@ -20,7 +20,7 @@ import net.minecraft.network.chat.Style
 import net.minecraft.network.chat.TextColor
 import net.minecraft.network.chat.contents.objects.AtlasSprite
 import net.minecraft.resources.Identifier
-import net.minecraft.world.inventory.ClickType
+import net.minecraft.world.inventory.ContainerInput
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.level.Level
@@ -583,7 +583,7 @@ object Utils {
         val gui = Minecraft.getInstance().screen
         if (gui is AbstractContainerScreen<*>) {
             val slotObj = gui.menu.getSlot(slot)
-            gui.slotClicked(slotObj, slot, button, ClickType.PICKUP)
+            gui.slotClicked(slotObj, slot, button, ContainerInput.PICKUP)
         }
     }
 
