@@ -32,6 +32,11 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
     var equipment = arrayOfNulls<ItemStack?>(4)
     val slotIndexes = listOf(10, 19, 28, 37)
 
+    val loadoutRegex = Regex("\\(\\d+/\\d+\\) Loadouts")
+    val equipmentRegex = Regex("\\(\\d+/\\d+\\) Equipment Sets")
+
+    val eqActiveSwaps = 36..44
+
     override fun render(context: GuiGraphicsExtractor) {
         if (!config.enabled) return
         if (!HypixelUtils.onSkyblock()) return
@@ -81,7 +86,13 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
         if (!HypixelUtils.onSkyblock()) return
         val screen = Minecraft.getInstance().screen
         if (screen !is ContainerScreen) return
-        if (screen.title.string != "Your Equipment and Stats") return
+        val title = screen.title.string
+        if (title == "Your Equipment and Stats") statsAndLoadout()
+        if (loadoutRegex.matches(title)) statsAndLoadout()
+        if (equipmentRegex.matches(title)) eqWardrobe()
+    }
+
+    private fun statsAndLoadout() {
         val slots = Minecraft.getInstance().player?.containerMenu?.slots ?: return
         equipment = arrayOfNulls<ItemStack?>(4)
         for (index in slotIndexes.withIndex()) {
@@ -90,6 +101,27 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
                 equipment[index.index] = stack
             }
         }
+    }
+
+    private fun eqWardrobe() {
+        val slots = Minecraft.getInstance().player?.containerMenu?.slots ?: return
+        equipment = arrayOfNulls<ItemStack?>(4)
+        var found = false
+        for (slot in eqActiveSwaps) {
+            val stack = slots[slot].item
+            if (stack.item == Items.LIME_DYE) {
+                found = true
+                val necklace = slots[slot - 36].item
+                if (necklace.item == Items.PLAYER_HEAD) equipment[0] = necklace
+                val cloak = slots[slot - 27].item
+                if (cloak.item == Items.PLAYER_HEAD) equipment[1] = cloak
+                val belt = slots[slot - 18].item
+                if (belt.item == Items.PLAYER_HEAD) equipment[2] = belt
+                val bracelet = slots[slot - 9].item
+                if (bracelet.item == Items.PLAYER_HEAD) equipment[3] = bracelet
+            }
+        }
+        if (!found) equipment = arrayOfNulls<ItemStack?>(4)
     }
 
     override fun addListCommandData(): Component {

@@ -5,7 +5,9 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "MixinCopyChat",
+    "MixinLevelRenderer",
     "MixinPlayerEntity",
+    "MixinSheep",
     "MixinSkyHanniItemTracker"
   ],
   "injectors": {
@@ -22,8 +24,10 @@
     "MixinHumanoidArmourLayer",
     "MixinLayerDefinitions",
     "MixinLivingEntityRenderer",
+    "MixinMinecraft",
     "MixinModelLayers",
     "MixinParrotOnShoulderLayer",
+    "MixinScreen",
     "MixinSplashManager",
     "MixinSuggestionsList",
     "accessor.AccessorCommandSuggestions"

@@ -13,8 +13,11 @@ import com.nopo.config.RareCropConfigHolder
 import com.nopo.data.Data
 import com.nopo.data.Version
 import com.nopo.data.Version.Companion.toVersion
+import com.nopo.data.WardrobeData
 import com.nopo.events.FabricEvents
+import com.nopo.features.AutoPerspective
 import com.nopo.features.EquipmentDisplay
+import com.nopo.features.FastAOTV
 import com.nopo.features.SkyHanniTrackerTitleTotemItem
 import com.nopo.features.WokeName
 import com.nopo.features.combat.CocoonWarning
@@ -24,6 +27,8 @@ import com.nopo.features.emoji.EmojiReplace
 import com.nopo.features.fishing.TrophyFishDisplay
 import com.nopo.features.garden.AshwreathReminder
 import com.nopo.features.garden.RareCropTracker
+import com.nopo.features.inventory.RaffleQuests
+import com.nopo.features.inventory.WardrobeKeybinds
 import com.nopo.features.meta.DebugModule
 import com.nopo.features.meta.FirstTimeGreeting
 import com.nopo.features.meta.UpdateNotification
@@ -53,6 +58,7 @@ object NopoMod : ModInitializer {
     const val MOD_ID = "nopo"
     lateinit var config: Config
     lateinit var rareCropConfig: RareCropConfigHolder
+    lateinit var wardrobeDataConfig: Map<String, List<WardrobeData>>
     var modules: List<BaseModule> = emptyList()
         private set
     private const val DATA_JSON = "https://raw.githubusercontent.com/NopoTheGamer/NopoMod/refs/heads/master/src/main/resources/assets/nopo/data.json"
@@ -71,6 +77,7 @@ object NopoMod : ModInitializer {
     override fun onInitialize() {
         config = ConfigManager.init()
         rareCropConfig = ConfigManager.initRareCrops()
+        wardrobeDataConfig = ConfigManager.initWardrobeKeybinds()
         ConfigManager.save()
         ConfigManager.saveRareCrops()
 
@@ -117,6 +124,10 @@ object NopoMod : ModInitializer {
             InfernoFuelCalculator,
             TitleApi,
             TrophyFishDisplay,
+            AutoPerspective,
+            WardrobeKeybinds,
+            FastAOTV,
+            RaffleQuests,
         )
     }
 }

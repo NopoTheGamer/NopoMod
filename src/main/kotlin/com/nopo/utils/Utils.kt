@@ -10,6 +10,8 @@ import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.components.debug.DebugScreenDisplayer
 import net.minecraft.client.gui.components.debug.DebugScreenEntries
 import net.minecraft.client.gui.components.debug.DebugScreenEntry
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
+import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.ClickEvent
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.HoverEvent
@@ -18,6 +20,7 @@ import net.minecraft.network.chat.Style
 import net.minecraft.network.chat.TextColor
 import net.minecraft.network.chat.contents.objects.AtlasSprite
 import net.minecraft.resources.Identifier
+import net.minecraft.world.inventory.ClickType
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.level.Level
@@ -31,8 +34,12 @@ import java.util.Locale
 import java.util.Optional
 import kotlin.concurrent.atomics.AtomicBoolean
 import kotlin.concurrent.atomics.ExperimentalAtomicApi
+import kotlin.jvm.optionals.getOrElse
 import kotlin.math.absoluteValue
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
 object Utils {
@@ -508,6 +515,17 @@ object Utils {
         return prefix + result.trim()
     }
 
+    val timeRegex = Regex("(?:(?<y>\\d+) ?y(?:\\w* ?)?)?(?:(?<d>\\d+) ?d(?:\\w* ?)?)?(?:(?<h>\\d+) ?h(?:\\w* ?)?)?(?:(?<m>\\d+) ?m(?:\\w* ?)?)?(?:(?<s>\\d+) ?s(?:\\w* ?)?)?")
+
+    fun String.getDuration(): Duration {
+        val years = timeRegex.group(this, "y")?.toLong()?.days?.times(365) ?: 0.seconds
+        val days = timeRegex.group(this, "d")?.toLong()?.days ?: 0.seconds
+        val hours = timeRegex.group(this, "h")?.toLong()?.hours ?: 0.seconds
+        val minutes = timeRegex.group(this, "m")?.toLong()?.minutes ?: 0.seconds
+        val seconds = timeRegex.group(this, "s")?.toLong()?.seconds ?: 0.seconds
+        return years + days + hours + minutes + seconds
+    }
+
     fun Number.addSeparators(): String {
         return NumberFormat.getNumberInstance().format(this)
     }
@@ -559,5 +577,21 @@ object Utils {
             Optional.empty()
         }, Style.EMPTY)
         return new
+    }
+
+    fun clickSlot(slot: Int, button: Int) {
+        val gui = Minecraft.getInstance().screen
+        if (gui is AbstractContainerScreen<*>) {
+            val slotObj = gui.menu.getSlot(slot)
+            gui.slotClicked(slotObj, slot, button, ClickType.PICKUP)
+        }
+    }
+
+    @JvmStatic
+    fun getItemId(stack: ItemStack): String {
+        val nbt = stack.get(DataComponents.CUSTOM_DATA)?.copyTag() ?: return ""
+        return nbt.get("id")?.asString()?.getOrElse {
+            null
+        } ?: ""
     }
 }

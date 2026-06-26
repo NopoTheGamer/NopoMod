@@ -38,7 +38,7 @@ object FabricEvents : BaseModule("fabric events") {
                     module.registerToggleCommand()?.register(dispatcher)
                 }
                 if (module is CommandRegistration) {
-                    module.createCommand().register(dispatcher)
+                    module.createCommand()?.register(dispatcher)
                 }
             }
         }
