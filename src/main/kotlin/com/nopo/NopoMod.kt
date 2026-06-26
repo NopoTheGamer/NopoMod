@@ -58,7 +58,7 @@ object NopoMod : ModInitializer {
     const val MOD_ID = "nopo"
     lateinit var config: Config
     lateinit var rareCropConfig: RareCropConfigHolder
-    lateinit var wardrobeDataConfig: List<WardrobeData>
+    lateinit var wardrobeDataConfig: Map<String, List<WardrobeData>>
     var modules: List<BaseModule> = emptyList()
         private set
     private const val DATA_JSON = "https://raw.githubusercontent.com/NopoTheGamer/NopoMod/refs/heads/master/src/main/resources/assets/nopo/data.json"

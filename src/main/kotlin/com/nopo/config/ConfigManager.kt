@@ -51,13 +51,13 @@ object ConfigManager {
         return data
     }
 
-    fun initWardrobeKeybinds(): List<WardrobeData> {
+    fun initWardrobeKeybinds(): Map<String, List<WardrobeData>> {
         configFolder.mkdirs()
         wardrobeKeybindsConfigFile.createNewFile()
         val reader = JsonReader(FileReader(wardrobeKeybindsConfigFile))
-        val type = object : TypeToken<List<WardrobeData>>() {}.type
-        val data = gson.fromJson<List<WardrobeData>>(reader, type)
-        if (data == null) return emptyList()
+        val type = object : TypeToken<Map<String, List<WardrobeData>>>() {}.type
+        val data = gson.fromJson<Map<String, List<WardrobeData>>>(reader, type)
+        if (data == null) return emptyMap()
         return data
     }
 
