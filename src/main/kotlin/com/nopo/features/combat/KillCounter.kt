@@ -19,7 +19,7 @@ import com.nopo.utils.Utils.hover
 import com.nopo.utils.Utils.withColor
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
 import kotlin.jvm.optionals.getOrNull
@@ -46,7 +46,7 @@ object KillCounter : FeatureModule("killCounter", NopoMod.config.killCounterConf
         }
     }
 
-    override fun render(context: GuiGraphics) {
+    override fun render(context: GuiGraphicsExtractor) {
         if (!HypixelUtils.onSkyblock()) return
         if (!config.enabled) return
         if (trackedKills.isEmpty()) return
@@ -55,13 +55,13 @@ object KillCounter : FeatureModule("killCounter", NopoMod.config.killCounterConf
         }
     }
 
-    override fun doRender(context: GuiGraphics) {
+    override fun doRender(context: GuiGraphicsExtractor) {
         var kills = 0
         for ((_, data) in trackedKills) {
             kills += data.currentKills - data.startKills
         }
         if (kills == 0) return
-        context.drawString(
+        context.text(
             Minecraft.getInstance().font, Utils.componentBuilder {
                 append("Total kills today: ")
                 appendWithColor("$kills", ChatFormatting.YELLOW)
