@@ -88,6 +88,9 @@ class Config {
     var raffleQuestConfig = PositionConfig()
 
     @Expose
+    var minionCantReachConfig = PositionConfig(200, 200, 2f, default = false)
+
+    @Expose
     var debug = ModuleConfig(false)
 
 }
