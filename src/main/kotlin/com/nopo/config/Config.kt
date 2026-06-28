@@ -91,6 +91,9 @@ class Config {
     var minionCantReachConfig = PositionConfig(200, 200, 2f, default = false)
 
     @Expose
+    var killCounterConfig = PositionConfig(default = false)
+
+    @Expose
     var debug = ModuleConfig(false)
 
 }
