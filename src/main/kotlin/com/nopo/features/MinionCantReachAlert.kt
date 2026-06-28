@@ -12,7 +12,7 @@ import com.nopo.utils.Utils.group
 import com.nopo.utils.Utils.withColor
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.world.entity.decoration.ArmorStand
 
 object MinionCantReachAlert : FeatureModule("minionCantReachAlert", NopoMod.config.minionCantReachConfig), TickEvent, GuiRendering {
@@ -37,7 +37,7 @@ object MinionCantReachAlert : FeatureModule("minionCantReachAlert", NopoMod.conf
         }
     }
 
-    override fun render(context: GuiGraphics) {
+    override fun render(context: GuiGraphicsExtractor) {
         if (!config.enabled) return
         if (!IslandType.PRIVATE_ISLAND.isActive()) return
         if (currentMob == null) return
@@ -46,8 +46,8 @@ object MinionCantReachAlert : FeatureModule("minionCantReachAlert", NopoMod.conf
         }
     }
 
-    override fun doRender(context: GuiGraphics) {
-        context.drawString(
+    override fun doRender(context: GuiGraphicsExtractor) {
+        context.text(
             Minecraft.getInstance().font, Utils.componentBuilder {
                 append("Minions have stopped generating ")
                 append(currentMob ?: "mobs")
