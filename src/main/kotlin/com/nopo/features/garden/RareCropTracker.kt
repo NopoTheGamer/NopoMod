@@ -38,6 +38,8 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
     // PET DROP! LEGENDARY Slug (+136☀)
     private val petDropRegex = Regex("PET DROP! (?<pet>\\w+) \\(\\+[0-9,.]+☀\\)")
 
+    private const val CROP_FEVER = "WOAH! You caught a case of the CROP FEVER for 60 seconds!"
+
     override fun onChat(message: Component, actionBar: Boolean) {
         if (!HypixelUtils.onSkyblock() || !config.enabled) return
         if (!IslandType.GARDEN.isActive()) return
@@ -55,6 +57,10 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
             }
             addRareDrop("$rarity $pet", message)
             return
+        }
+
+        if (string == CROP_FEVER) {
+            addRareDrop("CROP FEVER", message)
         }
 
         if (!string.matches(rareCropRegex)) return
