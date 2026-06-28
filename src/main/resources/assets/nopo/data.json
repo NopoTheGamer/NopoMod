@@ -28,8 +28,8 @@
     "2cb34f42-7317-4b1e-a8bf-3e77a6e720ab": ["nerd", "point_up", "regional_indicator_m", "regional_indicator_e", "regional_indicator_o", "regional_indicator_w"]
   },
   "updateNotification": {
-    "latestVersion": "1.10.0",
-    "download": "https://modrinth.com/mod/nopo-mod/version/5k6fYX1E"
+    "latestVersion": "1.11.0",
+    "download": "https://modrinth.com/mod/nopo-mod/version/1.11.0"
   },
   "disabledFeatures": [
     "ashwreath"
