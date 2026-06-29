@@ -16847,6 +16847,9 @@
     },
     {
       "name": "skyblock_player"
+    },
+    {
+      "name": "aware"
     }
   ]
 }
