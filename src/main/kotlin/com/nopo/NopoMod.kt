@@ -5,6 +5,7 @@ import com.nopo.commands.DiscordCommand
 import com.nopo.commands.InfernoFuelCalculator
 import com.nopo.commands.ListConfigCommand
 import com.nopo.commands.MainCommand
+import com.nopo.commands.RingCommand
 import com.nopo.commands.SixSeven
 import com.nopo.commands.TaskList
 import com.nopo.config.Config
@@ -132,6 +133,7 @@ object NopoMod : ModInitializer {
             RaffleQuests,
             MinionCantReachAlert,
             KillCounter,
+            RingCommand,
         )
     }
 }
