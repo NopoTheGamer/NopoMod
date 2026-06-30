@@ -14,8 +14,7 @@ object WokeName : FeatureModule("woke", NopoMod.config.wokeConfig, shouldBeHidde
 
     val nameComp by lazy {
         componentBuilder {
-            append(Utils.createGradientText(Color(85, 255, 255), Color.MAGENTA, "Throwpo"))
-            // TODO: remove on 26.1
+            append(Utils.createGradientText(Color(85, 255, 255), Color.MAGENTA, "meowgirlemily"))
             if (Utils.isDevAllowed()) {
                 append(" ")
                 val trans = Utils.createEmoji("trans")
