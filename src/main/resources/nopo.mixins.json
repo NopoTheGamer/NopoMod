@@ -17,6 +17,7 @@
     "requireAnnotations": true
   },
   "client": [
+    "MixinAbstractContainerScreen",
     "MixinAvatarRenderer",
     "MixinCapeLayer",
     "MixinClientPacketListener",

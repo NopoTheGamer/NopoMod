@@ -94,6 +94,9 @@ class Config {
     var killCounterConfig = PositionConfig(default = false)
 
     @Expose
+    var harpMisclickConfig = ModuleConfig()
+
+    @Expose
     var debug = ModuleConfig(false)
 
 }
