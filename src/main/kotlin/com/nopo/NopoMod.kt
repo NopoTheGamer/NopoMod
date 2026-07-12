@@ -16,6 +16,7 @@ import com.nopo.data.Version
 import com.nopo.data.Version.Companion.toVersion
 import com.nopo.data.WardrobeData
 import com.nopo.events.FabricEvents
+import com.nopo.features.AutoJoinParty
 import com.nopo.features.AutoPerspective
 import com.nopo.features.EquipmentDisplay
 import com.nopo.features.FastAOTV
@@ -136,6 +137,7 @@ object NopoMod : ModInitializer {
             KillCounter,
             RingCommand,
             HarpMisclick,
+            AutoJoinParty
         )
     }
 }

@@ -97,6 +97,9 @@ class Config {
     var harpMisclickConfig = ModuleConfig()
 
     @Expose
+    var autoJoinParty = ModuleConfig(false)
+
+    @Expose
     var debug = ModuleConfig(false)
 
 }
