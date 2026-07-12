@@ -1,0 +1,166 @@
+{
+  "ABILITY_DAMAGE": {
+    "from": "๑",
+    "to": ""
+  },
+  "BLOCK_FORTUNE": {
+    "from": "☘",
+    "to": ""
+  },
+  "BONUS_ATTACK_SPEED": {
+    "from": "⚔",
+    "to": ""
+  },
+  "BONUS_PEST_CHANCE": {
+    "from": "",
+    "to": ""
+  },
+  "BREAKING_POWER": {
+    "from": "Ⓟ",
+    "to": ""
+  },
+  "COLD_RESISTANCE": {
+    "from": "❄",
+    "to": ""
+  },
+  "CRIT_CHANCE": {
+    "from": "☣",
+    "to": ""
+  },
+  "CRIT_DAMAGE": {
+    "from": "☠",
+    "to": ""
+  },
+  "DAMAGE": {
+    "from": "❁",
+    "to": ""
+  },
+  "DEFENSE": {
+    "from": "❈",
+    "to": ""
+  },
+  "DOUBLE_HOOK_CHANCE": {
+    "from": "⚓",
+    "to": ""
+  },
+  "FEAR": {
+    "from": "☠",
+    "to": ""
+  },
+  "FEROCITY": {
+    "from": "⫽",
+    "to": ""
+  },
+  "FISHING_SPEED": {
+    "from": "☂",
+    "to": ""
+  },
+  "GEMSTONE_SPREAD": {
+    "from": "▚",
+    "to": ""
+  },
+  "HEALTH": {
+    "from": "❤",
+    "to": ""
+  },
+  "HEALTH_REGEN": {
+    "from": "❣",
+    "to": ""
+  },
+  "HEARTS": {
+    "from": "♥",
+    "to": "♥"
+  },
+  "HEAT_RESISTANCE": {
+    "from": "♨",
+    "to": ""
+  },
+  "INTELLIGENCE": {
+    "from": "✎",
+    "to": ""
+  },
+  "MAGIC_FIND": {
+    "from": "✯",
+    "to": ""
+  },
+  "MENDING": {
+    "from": "☄",
+    "to": ""
+  },
+  "MINING_SPEED": {
+    "from": "⸕",
+    "to": ""
+  },
+  "OVERBLOOM": {
+    "from": "☀",
+    "to": ""
+  },
+  "PET_LUCK": {
+    "from": "♣",
+    "to": ""
+  },
+  "PRESSURE_RESISTANCE": {
+    "from": "❍",
+    "to": ""
+  },
+  "PRISTINE": {
+    "from": "✧",
+    "to": ""
+  },
+  "PULL": {
+    "from": "ᛷ",
+    "to": ""
+  },
+  "RESPIRATION": {
+    "from": "⚶",
+    "to": ""
+  },
+  "RIFT_DAMAGE": {
+    "from": "❁",
+    "to": ""
+  },
+  "RIFT_TIME": {
+    "from": "ф",
+    "to": ""
+  },
+  "SEA_CREATURE_CHANCE": {
+    "from": "α",
+    "to": ""
+  },
+  "SPEED": {
+    "from": "✦",
+    "to": ""
+  },
+  "STRENGTH": {
+    "from": "❁",
+    "to": ""
+  },
+  "SWEEP": {
+    "from": "∮",
+    "to": ""
+  },
+  "SWING_RANGE": {
+    "from": "Ⓢ",
+    "to": ""
+  },
+  "TRACKING": {
+    "from": "❃",
+    "to": ""
+  },
+  "TREASURE_CHANCE": {
+    "from": "⛃",
+    "to": ""
+  },
+  "TROPHY_FISH_CHANCE": {
+    "from": "♔",
+    "to": ""
+  },
+  "TRUE_DEFENSE": {
+    "from": "❂",
+    "to": ""
+  },
+  "VITALITY": {
+    "from": "♨",
+    "to": ""
+  }
+}

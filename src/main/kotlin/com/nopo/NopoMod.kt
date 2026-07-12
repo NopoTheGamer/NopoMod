@@ -21,6 +21,7 @@ import com.nopo.features.AutoPerspective
 import com.nopo.features.EquipmentDisplay
 import com.nopo.features.FastAOTV
 import com.nopo.features.MinionCantReachAlert
+import com.nopo.features.SendOldIcons
 import com.nopo.features.SkyHanniTrackerTitleTotemItem
 import com.nopo.features.WokeName
 import com.nopo.features.combat.CocoonWarning
@@ -137,7 +138,8 @@ object NopoMod : ModInitializer {
             KillCounter,
             RingCommand,
             HarpMisclick,
-            AutoJoinParty
+            AutoJoinParty,
+            SendOldIcons,
         )
     }
 }
