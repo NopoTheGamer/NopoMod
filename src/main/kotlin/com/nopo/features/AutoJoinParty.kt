@@ -7,7 +7,7 @@ import com.nopo.events.TickEvent
 import com.nopo.module.FeatureModule
 import com.nopo.utils.SkyHanniUtils
 import com.nopo.utils.Utils
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper
 import net.minecraft.client.KeyMapping
 import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
@@ -16,7 +16,7 @@ import org.lwjgl.glfw.GLFW
 
 object AutoJoinParty : FeatureModule("autoJoinParty", NopoMod.config.autoJoinPartyConfig, null, { !Utils.isDevAllowed() && !Utils.isCal() && !SkyHanniUtils.isSkyHanniLoaded }), ChatEvent, TickEvent {
 
-    val sendLocation = KeyBindingHelper.registerKeyBinding(
+    val sendLocation = KeyMappingHelper.registerKeyMapping(
         KeyMapping(
             "key.nopo.send_location",
             InputConstants.Type.MOUSE,

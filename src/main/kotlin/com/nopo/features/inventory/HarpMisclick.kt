@@ -5,15 +5,15 @@ import com.nopo.module.FeatureModule
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.gui.screens.inventory.ContainerScreen
-import net.minecraft.world.inventory.ClickType
+import net.minecraft.world.inventory.ContainerInput
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.level.block.Blocks
 
 object HarpMisclick : FeatureModule("preventHarpMisclicks", NopoMod.config.harpMisclickConfig) {
 
     @JvmStatic
-    fun onSlotClick(slot: Slot?, slotId: Int?, buttonNum: Int?, clickType: ClickType?): Boolean {
-        if (clickType != ClickType.CLONE) return false
+    fun onSlotClick(slot: Slot?, slotId: Int?, buttonNum: Int?, clickType: ContainerInput?): Boolean {
+        if (clickType != ContainerInput.CLONE) return false
         if (slotId !in 37..43 || slotId == null) return false
         val screen: Screen? = Minecraft.getInstance().screen
         if (screen !is ContainerScreen) return false
