@@ -30,13 +30,13 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
     private fun getConfig() = NopoMod.rareCropConfig.cropConfig
 
     /*
-    RARE CROP! Seasoning (+131☀) (automatically donated)
-    RARE CROP! Melon Juice (+162☀)
+    RARE CROP! Seasoning (+131) (automatically donated)
+    RARE CROP! Melon Juice (+162)
      */
-    private val rareCropRegex = Regex("(?:VERY )?RARE CROP! (?<crop>[a-zA-Z ]+) \\(\\+[0-9,.]+☀\\)( \\(automatically donated\\))?")
+    private val rareCropRegex = Regex("(?:VERY )?RARE CROP! (?<crop>[a-zA-Z ]+) \\(\\+[0-9,.]+\\)( \\(automatically donated\\))?")
 
-    // PET DROP! LEGENDARY Slug (+136☀)
-    private val petDropRegex = Regex("PET DROP! (?<pet>\\w+) \\(\\+[0-9,.]+☀\\)")
+    // PET DROP! LEGENDARY Slug (+136)
+    private val petDropRegex = Regex("PET DROP! (?<pet>\\w+) \\(\\+[0-9,.]+\\)")
 
     private const val CROP_FEVER = "WOAH! You caught a case of the CROP FEVER for 60 seconds!"
 

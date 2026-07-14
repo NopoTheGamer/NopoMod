@@ -287,6 +287,10 @@ object Utils {
         return FabricLoader.getInstance().isDevelopmentEnvironment || Minecraft.getInstance().player?.uuid == NopoMod.data?.devs?.first()
     }
 
+    fun isCal(): Boolean {
+        return Minecraft.getInstance().player?.uuid.toString() == "eaa5623c-8413-46b7-a74b-2d74a42b2841"
+    }
+
     fun registerDebugScreenEntry(
         name: String,
         condition: () -> Boolean = { true },

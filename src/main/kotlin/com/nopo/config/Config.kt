@@ -94,6 +94,15 @@ class Config {
     var killCounterConfig = PositionConfig(default = false)
 
     @Expose
+    var harpMisclickConfig = ModuleConfig()
+
+    @Expose
+    var autoJoinPartyConfig = ModuleConfig(false)
+
+    @Expose
+    var sendOldIconConfig = ModuleConfig()
+
+    @Expose
     var debug = ModuleConfig(false)
 
 }

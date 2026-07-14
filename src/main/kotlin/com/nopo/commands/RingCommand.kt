@@ -13,7 +13,17 @@ object RingCommand : BaseModule("ring command"), CommandRegistration, TickEvent 
 
     override fun createCommand(): Commodore {
         return Commodore("nopo") {
+            // lowkey wish aliases worked...
             "ring" {
+                runs { name: String? ->
+                    if (name == null) {
+                        Utils.sendMessageToPlayer("You gotta ring someone :/")
+                        return@runs
+                    }
+                    currentPersonToAnnoy = name
+                }
+            }
+            "call" {
                 runs { name: String? ->
                     if (name == null) {
                         Utils.sendMessageToPlayer("You gotta ring someone :/")

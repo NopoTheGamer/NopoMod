@@ -11,6 +11,7 @@ import com.nopo.events.WorldChange
 import com.nopo.module.FeatureModule
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
+import com.nopo.utils.IslandType
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.cleanColor
 import com.nopo.utils.Utils.componentBuilder
@@ -27,15 +28,16 @@ object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bo
     private val bossTypeRegex = Regex(" +(?<slayer>Wolf|Zombie|Blaze|Vampire|Spider|Enderman|Guardian) Slayer LVL \\d.*")
 
     /*
-    * VERY RARE DROP! (Critical VI) (+218% ✯ Magic Find)
-    * RARE DROP! (4x Hamster Wheel) (+218% ✯ Magic Find)
-    * INSANE DROP! (Shard of the Shredded) (+170% ✯ Magic Find)
+    * VERY RARE DROP! (Critical VI) (+218%  Magic Find)
+    * RARE DROP! (4x Hamster Wheel) (+218%  Magic Find)
+    * INSANE DROP! (Shard of the Shredded) (+170%  Magic Find)
     * INSANE DROP! (Warden Heart)
-    * CRAZY RARE DROP! (Judgement Core) (+236% ✯ Magic Find)
-    * VERY RARE DROP! (◆ Spirit Rune I) (+218% ✯ Magic Find)
+    * CRAZY RARE DROP! (Judgement Core) (+236%  Magic Find)
+    * VERY RARE DROP! (◆ Spirit Rune I) (+218%  Magic Find)
      */
     private val dropRegex = Regex("(?:VERY RARE|RARE|INSANE|CRAZY RARE) DROP! \\((?<amount>\\d+x )?(?<item>[^)]+)\\)(?: .+)?")
     private var currentBoss: SlayerType? = null
+    private var hasWorldChanged = false
 
     init {
         for (type in SlayerType.entries) {
@@ -59,19 +61,24 @@ object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bo
             }
             getConfig().bossMap[currentBoss]?.kills++
             ConfigManager.save()
+            hasWorldChanged = false
             return
         }
 
         if (dropRegex.matches(string)) {
             DelayedRuns.schedule(30) {
-                // should only happen if the first boss is a cocoon
-                // maybe if the first boss is a t5 spider that takes ages to play its anim
+                var currentBoss = currentBoss
+                if (IslandType.RIFT.isActive()) currentBoss = SlayerType.VAMPIRE
                 if (currentBoss == null) {
                     Utils.debug("dropped $string but no current boss")
                     return@schedule
                 }
                 val drop = dropRegex.matchEntire(string)?.groups["item"]?.value ?: return@schedule
                 val bossData = getConfig().bossMap[currentBoss]
+                if (hasWorldChanged && bossData?.drops[drop] == null) {
+                    Utils.debug("dropped $string but world swap and boss hasn't dropped this")
+                    return@schedule
+                }
                 val currentKills = bossData?.kills ?: 0
                 val lastDropped = bossData?.drops[drop] ?: 0
                 bossData?.drops[drop] = currentKills
@@ -94,7 +101,7 @@ object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bo
     }
 
     override fun onWorldChange() {
-        currentBoss = null
+        hasWorldChanged = true
     }
 
     override fun createCommand(): Commodore {
