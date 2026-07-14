@@ -51,7 +51,10 @@ object SendOldIcons : FeatureModule("sendOldIcons", NopoMod.config.sendOldIconCo
         if (iconMap == null) return null
         var hasReplaced = false
         var newMessage = message.copy()
-        for ((_, icon) in iconMap) {
+        for ((name, icon) in iconMap) {
+            // hypixel uses a bunch of old stat symbols as icons in other places so this kinda cooks some stuff
+            // magic find is the only stat that is sent enough to be worthwhile to replace
+            if (name != "MAGIC_FIND") continue
             newMessage = newMessage.replace(icon.from, icon.to) ?: continue
             hasReplaced = true
         }
