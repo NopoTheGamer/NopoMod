@@ -103,6 +103,9 @@ class Config {
     var sendOldIconConfig = ModuleConfig()
 
     @Expose
+    var experimentRngConfig = PositionConfig(387, 170)
+
+    @Expose
     var debug = ModuleConfig(false)
 
 }

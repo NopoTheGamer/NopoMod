@@ -32,6 +32,7 @@ import com.nopo.features.emoji.EmojiReplace
 import com.nopo.features.fishing.TrophyFishDisplay
 import com.nopo.features.garden.AshwreathReminder
 import com.nopo.features.garden.RareCropTracker
+import com.nopo.features.inventory.ExperimentationRngDisplay
 import com.nopo.features.inventory.HarpMisclick
 import com.nopo.features.inventory.RaffleQuests
 import com.nopo.features.inventory.WardrobeKeybinds
@@ -140,6 +141,7 @@ object NopoMod : ModInitializer {
             HarpMisclick,
             AutoJoinParty,
             SendOldIcons,
+            ExperimentationRngDisplay,
         )
     }
 }
