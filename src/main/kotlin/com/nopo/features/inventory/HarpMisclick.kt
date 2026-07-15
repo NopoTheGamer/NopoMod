@@ -13,6 +13,7 @@ object HarpMisclick : FeatureModule("preventHarpMisclicks", NopoMod.config.harpM
 
     @JvmStatic
     fun onSlotClick(slot: Slot?, slotId: Int?, buttonNum: Int?, clickType: ClickType?): Boolean {
+        if (!config.enabled) return false
         if (clickType != ClickType.CLONE) return false
         if (slotId !in 37..43 || slotId == null) return false
         val screen: Screen? = Minecraft.getInstance().screen
