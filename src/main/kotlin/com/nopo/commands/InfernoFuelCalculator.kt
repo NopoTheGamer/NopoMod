@@ -20,8 +20,8 @@ object InfernoFuelCalculator : BaseModule("inferno fuel", { !SkyHanniUtils.isSky
 
                     val distillate = SkyHanniUtils.getAmountInSack("CRUDE_GABAGOOL_DISTILLATE")
                     val sulphuricCoal = SkyHanniUtils.getAmountInSack("SULPHURIC_COAL")
-                    val coal = SkyHanniUtils.getAmountInSack("ENCHANTED_COAL") * 160 + SkyHanniUtils.getAmountInSack("COAL") + (sulphuricCoal * 16 * 160)
-                    val sulphur = SkyHanniUtils.getAmountInSack("ENCHANTED_SULPHUR") * 160 + SkyHanniUtils.getAmountInSack("SULPHUR_ORE") + sulphuricCoal * 160
+                    val coal = SkyHanniUtils.getAmountInSack("ENCHANTED_COAL") * 160 + SkyHanniUtils.getAmountInSack("COAL") + (sulphuricCoal * 4 * 160)
+                    val sulphur = SkyHanniUtils.getAmountInSack("ENCHANTED_SULPHUR") * 160 + SkyHanniUtils.getAmountInSack("SULPHUR_ORE") + sulphuricCoal * 40
 
                     val craftableWithCoal = coal / COAL_NEEDED
                     val craftableWithSulphur = sulphur / SULPHUR_NEEDED
