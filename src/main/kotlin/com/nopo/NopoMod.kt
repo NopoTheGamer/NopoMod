@@ -1,6 +1,16 @@
 package com.nopo
 
 import com.google.gson.stream.JsonReader
+import com.nopo.categories.ChatCategory
+import com.nopo.categories.CombatCategory
+import com.nopo.categories.DevCategory
+import com.nopo.categories.FarmingCategory
+import com.nopo.categories.FishingCategory
+import com.nopo.categories.FunCategory
+import com.nopo.categories.InventoryCategory
+import com.nopo.categories.MiningCategory
+import com.nopo.categories.MiscCategory
+import com.nopo.categories.RiftCategory
 import com.nopo.commands.DiscordCommand
 import com.nopo.commands.InfernoFuelCalculator
 import com.nopo.commands.ListConfigCommand
@@ -99,49 +109,70 @@ object NopoMod : ModInitializer {
         if (data == null) data = Utils.getJsonFromJar<Data>("data.json")
 
         modules = listOf(
-            FabricEvents,
-            WokeName,
-            SixSeven,
+            ChatCategory,
             EmojiReplace,
-            DebugModule,
-            HypixelUtils,
-            OverflowPetLevels,
-            TaskList,
-            FirstTimeGreeting,
-            AshwreathReminder,
-            DelayedRuns,
-            ListConfigCommand,
+            SendOldIcons,
+            CocoonWarning,
+
+            CombatCategory,
             BossesSinceDrop,
-            RareCropTracker,
             PartyFinderKickButton,
-            EmojiName,
+
+            FarmingCategory,
+            RareCropTracker,
+
+            InventoryCategory,
+            OverflowPetLevels,
             EquipmentDisplay,
             PetDisplay,
-            DiscordCommand,
-            UpdateNotification,
+            HarpMisclick,
+            ExperimentationRngDisplay,
+
+            MiningCategory,
             PowderCoatingParticleHider,
-            SkyHanniTrackerTitleTotemItem,
-            ParrotCommand,
-            ShensOutbidNotification,
-            MainCommand,
+
+            FunCategory,
             SmallPlayers,
             BabyDollModel,
-            CocoonWarning,
-            PartyApi,
-            InfernoFuelCalculator,
-            TitleApi,
+
+            FishingCategory,
             TrophyFishDisplay,
-            AutoPerspective,
-            WardrobeKeybinds,
-            FastAOTV,
-            RaffleQuests,
+
+            RiftCategory,
+            ShensOutbidNotification,
+
+            MiscCategory,
             MinionCantReachAlert,
             KillCounter,
-            RingCommand,
-            HarpMisclick,
+            FastAOTV,
+            AutoPerspective,
+            SkyHanniTrackerTitleTotemItem,
+            RaffleQuests,
+
+            DevCategory,
+            WokeName,
+            DebugModule,
+            AshwreathReminder,
             AutoJoinParty,
-            SendOldIcons,
-            ExperimentationRngDisplay,
+
+            // not in /nopo list
+            RingCommand,
+            WardrobeKeybinds,
+            TitleApi,
+            MainCommand,
+            UpdateNotification,
+            DiscordCommand,
+            EmojiName,
+            TaskList,
+            FirstTimeGreeting,
+            DelayedRuns,
+            ListConfigCommand,
+            FabricEvents,
+            SixSeven,
+            ParrotCommand,
+            InfernoFuelCalculator,
+            HypixelUtils,
+            PartyApi,
         )
     }
 }

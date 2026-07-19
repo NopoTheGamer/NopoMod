@@ -2,6 +2,7 @@ package com.nopo.commands
 
 import com.github.stivais.commodore.Commodore
 import com.nopo.NopoMod
+import com.nopo.categories.Category
 import com.nopo.config.PositionConfig
 import com.nopo.events.CommandRegistration
 import com.nopo.events.ListCommandExtras
@@ -16,14 +17,22 @@ import com.nopo.utils.Utils.hover
 import net.minecraft.network.chat.Component
 
 object ListConfigCommand : BaseModule("list config"), CommandRegistration {
+
+    var currentCategory: String? = null
+
     override fun createCommand(): Commodore {
         return Commodore("nopo") {
             "list" {
                 runs {
                     Utils.sendMessageToPlayer("Current Config:")
                     for (module in NopoMod.modules) {
+                        if (module is Category) {
+                            currentCategory = module.moduleName
+                            continue
+                        }
                         if (module !is FeatureModule) continue
                         if (module.shouldBeHidden()) continue
+                        printCategory()
                         Utils.sendMessageToPlayer(
                             componentBuilder {
                                 append {
@@ -102,5 +111,17 @@ object ListConfigCommand : BaseModule("list config"), CommandRegistration {
                 }
             }
         }
+    }
+
+    fun printCategory() {
+        val category = currentCategory ?: return
+        Utils.sendMessageToPlayer("")
+        Utils.sendMessageToPlayer(
+            componentBuilder {
+                append(category)
+                append(":")
+            }
+        )
+        currentCategory = null
     }
 }
