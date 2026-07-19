@@ -5,6 +5,7 @@ import com.nopo.config.PositionConfig
 import com.nopo.events.GuiRendering
 import com.nopo.events.ScreenRendering
 import com.nopo.events.TickEvent
+import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.appendWithColor
@@ -18,7 +19,13 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Items
 
-object ExperimentationRngDisplay : FeatureModule("experimentationRngDisplay", NopoMod.config.experimentRngConfig), TickEvent, GuiRendering, ScreenRendering {
+object ExperimentationRngDisplay : FeatureModule("experimentationRngDisplay", NopoMod.config.experimentRngConfig,
+    ConfigData(
+        Component.literal("Experimentation Table Rng XP Display"),
+        Utils.componentBuilder {
+            append("Displays how much Rng XP you have while in the main page of the table")
+        }
+    )), TickEvent, GuiRendering, ScreenRendering {
 
     fun getConfig() = config as PositionConfig
 

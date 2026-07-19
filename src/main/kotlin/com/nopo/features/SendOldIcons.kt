@@ -21,7 +21,7 @@ object SendOldIcons : FeatureModule("sendOldIcons", NopoMod.config.sendOldIconCo
         append("Converts stat icons ")
         appendWithColor("eg ", ChatFormatting.RED)
         appendWithColor("(+398 \uE01A Magic Find) ", ChatFormatting.AQUA)
-        append("to their old versions so you can send them in chat on Hypixel")
+        append("to their old versions when you send them in chat on Hypixel")
     }
 )), ModifyOutgoingMessages, ModifyChat {
 

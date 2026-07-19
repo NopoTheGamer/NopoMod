@@ -1,15 +1,24 @@
 package com.nopo.features.inventory
 
 import com.nopo.NopoMod
+import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
+import com.nopo.utils.Utils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.gui.screens.inventory.ContainerScreen
+import net.minecraft.network.chat.Component
 import net.minecraft.world.inventory.ClickType
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.level.block.Blocks
 
-object HarpMisclick : FeatureModule("preventHarpMisclicks", NopoMod.config.harpMisclickConfig) {
+object HarpMisclick : FeatureModule("preventHarpMisclicks", NopoMod.config.harpMisclickConfig,
+    ConfigData(
+        Component.literal("Prevent Harp Misclicks"),
+        Utils.componentBuilder {
+            append("Prevents you from clicking on totally empty rows in the harp")
+        }
+    )) {
 
     @JvmStatic
     fun onSlotClick(slot: Slot?, slotId: Int?, buttonNum: Int?, clickType: ClickType?): Boolean {

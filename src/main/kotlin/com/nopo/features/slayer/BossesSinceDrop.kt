@@ -8,6 +8,7 @@ import com.nopo.config.ModuleConfig
 import com.nopo.events.ChatEvent
 import com.nopo.events.CommandRegistration
 import com.nopo.events.WorldChange
+import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
@@ -17,7 +18,13 @@ import com.nopo.utils.Utils.cleanColor
 import com.nopo.utils.Utils.componentBuilder
 import net.minecraft.network.chat.Component
 
-object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bossesSinceDrop), ChatEvent, WorldChange, CommandRegistration {
+object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bossesSinceDrop,
+    ConfigData(
+        Component.literal("Kills Since Slayer Drop"),
+        componentBuilder {
+            append("Tells you how many Slayer kills it took since last time you got that drop")
+        }
+    )), ChatEvent, WorldChange, CommandRegistration {
 
     private fun getConfig() = config as BossesSinceDropConfig
 

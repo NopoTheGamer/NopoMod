@@ -5,6 +5,7 @@ import com.nopo.config.PositionConfig
 import com.nopo.events.ChatEvent
 import com.nopo.events.GuiRendering
 import com.nopo.events.TickEvent
+import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Utils
@@ -17,7 +18,13 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Items
 
-object RaffleQuests : FeatureModule("raffleQuestDisplay", NopoMod.config.raffleQuestConfig), TickEvent, GuiRendering, ChatEvent {
+object RaffleQuests : FeatureModule("raffleQuestDisplay", NopoMod.config.raffleQuestConfig,
+    ConfigData(
+        Component.literal("Raffle Quest Display"),
+        Utils.componentBuilder {
+            append("Displays your Century Raffle quests on your screen")
+        }
+    ), shouldBeHidden = { !Utils.isDevAllowed() }), TickEvent, GuiRendering, ChatEvent {
 
     fun getConfig() = config as PositionConfig
 

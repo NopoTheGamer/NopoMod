@@ -9,6 +9,7 @@ import com.nopo.events.CommandRegistration
 import com.nopo.events.GuiRendering
 import com.nopo.events.ListCommandExtras
 import com.nopo.events.TickEvent
+import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Rarity
@@ -30,7 +31,14 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import java.util.Locale
 
-object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay), CommandRegistration, GuiRendering, TickEvent, ListCommandExtras {
+object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay,
+    ConfigData(
+        Component.literal("Pet Display"),
+        componentBuilder {
+            append("Hud element that shows your currently selected pet\n")
+            append("Shows overflow levels and progress to level 100 legendary on pets lower than legendary")
+        }
+    )), CommandRegistration, GuiRendering, TickEvent, ListCommandExtras {
 
     private fun getConfig() = config as PetConfig
     private var display: List<Component>? = null

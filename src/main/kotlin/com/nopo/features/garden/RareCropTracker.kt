@@ -7,6 +7,7 @@ import com.nopo.config.ConfigManager
 import com.nopo.events.ChatEvent
 import com.nopo.events.CommandRegistration
 import com.nopo.events.ListCommandExtras
+import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
@@ -25,7 +26,13 @@ import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import kotlin.time.Duration.Companion.milliseconds
 
-object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCrop), ChatEvent, ListCommandExtras, CommandRegistration {
+object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCrop,
+    ConfigData(
+        Component.literal("Rare Crop Tracker"),
+        componentBuilder {
+            append("Tells you how long it took to drop that Rare Crop")
+        }
+    )), ChatEvent, ListCommandExtras, CommandRegistration {
 
     private fun getConfig() = NopoMod.rareCropConfig.cropConfig
 
