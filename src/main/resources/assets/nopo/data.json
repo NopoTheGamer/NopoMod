@@ -30,8 +30,8 @@
     "6099000d-fd1e-4153-acc1-d206f1a93433": ["bug"]
   },
   "updateNotification": {
-    "latestVersion": "1.12.0",
-    "download": "https://modrinth.com/mod/nopo-mod/version/1.12.0"
+    "latestVersion": "2.0.0",
+    "download": "https://modrinth.com/mod/nopo-mod/version/2.0.0"
   },
   "disabledFeatures": [
     "ashwreath"
