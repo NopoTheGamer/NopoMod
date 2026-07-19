@@ -41,7 +41,7 @@ open class FeatureModule(
                 literal(moduleName) {
                     runs {
                         config.enabled = !config.enabled
-                        Utils.sendMessageToPlayer(
+                        Utils.sendMessageUnlessInConfig(
                             Utils.componentBuilder {
                                 append("$moduleName module ")
                                 if (config.enabled) {

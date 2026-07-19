@@ -31,7 +31,7 @@ object BabyDollModel : FeatureModule("babyDoll", NopoMod.config.babyDollConfig),
                 moduleName {
                     "everyone" {
                         runs {
-                            Utils.sendMessageToPlayer(
+                            Utils.sendMessageUnlessInConfig(
                                 componentBuilder {
                                     append("Everyone ")
                                     getConfig().everyone = !getConfig().everyone

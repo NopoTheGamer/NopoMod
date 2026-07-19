@@ -123,7 +123,7 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
                 moduleName {
                     "partyMessage" {
                         runs {
-                            Utils.sendMessageToPlayer(
+                            Utils.sendMessageUnlessInConfig(
                                 componentBuilder {
                                     append("Sending rare crops to party chat is now ")
                                     getConfig().sendToPartyChat = !getConfig().sendToPartyChat

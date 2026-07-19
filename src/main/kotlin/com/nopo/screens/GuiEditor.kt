@@ -3,6 +3,7 @@ package com.nopo.screens
 import com.nopo.config.ConfigManager
 import com.nopo.utils.Position
 import com.nopo.utils.Utils
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.input.CharacterEvent
@@ -10,6 +11,12 @@ import net.minecraft.client.input.MouseButtonEvent
 import net.minecraft.network.chat.Component
 
 class GuiEditor(val pos: Position, val runnable: (GuiGraphics) -> Unit) : Screen(Component.literal("Gui Editor")) {
+
+    var previousScreen: Screen? = null
+
+    init {
+        previousScreen = Minecraft.getInstance().screen as? ConfigScreen
+    }
 
     override fun init() {
         super.init()
@@ -71,6 +78,7 @@ class GuiEditor(val pos: Position, val runnable: (GuiGraphics) -> Unit) : Screen
         pos.y = firstY
         pos.scale = firstScale
         ConfigManager.save()
-        super.onClose()
+        if (previousScreen == null) super.onClose()
+        else Minecraft.getInstance().setScreen(previousScreen)
     }
 }

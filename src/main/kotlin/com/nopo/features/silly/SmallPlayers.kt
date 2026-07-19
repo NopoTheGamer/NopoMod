@@ -41,7 +41,7 @@ object SmallPlayers : FeatureModule("small", NopoMod.config.smallConfig), Comman
                 moduleName {
                     "everyone" {
                         runs {
-                            Utils.sendMessageToPlayer(
+                            Utils.sendMessageUnlessInConfig(
                                 componentBuilder {
                                     append("Everyone is now ")
                                     getConfig().everyone = !getConfig().everyone

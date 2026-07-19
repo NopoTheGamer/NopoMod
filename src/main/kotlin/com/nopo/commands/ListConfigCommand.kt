@@ -14,6 +14,8 @@ import com.nopo.utils.Utils.appendEmoji
 import com.nopo.utils.Utils.command
 import com.nopo.utils.Utils.componentBuilder
 import com.nopo.utils.Utils.hover
+import com.nopo.utils.Utils.withColor
+import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 
 object ListConfigCommand : BaseModule("list config"), CommandRegistration {
@@ -34,32 +36,23 @@ object ListConfigCommand : BaseModule("list config"), CommandRegistration {
                         if (module.shouldBeHidden()) continue
                         printCategory()
                         Utils.sendMessageToPlayer(
+                            printModule(module)
+                        )
+                    }
+                    if (!NopoMod.config.usedConfigMenu) {
+                        Utils.sendMessageToPlayer(
                             componentBuilder {
-                                append {
-                                    module.configData?.let { data ->
-                                        append(data.name)
-                                        data.description?.let {
-                                            hover = it
-                                        }
-                                    }
+                                appendEmoji("rotating_light")
+                                append(" New ")
+                                appendEmoji("rotating_light")
+                                append(" Config screen has been added use ")
+                                append("/nopo") {
+                                    withColor(ChatFormatting.YELLOW)
                                 }
-                                if (module.configData == null) append(module.moduleName)
-                                append(" ")
-                                if (module.config.enabled) {
-                                    appendEmoji("white_check_mark")
-                                } else {
-                                    appendEmoji("x")
-                                }
-                                if (module.config is PositionConfig) {
-                                    append(" ")
-                                    appendEmoji("left_right_arrow") {
-                                        command = "/nopo feature ${module.moduleName} setPos"
-                                        hover = Component.literal("Click to edit position")
-                                    }
-                                }
-                                if (module is ListCommandExtras) append(module.addListCommandData())
-                                command = "/nopo feature ${module.moduleName}"
-                                hover = Component.literal("Click to toggle")
+                                append(" to open")
+
+                                hover = Component.literal("Click to open the config menu")
+                                command = "/nopo"
                             }
                         )
                     }
@@ -106,7 +99,6 @@ object ListConfigCommand : BaseModule("list config"), CommandRegistration {
                                 Utils.sendMessageToPlayer(it)
                             }
                         }
-
                     }
                 }
             }
@@ -123,5 +115,35 @@ object ListConfigCommand : BaseModule("list config"), CommandRegistration {
             }
         )
         currentCategory = null
+    }
+
+    fun printModule(module: FeatureModule): Component {
+        return componentBuilder {
+            append {
+                module.configData?.let { data ->
+                    append(data.name)
+                    data.description?.let {
+                        hover = it
+                    }
+                }
+            }
+            if (module.configData == null) append(module.moduleName)
+            append(" ")
+            if (module.config.enabled) {
+                appendEmoji("white_check_mark")
+            } else {
+                appendEmoji("x")
+            }
+            if (module.config is PositionConfig) {
+                append(" ")
+                appendEmoji("left_right_arrow") {
+                    command = "/nopo feature ${module.moduleName} setPos"
+                    hover = Component.literal("Click to edit position")
+                }
+            }
+            if (module is ListCommandExtras) append(module.addListCommandData())
+            command = "/nopo feature ${module.moduleName}"
+            hover = Component.literal("Click to toggle")
+        }
     }
 }

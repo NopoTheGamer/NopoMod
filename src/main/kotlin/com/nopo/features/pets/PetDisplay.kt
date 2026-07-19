@@ -46,7 +46,7 @@ object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay), Comm
                 "petDisplay" {
                     "chatMessage" {
                         runs {
-                            Utils.sendMessageToPlayer(
+                            Utils.sendMessageUnlessInConfig(
                                 componentBuilder {
                                     append("Toggled overflow level up messages ")
                                     getConfig().chatMessage = !getConfig().chatMessage

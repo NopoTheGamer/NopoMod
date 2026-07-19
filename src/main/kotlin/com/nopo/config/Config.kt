@@ -19,6 +19,9 @@ class Config {
     var firstTime = true
 
     @Expose
+    var usedConfigMenu = false
+
+    @Expose
     var dev: Boolean? = null
 
     @Expose

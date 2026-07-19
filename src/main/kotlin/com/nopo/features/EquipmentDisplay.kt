@@ -63,7 +63,7 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
                 "equipmentDisplay" {
                     "showArmour" {
                         runs {
-                            Utils.sendMessageToPlayer(
+                            Utils.sendMessageUnlessInConfig(
                                 componentBuilder {
                                     append("Armor is now ")
                                     getConfig().showArmor = !getConfig().showArmor
