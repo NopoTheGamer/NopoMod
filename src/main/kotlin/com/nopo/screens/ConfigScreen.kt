@@ -16,7 +16,7 @@ import com.nopo.utils.Utils.withColor
 import net.minecraft.ChatFormatting
 import net.minecraft.SharedConstants
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.components.MultiLineTextWidget
 import net.minecraft.client.gui.components.StringWidget
 import net.minecraft.client.gui.screens.ConfirmLinkScreen
@@ -141,10 +141,10 @@ class ConfigScreen : Screen(Component.literal("Config")) {
     private fun getTop(): Int = height / 9 * 2
     private fun getLeft(): Int = width / 9 * 2
 
-    override fun render(context: GuiGraphics, mouseX: Int, mouseY: Int, f: Float) {
+    override fun extractRenderState(context: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, f: Float) {
         context.fill(getLeft() - 5, getTop() - 5, width / 9 * 7, height / 9 * 7, -1610612736)
-        context.renderOutline(getLeft() - 5, getTop() - 5, width / 9 * 5 + 5, height / 9 * 5 + 5, -16777216)
-        super.render(context, mouseX, mouseY, f)
+        context.outline(getLeft() - 5, getTop() - 5, width / 9 * 5 + 5, height / 9 * 5 + 5, -16777216)
+        super.extractRenderState(context, mouseX, mouseY, f)
         Utils.drawCenteredText(
             context, titleComponent, 0, getTop()
         )

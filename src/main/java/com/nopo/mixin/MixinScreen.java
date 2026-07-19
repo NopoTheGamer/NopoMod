@@ -4,7 +4,7 @@ import com.nopo.NopoMod;
 import com.nopo.events.ScreenRendering;
 import com.nopo.features.inventory.WardrobeKeybinds;
 import com.nopo.module.BaseModule;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.KeyEvent;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,8 +22,8 @@ public class MixinScreen {
         }
     }
 
-    @Inject(method = "renderWithTooltipAndSubtitles", at = @At("TAIL"))
-    public void onRender(GuiGraphics guiGraphics, int x, int y, float delta, CallbackInfo ci) {
+    @Inject(method = "extractRenderStateWithTooltipAndSubtitles", at = @At("TAIL"))
+    public void onRender(GuiGraphicsExtractor guiGraphics, int x, int y, float delta, CallbackInfo ci) {
         for (BaseModule module : NopoMod.INSTANCE.getModules()) {
             if (module instanceof ScreenRendering event) {
                 event.renderAfterScreen(guiGraphics);

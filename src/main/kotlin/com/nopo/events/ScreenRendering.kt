@@ -1,10 +1,10 @@
 package com.nopo.events
 
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 
 interface ScreenRendering {
-    fun renderAfterScreen(context: GuiGraphics)
-    fun doRenderAfterScreen(context: GuiGraphics) {
+    fun renderAfterScreen(context: GuiGraphicsExtractor)
+    fun doRenderAfterScreen(context: GuiGraphicsExtractor) {
 
     }
 }

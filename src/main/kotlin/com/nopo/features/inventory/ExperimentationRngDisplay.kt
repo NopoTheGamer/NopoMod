@@ -12,7 +12,7 @@ import com.nopo.utils.Utils.appendWithColor
 import com.nopo.utils.Utils.group
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.gui.screens.inventory.ContainerScreen
 import net.minecraft.core.component.DataComponents
@@ -53,15 +53,15 @@ object ExperimentationRngDisplay : FeatureModule("experimentationRngDisplay", No
         }
     }
 
-    override fun render(context: GuiGraphics) {
+    override fun render(context: GuiGraphicsExtractor) {
 
     }
 
-    override fun doRender(context: GuiGraphics) {
+    override fun doRender(context: GuiGraphicsExtractor) {
         doRenderAfterScreen(context)
     }
 
-    override fun renderAfterScreen(context: GuiGraphics) {
+    override fun renderAfterScreen(context: GuiGraphicsExtractor) {
         if (!config.enabled) return
         rngXp ?: return
         getConfig().pos.render(context) {
@@ -69,8 +69,8 @@ object ExperimentationRngDisplay : FeatureModule("experimentationRngDisplay", No
         }
     }
 
-    override fun doRenderAfterScreen(context: GuiGraphics) {
-        context.drawString(
+    override fun doRenderAfterScreen(context: GuiGraphicsExtractor) {
+        context.text(
             Minecraft.getInstance().font, Utils.componentBuilder {
                 rngXp?.let { append(it) } ?: appendWithColor("325,212", ChatFormatting.LIGHT_PURPLE)
                 appendWithColor(" RNG Meter", ChatFormatting.LIGHT_PURPLE)

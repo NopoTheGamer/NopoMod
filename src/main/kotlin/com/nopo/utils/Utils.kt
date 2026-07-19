@@ -97,7 +97,7 @@ object Utils {
                 append(message)
             }
         }
-        Minecraft.getInstance().player?.displayClientMessage(finalMessage, false)
+        Minecraft.getInstance().player?.sendSystemMessage(finalMessage)
     }
 
     fun componentBuilder(init: MutableComponent.() -> Unit): Component {
