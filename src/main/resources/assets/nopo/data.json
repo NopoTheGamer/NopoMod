@@ -26,7 +26,8 @@
     "af3f1844-1aa1-4e4e-9eb9-06e6bfef33b2": ["trans", "trans"],
     "d2caf19c-888f-44c6-9916-c34271869dbd": ["cat_bleh"],
     "2cb34f42-7317-4b1e-a8bf-3e77a6e720ab": ["nerd", "point_up", "regional_indicator_m", "regional_indicator_e", "regional_indicator_o", "regional_indicator_w"],
-    "92b1aee3-f35a-4dbc-b674-d6f689d660c4": ["pick", "woman_farmer", "trans", "trans"]
+    "92b1aee3-f35a-4dbc-b674-d6f689d660c4": ["pick", "woman_farmer", "trans", "trans"],
+    "6099000d-fd1e-4153-acc1-d206f1a93433": ["bug"]
   },
   "updateNotification": {
     "latestVersion": "1.12.0",
