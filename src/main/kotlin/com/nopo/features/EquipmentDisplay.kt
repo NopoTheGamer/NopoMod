@@ -8,6 +8,7 @@ import com.nopo.events.CommandRegistration
 import com.nopo.events.GuiRendering
 import com.nopo.events.ListCommandExtras
 import com.nopo.events.TickEvent
+import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Utils
@@ -24,7 +25,13 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 
-object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equipmentDisplay), GuiRendering,
+object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equipmentDisplay,
+    ConfigData(
+        Component.literal("Equipment Display"),
+        componentBuilder {
+            append("Hud element that shows your current armour and equipment")
+        }
+    )), GuiRendering,
     CommandRegistration, TickEvent, ListCommandExtras {
 
     private fun getConfig() = config as EquipmentDisplayConfig
@@ -63,7 +70,7 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
                 "equipmentDisplay" {
                     "showArmour" {
                         runs {
-                            Utils.sendMessageToPlayer(
+                            Utils.sendMessageUnlessInConfig(
                                 componentBuilder {
                                     append("Armor is now ")
                                     getConfig().showArmor = !getConfig().showArmor

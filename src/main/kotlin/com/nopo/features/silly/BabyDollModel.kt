@@ -7,6 +7,7 @@ import com.nopo.config.ConfigManager
 import com.nopo.config.ModuleConfig
 import com.nopo.events.CommandRegistration
 import com.nopo.events.ListCommandExtras
+import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.append
@@ -19,7 +20,13 @@ import net.fabricmc.fabric.api.client.rendering.v1.RenderStateDataKey
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 
-object BabyDollModel : FeatureModule("babyDoll", NopoMod.config.babyDollConfig), CommandRegistration, ListCommandExtras {
+object BabyDollModel : FeatureModule("babyDoll", NopoMod.config.babyDollConfig,
+    ConfigData(
+        Component.literal("Baby Doll"),
+        componentBuilder {
+            append("Gives people a baby doll model of themself that renders sitting on their shoulder")
+        }
+    )), CommandRegistration, ListCommandExtras {
 
     private fun getConfig() = config as ShoulderConfig
 
@@ -31,7 +38,7 @@ object BabyDollModel : FeatureModule("babyDoll", NopoMod.config.babyDollConfig),
                 moduleName {
                     "everyone" {
                         runs {
-                            Utils.sendMessageToPlayer(
+                            Utils.sendMessageUnlessInConfig(
                                 componentBuilder {
                                     append("Everyone ")
                                     getConfig().everyone = !getConfig().everyone

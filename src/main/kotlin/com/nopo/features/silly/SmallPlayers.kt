@@ -7,6 +7,7 @@ import com.nopo.config.ConfigManager
 import com.nopo.config.ModuleConfig
 import com.nopo.events.CommandRegistration
 import com.nopo.events.ListCommandExtras
+import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.append
@@ -22,7 +23,13 @@ import net.minecraft.client.model.player.PlayerModel
 import net.minecraft.client.renderer.entity.ArmorModelSet
 import net.minecraft.network.chat.Component
 
-object SmallPlayers : FeatureModule("small", NopoMod.config.smallConfig), CommandRegistration, ListCommandExtras {
+object SmallPlayers : FeatureModule("small", NopoMod.config.smallConfig,
+    ConfigData(
+        Component.literal("Small Players"),
+        componentBuilder {
+            append("Makes people into their baby form!")
+        }
+    )), CommandRegistration, ListCommandExtras {
 
     private fun getConfig() = config as SmallConfig
 
@@ -41,7 +48,7 @@ object SmallPlayers : FeatureModule("small", NopoMod.config.smallConfig), Comman
                 moduleName {
                     "everyone" {
                         runs {
-                            Utils.sendMessageToPlayer(
+                            Utils.sendMessageUnlessInConfig(
                                 componentBuilder {
                                     append("Everyone is now ")
                                     getConfig().everyone = !getConfig().everyone

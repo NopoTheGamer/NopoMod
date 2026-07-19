@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.nopo.NopoMod
 import com.nopo.events.TooltipEvent
+import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Rarity
@@ -17,7 +18,13 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 
-object OverflowPetLevels : FeatureModule("overflowPetLevels", NopoMod.config.overflowPetLevel), TooltipEvent {
+object OverflowPetLevels : FeatureModule("overflowPetLevels", NopoMod.config.overflowPetLevel,
+    ConfigData(
+        Component.literal("Overflow Pet Levels"),
+        componentBuilder {
+            append("Shows overflow levels in the pets lore")
+        }
+    )), TooltipEvent {
 
     override fun onTooltip(itemStack: ItemStack, lore: MutableList<Component>) {
         if (!config.enabled) return

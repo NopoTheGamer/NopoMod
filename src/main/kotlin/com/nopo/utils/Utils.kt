@@ -3,6 +3,7 @@ package com.nopo.utils
 import com.google.gson.stream.JsonReader
 import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
+import com.nopo.screens.ConfigScreen
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
@@ -81,6 +82,22 @@ object Utils {
             }
         }
         Minecraft.getInstance().player?.sendSystemMessage(finalMessage)
+    }
+
+    fun sendMessageUnlessInConfig(message: String, prefix: Boolean = true) {
+        sendMessageUnlessInConfig(Component.literal(message), prefix)
+    }
+
+    fun sendMessageUnlessInConfig(message: Component, prefix: Boolean = true) {
+        if (isConfigOpen()) return
+        var finalMessage: Component = message
+        if (prefix) {
+            finalMessage = componentBuilder {
+                append(chatPrefix)
+                append(message)
+            }
+        }
+        Minecraft.getInstance().player?.displayClientMessage(finalMessage, false)
     }
 
     fun componentBuilder(init: MutableComponent.() -> Unit): Component {
@@ -597,5 +614,9 @@ object Utils {
         return nbt.get("id")?.asString()?.getOrElse {
             null
         } ?: ""
+    }
+
+    fun isConfigOpen(): Boolean {
+        return Minecraft.getInstance().screen is ConfigScreen
     }
 }

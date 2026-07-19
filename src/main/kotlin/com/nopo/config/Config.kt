@@ -19,6 +19,9 @@ class Config {
     var firstTime = true
 
     @Expose
+    var usedConfigMenu = false
+
+    @Expose
     var dev: Boolean? = null
 
     @Expose
@@ -101,6 +104,9 @@ class Config {
 
     @Expose
     var sendOldIconConfig = ModuleConfig()
+
+    @Expose
+    var experimentRngConfig = PositionConfig(387, 170)
 
     @Expose
     var debug = ModuleConfig(false)

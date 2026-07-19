@@ -9,6 +9,7 @@ import com.nopo.config.PositionConfig
 import com.nopo.events.ChatEvent
 import com.nopo.events.CommandRegistration
 import com.nopo.events.ModifyChat
+import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
 import com.nopo.screens.GuiEditor
 import com.nopo.utils.HypixelUtils
@@ -28,7 +29,14 @@ import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
 
-object CocoonWarning : FeatureModule("cocoonTitle", NopoMod.config.cocoonConfig), CommandRegistration, ChatEvent, ModifyChat {
+object CocoonWarning : FeatureModule("cocoonTitle", NopoMod.config.cocoonConfig,
+    ConfigData(
+        Component.literal("Cocoon Warning"),
+        componentBuilder {
+            append("Gives you a title and sends to party message when you cocoon specified mobs\n")
+            append("Do /nopo feature cocoonTitle add (mobName) or click on a cocoon message to add it to the list")
+        }
+    )), CommandRegistration, ChatEvent, ModifyChat {
 
     private fun getConfig() = config as CocoonConfig
 

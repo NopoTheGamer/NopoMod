@@ -2,6 +2,7 @@ package com.nopo.features.dungeons
 
 import com.nopo.NopoMod
 import com.nopo.events.ModifyChat
+import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Utils
@@ -14,7 +15,15 @@ import com.nopo.utils.Utils.withColor
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 
-object PartyFinderKickButton : FeatureModule("partyFinderKickButton", NopoMod.config.partyFinderKickButton),
+object PartyFinderKickButton : FeatureModule("partyFinderKickButton", NopoMod.config.partyFinderKickButton,
+    ConfigData(
+        Component.literal("Party Finder Kick Button"),
+        Utils.componentBuilder {
+            append("Adds an ")
+            appendEmoji("x")
+            append(" you can click on to quickly kick people who join from Party Finder")
+        }
+    )),
     ModifyChat {
 
     private val pfRegex = Regex("Party Finder > (?<name>[a-zA-Z0-9_]+) joined the (?:dungeon )?group! \\((?<class>[a-zA-Z]+) Level \\d+\\)")

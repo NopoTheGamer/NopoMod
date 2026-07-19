@@ -23,7 +23,7 @@ import java.util.Optional
 object TrophyFishDisplay : FeatureModule(
     "trophyFishDisplay", NopoMod.config.trophyFishConfig, ConfigData(
         Component.literal("Trophy Frog And Fish Display"),
-        Component.literal("Requires Trophy Tab Widget. Highly recommended to turn on \"Show Total Caught\" in the /tab settings.")
+        Component.literal("Requires Trophy Tab Widget.\n Highly recommended to turn on \"Show Total Caught\" in the /tab settings.")
     )
 ), GuiRendering, TickEvent {
 

@@ -15,11 +15,19 @@ import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 
 object UpdateNotification : BaseModule("update notification"), SkyblockFirstJoin {
+
+    private var outdated = false
+
+    fun isOutdated(): Boolean {
+        return outdated
+    }
+
     override fun onSkyblockFirstJoin() {
         val updateNotification = NopoMod.data?.updateNotification ?: return
         val latestVersion = updateNotification.latestVersion ?: return
         val downloadLink = updateNotification.download
         if (latestVersion > NopoMod.CURRENT_VERSION) {
+            outdated = true
             Utils.sendMessageToPlayer(
                 Utils.componentBuilder {
                     append("Your mod is outdated ")

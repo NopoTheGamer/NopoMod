@@ -27,7 +27,7 @@ import kotlin.jvm.optionals.getOrNull
 object KillCounter : FeatureModule("killCounter", NopoMod.config.killCounterConfig, ConfigData(
     Component.literal("Book Of Stats Kill Tracker"),
     Utils.componentBuilder {
-        append("Tracks how many kills you have gotten since game launch with weapons with Book Of Stats")
+        append("Tracks how many kills you have gotten since game launch with weapons that have a Book Of Stats")
     }
 )), TickEvent, GuiRendering, CommandRegistration, ListCommandExtras {
 

@@ -8,10 +8,12 @@ import com.nopo.config.ModuleConfig
 import com.nopo.events.CommandRegistration
 import com.nopo.events.ListCommandExtras
 import com.nopo.events.TickEvent
+import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.append
 import com.nopo.utils.Utils.appendEmoji
+import com.nopo.utils.Utils.appendWithColor
 import com.nopo.utils.Utils.componentBuilder
 import com.nopo.utils.Utils.hover
 import com.nopo.utils.Utils.suggest
@@ -22,7 +24,15 @@ import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
 import net.minecraft.util.Mth
 
-object AutoPerspective : FeatureModule("autoPerspective", NopoMod.config.perspectiveConfig), TickEvent, CommandRegistration, ListCommandExtras {
+object AutoPerspective : FeatureModule("autoPerspective", NopoMod.config.perspectiveConfig,
+    ConfigData(
+        Component.literal("Auto Perspective When Looking Down"),
+        componentBuilder {
+            append("Automatically toggles f5 when you look down\n")
+            append("The angle required can be modified with ")
+            appendWithColor("/nopo feature autoPerspective setDegrees (degrees)", ChatFormatting.YELLOW)
+        }
+    )), TickEvent, CommandRegistration, ListCommandExtras {
 
     fun getConfig() = config as PerspectiveConfig
 
