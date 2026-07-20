@@ -279,6 +279,22 @@ object Utils {
         return text
     }
 
+    fun createAnimatedText(start: Color, end: Color, string: String, delay: Int = 1): Component {
+        val length = string.length
+        val colours = mutableListOf<Int>()
+        for (index in 0 until length) {
+            colours.add(blendRGB(start, end, index, length).rgb)
+        }
+        val text = componentBuilder {
+            for ((index, char) in string.withIndex()) {
+                append(char.toString()) {
+                    withColor(colours[(index + getTotalTicks() / delay) % length])
+                }
+            }
+        }
+        return text
+    }
+
     fun themedGradient(string: String): Component {
         // idk if i like this yet
         val start = Color(24, 199, 146)
@@ -628,5 +644,9 @@ object Utils {
             }
         }
         return list
+    }
+
+    fun getTotalTicks(): Int {
+        return Minecraft.getInstance().player?.tickCount ?: 0
     }
 }

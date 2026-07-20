@@ -12,21 +12,19 @@ import java.awt.Color
 object WokeName : FeatureModule("woke", NopoMod.config.wokeConfig, shouldBeHidden = { !Utils.isDevAllowed() }),
     ModifyChat {
 
-    val nameComp by lazy {
-        componentBuilder {
-            append(
-                Utils.createGradientText(
-                    Color(85, 255, 255),
-                    Color.MAGENTA,
-                    NopoMod.data?.devName ?: "meowgirlemily"
-                )
+    fun getNameComp() = componentBuilder {
+        append(
+            Utils.createAnimatedText(
+                Color(85, 255, 255),
+                Color.MAGENTA,
+                NopoMod.data?.devName ?: "meowgirlemily"
             )
-            if (Utils.isDevAllowed()) {
-                append(" ")
-                val trans = Utils.createEmoji("trans")
-                append(trans)
-                append(trans)
-            }
+        )
+        if (Utils.isDevAllowed()) {
+            append(" ")
+            val trans = Utils.createEmoji("trans")
+            append(trans)
+            append(trans)
         }
     }
 
@@ -36,7 +34,7 @@ object WokeName : FeatureModule("woke", NopoMod.config.wokeConfig, shouldBeHidde
     ): Component? {
         if (actionBar || !config.enabled) return null
         if (!message.string.contains("Throwpo")) return null
-        val comp = message.copy().replace("Throwpo", nameComp) ?: return null
+        val comp = message.copy().replace("Throwpo", getNameComp()) ?: return null
         return comp
     }
 

@@ -51,28 +51,30 @@ class ConfigScreen(var currentCategory: String? = null) : Screen(Component.liter
         Minecraft.getInstance().font
     )
 
-    private val donateRenderable = StringWidget(
-        Utils.componentBuilder {
-            append("Donate ") {
-                withColor(16110348)
-            }
-            appendEmoji("money_mouth")
-            hover = Utils.componentBuilder {
-                append("Buy gems for ")
-                append(
-                    Utils.createGradientText(
-                        Color(85, 255, 255),
-                        Color.MAGENTA,
-                        NopoMod.data?.devName ?: "meowgirlemily"
-                    )
+    fun makeDonateComponent() = Utils.componentBuilder {
+        append("Donate ") {
+            withColor(16110348)
+        }
+        appendEmoji("money_mouth")
+        hover = Utils.componentBuilder {
+            append("Buy gems for ")
+            append(
+                Utils.createAnimatedText(
+                    Color(85, 255, 255),
+                    Color.MAGENTA,
+                    NopoMod.data?.devName ?: "meowgirlemily"
                 )
-                append(" ")
-                appendEmoji("pray")
-                appendEmoji("pray")
-                append("\nI need community upgrades it would be very appreciated")
-                append("\nIf you ask nicely I can make you some stupid cosmetic :)")
-            }
-        },
+            )
+            append(" ")
+            appendEmoji("pray")
+            appendEmoji("pray")
+            append("\nI need community upgrades it would be very appreciated")
+            append("\nIf you ask nicely I can make you some stupid cosmetic :)")
+        }
+    }
+
+    private val donateRenderable = StringWidget(
+        makeDonateComponent(),
         Minecraft.getInstance().font
     )
 
@@ -152,6 +154,7 @@ class ConfigScreen(var currentCategory: String? = null) : Screen(Component.liter
         )
         categoryRenderable.message = getCategories()
         optionsRenderable.message = getOptions()
+        donateRenderable.message = makeDonateComponent()
     }
 
     override fun isPauseScreen(): Boolean {
