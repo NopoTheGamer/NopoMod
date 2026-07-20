@@ -10,6 +10,7 @@ import com.nopo.utils.HypixelUtils
 import com.nopo.utils.TabWidget
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.appendWithColor
+import com.nopo.utils.Utils.bold
 import com.nopo.utils.Utils.clearObfuscated
 import com.nopo.utils.Utils.formatInt
 import com.nopo.utils.Utils.group
@@ -36,6 +37,7 @@ object TrophyFishDisplay : FeatureModule(
     override fun render(context: GuiGraphics) {
         if (!config.enabled) return
         if (!HypixelUtils.onSkyblock()) return
+        display ?: return
 
         getConfig().pos.render(context) {
             doRender(context)
@@ -43,8 +45,26 @@ object TrophyFishDisplay : FeatureModule(
     }
 
     override fun doRender(context: GuiGraphics) {
-        val display = display ?: return
         val font = Minecraft.getInstance().font
+        val display = display
+        if (display == null) {
+            val line1 = Utils.componentBuilder {
+                appendWithColor("Trophy Frogs:", ChatFormatting.DARK_GREEN) {
+                    bold = true
+                }
+            }
+            val line2 = Utils.componentBuilder {
+                append("  ")
+                append(Utils.createItem("iron_ingot"))
+                append(Utils.createItem("gold_ingot"))
+                append(Utils.createItem("diamond"))
+                appendWithColor("Puddle Jumper", ChatFormatting.GOLD)
+                appendWithColor(" 90/300", ChatFormatting.GRAY)
+            }
+            context.drawString(font, line1, 0, 0, -1)
+            context.drawString(font, line2, 0, 10, -1)
+            return
+        }
         for ((index, component) in display.withIndex()) {
             context.drawString(font, component, 0, index * 10, -1)
         }

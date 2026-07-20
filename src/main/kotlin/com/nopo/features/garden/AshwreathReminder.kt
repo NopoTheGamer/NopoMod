@@ -27,17 +27,18 @@ import java.time.ZoneId
 object AshwreathReminder : FeatureModule("ashwreath", NopoMod.config.ashwreath, shouldBeHidden = { !Utils.isDevAllowed() }), TickEvent, GuiRendering, IslandChange {
 
     private fun getConfig() = config as AshwreathConfig
-    private var display: Component? = null
+    private val display: Component = componentBuilder {
+        append(Utils.themedGradient("Ashwreath Collection Time! "))
+        appendEmoji("money_mouth")
+    }
+    private var shouldShow = false
 
     override fun onTick(totalTicks: Int) {
         if (!getConfig().enabled) return
          if (shouldTell()) {
-             display = componentBuilder {
-                 append(Utils.themedGradient("Ashwreath Collection Time! "))
-                 appendEmoji("money_mouth")
-             }
+             shouldShow = true
          } else {
-            display = null
+             shouldShow = false
         }
     }
 
@@ -62,7 +63,6 @@ object AshwreathReminder : FeatureModule("ashwreath", NopoMod.config.ashwreath, 
     }
 
     override fun doRender(context: GuiGraphics) {
-        val display = display ?: return
         context.drawString(Minecraft.getInstance().font, display, 0, 0, -1)
     }
 
@@ -76,7 +76,7 @@ object AshwreathReminder : FeatureModule("ashwreath", NopoMod.config.ashwreath, 
             }
         }
         getConfig().lastCollected = System.currentTimeMillis()
-        display = null
+        shouldShow = false
         ConfigManager.save()
     }
 }

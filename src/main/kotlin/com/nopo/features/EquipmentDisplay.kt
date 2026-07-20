@@ -44,15 +44,29 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
 
     val eqActiveSwaps = 36..44
 
+    private fun hasAnythingToRender(): Boolean {
+        for (index in 0 until 4) {
+            val item = Minecraft.getInstance().player?.inventory?.getItem(36 + (3 - index))
+            if (item != null && item.item != Items.AIR) return true
+            val item2 = equipment[index]
+            if (item2 != null && item2.item != Items.AIR) return true
+        }
+        return false
+    }
+
     override fun render(context: GuiGraphics) {
         if (!config.enabled) return
         if (!HypixelUtils.onSkyblock()) return
+        if (!hasAnythingToRender()) return
         getConfig().pos.render(context) {
             doRender(context)
         }
     }
 
     override fun doRender(context: GuiGraphics) {
+        if (!hasAnythingToRender()) {
+            context.renderItem(ItemStack(Items.DIAMOND_HELMET), -16, 0)
+        }
         for ((index, eq) in equipment.withIndex()) {
             if (getConfig().showArmor) {
                 Minecraft.getInstance().player?.inventory?.getItem(36 + (3 - index))?.let {

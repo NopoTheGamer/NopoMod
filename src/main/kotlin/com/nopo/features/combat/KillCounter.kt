@@ -50,6 +50,7 @@ object KillCounter : FeatureModule("killCounter", NopoMod.config.killCounterConf
         if (!HypixelUtils.onSkyblock()) return
         if (!config.enabled) return
         if (trackedKills.isEmpty()) return
+        if (!trackedKills.any { it.value.currentKills - it.value.startKills > 0 }) return
         getConfig().pos.render(context) {
             doRender(context)
         }
@@ -60,7 +61,6 @@ object KillCounter : FeatureModule("killCounter", NopoMod.config.killCounterConf
         for ((_, data) in trackedKills) {
             kills += data.currentKills - data.startKills
         }
-        if (kills == 0) return
         context.drawString(
             Minecraft.getInstance().font, Utils.componentBuilder {
                 append("Total kills today: ")
