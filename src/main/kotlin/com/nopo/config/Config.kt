@@ -9,6 +9,7 @@ import com.nopo.features.combat.CocoonConfig
 import com.nopo.features.garden.AshwreathConfig
 import com.nopo.features.pets.PetConfig
 import com.nopo.features.silly.ParrotConfig
+import com.nopo.features.silly.RavenousConfig
 import com.nopo.features.silly.ShoulderConfig
 import com.nopo.features.silly.SmallConfig
 import com.nopo.features.slayer.BossesSinceDropConfig
@@ -110,6 +111,9 @@ class Config {
 
     @Expose
     var experimentRngConfig = PositionConfig(387, 170)
+
+    @Expose
+    var ravenousSheepConfig = RavenousConfig()
 
     @Expose
     var debug = ModuleConfig(false)

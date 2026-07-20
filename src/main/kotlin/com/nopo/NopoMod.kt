@@ -58,6 +58,7 @@ import com.nopo.features.rift.ShensOutbidNotification
 import com.nopo.features.silly.BabyDollModel
 import com.nopo.features.silly.Cosmetics
 import com.nopo.features.silly.ParrotCommand
+import com.nopo.features.silly.RavenousSheep
 import com.nopo.features.silly.SmallPlayers
 import com.nopo.features.slayer.BossesSinceDrop
 import com.nopo.module.BaseModule
@@ -137,6 +138,7 @@ object NopoMod : ModInitializer {
             FunCategory,
             SmallPlayers,
             BabyDollModel,
+            RavenousSheep,
 
             FishingCategory,
             TrophyFishDisplay,

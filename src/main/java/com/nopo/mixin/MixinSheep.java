@@ -1,5 +1,7 @@
 package com.nopo.mixin;
 
+import com.nopo.NopoMod;
+import com.nopo.features.silly.RavenousConfig;
 import com.nopo.mixininterfaces.FunnyEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.sheep.Sheep;
@@ -28,6 +30,8 @@ public class MixinSheep implements FunnyEntityData {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(EntityType entityType, Level level, CallbackInfo ci) {
-        nopo$setFunny(level.getRandom().nextInt(50) == 0);
+        RavenousConfig config = NopoMod.config.getRavenousSheepConfig();
+        if (!config.getEnabled()) return;
+        nopo$setFunny(level.getRandom().nextInt(25) == 0 || config.getAlways());
     }
 }
