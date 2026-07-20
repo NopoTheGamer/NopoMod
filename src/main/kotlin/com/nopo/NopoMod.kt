@@ -12,6 +12,7 @@ import com.nopo.categories.MiningCategory
 import com.nopo.categories.MiscCategory
 import com.nopo.categories.RiftCategory
 import com.nopo.commands.DiscordCommand
+import com.nopo.commands.EmojiCommand
 import com.nopo.commands.InfernoFuelCalculator
 import com.nopo.commands.ListConfigCommand
 import com.nopo.commands.MainCommand
@@ -156,21 +157,25 @@ object NopoMod : ModInitializer {
             AutoJoinParty,
 
             // not in /nopo list
+            // commands
             RingCommand,
-            WardrobeKeybinds,
-            TitleApi,
             MainCommand,
-            UpdateNotification,
             DiscordCommand,
-            EmojiName,
+            ListConfigCommand,
+            ParrotCommand,
+            EmojiCommand,
+            SixSeven,
+            WardrobeKeybinds,
             TaskList,
+            InfernoFuelCalculator,
+
+            // other
+            TitleApi,
+            EmojiName,
+            UpdateNotification,
             FirstTimeGreeting,
             DelayedRuns,
-            ListConfigCommand,
             FabricEvents,
-            SixSeven,
-            ParrotCommand,
-            InfernoFuelCalculator,
             HypixelUtils,
             PartyApi,
         )
