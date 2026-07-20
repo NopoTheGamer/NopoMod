@@ -56,9 +56,10 @@ object FabricEvents : BaseModule("fabric events") {
                 }
             }
 
+            val tick = ++ticks
             for (module in modules) {
                 if (module is TickEvent) {
-                    module.onTick(++ticks)
+                    module.onTick(tick)
                 }
             }
         }

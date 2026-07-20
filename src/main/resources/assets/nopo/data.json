@@ -30,11 +30,206 @@
     "6099000d-fd1e-4153-acc1-d206f1a93433": ["bug"]
   },
   "updateNotification": {
-    "latestVersion": "1.12.0",
-    "download": "https://modrinth.com/mod/nopo-mod/version/1.12.0"
+    "latestVersion": "2.0.0",
+    "download": "https://modrinth.com/mod/nopo-mod/version/2.0.0"
   },
   "disabledFeatures": [
     "ashwreath"
   ],
-  "devName": "meowgirlemily"
+  "devName": "meowgirlemily",
+  "cosmetics": [
+    {
+      "name": "meowgirlemily",
+      "uuid": "53924f1a-87e6-4709-8e53-f1c7d13dc239",
+      "startColour": 5636095,
+      "endColour": 16711935,
+      "emojis": [
+        "trans",
+        "trans"
+      ]
+    },
+    {
+      "name": "CalMWolfs",
+      "uuid": "eaa5623c-8413-46b7-a74b-2d74a42b2841",
+      "startColour": 2277827,
+      "endColour": 8388352,
+      "emojis": [
+        "bob"
+      ]
+    },
+    {
+      "name": "MisterNLIVE",
+      "uuid": "9006e774-9e2b-4f68-952b-ab6b4c1dd412",
+      "emojis": [
+        "tropical_fish"
+      ]
+    },
+    {
+      "name": "VERYFASTCAR",
+      "uuid": "9e762309-721d-4c34-a3fa-18baf343ae06",
+      "emojis": [
+        "dog"
+      ]
+    },
+    {
+      "name": "Malwry",
+      "uuid": "00b167a4-7668-439a-9ee8-56729c131196",
+      "emojis": [
+        "cat_bleh"
+      ]
+    },
+    {
+      "name": "Lucehh",
+      "uuid": "a7393810-7252-41ba-9374-c1bcd7ac7417",
+      "emojis": [
+        "frog"
+      ]
+    },
+    {
+      "name": "MelonKingDe",
+      "uuid": "bd082a55-373e-4305-bee3-48b9060e16c9",
+      "emojis": [
+        "watermelon"
+      ]
+    },
+    {
+      "name": "ToxicBoiNeon",
+      "uuid": "d26cbff5-a83b-4a22-9e39-999019782aae",
+      "emojis": [
+        "zzz"
+      ]
+    },
+    {
+      "name": "lurxispoo",
+      "uuid": "582f3c67-bd78-47e4-8c27-2f664abc1c04",
+      "emojis": [
+        "poop"
+      ]
+    },
+    {
+      "name": "FabiHBBBT",
+      "uuid": "6f8c7b61-42d8-4c4a-b4dc-c47e3aa75b30",
+      "emojis": [
+        "panda_face"
+      ]
+    },
+    {
+      "name": "thefakebee",
+      "uuid": "6d1e196f-0c72-4acc-9c18-6ebfdad1499e",
+      "emojis": [
+        "bee"
+      ]
+    },
+    {
+      "name": "Beevocate",
+      "uuid": "25b97370-e2ca-40a2-8e39-aed813d43c32",
+      "emojis": [
+        "bee"
+      ]
+    },
+    {
+      "name": "aspectofthewhy",
+      "uuid": "3b1d21d2-a784-4128-90b5-5e00e4da581a",
+      "emojis": [
+        "strawberry"
+      ]
+    },
+    {
+      "name": "tbotter",
+      "uuid": "17bd827d-d0e0-4b76-b798-7bb8a52c632c",
+      "emojis": [
+        "pleading_face"
+      ]
+    },
+    {
+      "name": "SuperDoff",
+      "uuid": "fa6c49a3-cacc-48f8-9d39-d9f876f5b4ed",
+      "emojis": [
+        "pensive",
+        "skull"
+      ]
+    },
+    {
+      "name": "2short2hit",
+      "uuid": "54b007f3-1e62-4209-803a-17139063dc71",
+      "emojis": [
+        "straight_ruler",
+        "ladder"
+      ]
+    },
+    {
+      "name": "AridPanda",
+      "uuid": "e25c5bb4-7c85-484f-b56c-395f790370d9",
+      "emojis": [
+        "rat",
+        "panda_face"
+      ]
+    },
+    {
+      "name": "RiskWondering",
+      "uuid": "fa5393b8-6bf1-4f0f-8f03-7759d9c2df62",
+      "emojis": [
+        "thinking"
+      ]
+    },
+    {
+      "name": "goohgurlvougy",
+      "uuid": "10ebc9da-1875-47b4-871b-e60408d4cc09",
+      "emojis": [
+        "cat2"
+      ]
+    },
+    {
+      "name": "queerlisted",
+      "uuid": "32b42025-5eb0-44d6-9cc9-2069b866fe7a",
+      "emojis": [
+        "trans",
+        "trans"
+      ]
+    },
+    {
+      "name": "Cloverquil",
+      "uuid": "af3f1844-1aa1-4e4e-9eb9-06e6bfef33b2",
+      "emojis": [
+        "trans",
+        "trans"
+      ]
+    },
+    {
+      "name": "meowemilyenjoyer",
+      "uuid": "d2caf19c-888f-44c6-9916-c34271869dbd",
+      "emojis": [
+        "cat_bleh"
+      ]
+    },
+    {
+      "name": "Minemon206",
+      "uuid": "2cb34f42-7317-4b1e-a8bf-3e77a6e720ab",
+      "emojis": [
+        "nerd",
+        "point_up",
+        "regional_indicator_m",
+        "regional_indicator_e",
+        "regional_indicator_o",
+        "regional_indicator_w"
+      ]
+    },
+    {
+      "name": "Miner_Farm",
+      "uuid": "92b1aee3-f35a-4dbc-b674-d6f689d660c4",
+      "emojis": [
+        "pick",
+        "woman_farmer",
+        "trans",
+        "trans"
+      ]
+    },
+    {
+      "name": "Emxa",
+      "uuid": "6099000d-fd1e-4153-acc1-d206f1a93433",
+      "emojis": [
+        "bug"
+      ]
+    }
+  ]
 }

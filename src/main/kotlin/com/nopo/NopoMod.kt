@@ -4,14 +4,18 @@ import com.google.gson.stream.JsonReader
 import com.nopo.categories.ChatCategory
 import com.nopo.categories.CombatCategory
 import com.nopo.categories.DevCategory
+import com.nopo.categories.DevUnlock
 import com.nopo.categories.FarmingCategory
 import com.nopo.categories.FishingCategory
 import com.nopo.categories.FunCategory
 import com.nopo.categories.InventoryCategory
 import com.nopo.categories.MiningCategory
 import com.nopo.categories.MiscCategory
+import com.nopo.categories.RealDevUnlock
 import com.nopo.categories.RiftCategory
+import com.nopo.commands.ConfigSearchCommand
 import com.nopo.commands.DiscordCommand
+import com.nopo.commands.EmojiCommand
 import com.nopo.commands.InfernoFuelCalculator
 import com.nopo.commands.ListConfigCommand
 import com.nopo.commands.MainCommand
@@ -33,11 +37,9 @@ import com.nopo.features.FastAOTV
 import com.nopo.features.MinionCantReachAlert
 import com.nopo.features.SendOldIcons
 import com.nopo.features.SkyHanniTrackerTitleTotemItem
-import com.nopo.features.WokeName
 import com.nopo.features.combat.CocoonWarning
 import com.nopo.features.combat.KillCounter
 import com.nopo.features.dungeons.PartyFinderKickButton
-import com.nopo.features.emoji.EmojiName
 import com.nopo.features.emoji.EmojiReplace
 import com.nopo.features.fishing.TrophyFishDisplay
 import com.nopo.features.garden.AshwreathReminder
@@ -54,7 +56,9 @@ import com.nopo.features.pets.OverflowPetLevels
 import com.nopo.features.pets.PetDisplay
 import com.nopo.features.rift.ShensOutbidNotification
 import com.nopo.features.silly.BabyDollModel
+import com.nopo.features.silly.Cosmetics
 import com.nopo.features.silly.ParrotCommand
+import com.nopo.features.silly.RavenousSheep
 import com.nopo.features.silly.SmallPlayers
 import com.nopo.features.slayer.BossesSinceDrop
 import com.nopo.module.BaseModule
@@ -134,6 +138,7 @@ object NopoMod : ModInitializer {
             FunCategory,
             SmallPlayers,
             BabyDollModel,
+            RavenousSheep,
 
             FishingCategory,
             TrophyFishDisplay,
@@ -150,27 +155,33 @@ object NopoMod : ModInitializer {
             RaffleQuests,
 
             DevCategory,
-            WokeName,
+            DevUnlock,
+            RealDevUnlock,
+            Cosmetics,
             DebugModule,
             AshwreathReminder,
             AutoJoinParty,
 
             // not in /nopo list
+            // commands
             RingCommand,
-            WardrobeKeybinds,
-            TitleApi,
             MainCommand,
-            UpdateNotification,
+            ConfigSearchCommand,
             DiscordCommand,
-            EmojiName,
+            ListConfigCommand,
+            ParrotCommand,
+            EmojiCommand,
+            SixSeven,
+            WardrobeKeybinds,
             TaskList,
+            InfernoFuelCalculator,
+
+            // other
+            TitleApi,
+            UpdateNotification,
             FirstTimeGreeting,
             DelayedRuns,
-            ListConfigCommand,
             FabricEvents,
-            SixSeven,
-            ParrotCommand,
-            InfernoFuelCalculator,
             HypixelUtils,
             PartyApi,
         )

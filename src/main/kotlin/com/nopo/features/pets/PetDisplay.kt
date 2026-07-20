@@ -18,6 +18,8 @@ import com.nopo.utils.Utils
 import com.nopo.utils.Utils.addSeparators
 import com.nopo.utils.Utils.append
 import com.nopo.utils.Utils.appendEmoji
+import com.nopo.utils.Utils.appendWithColor
+import com.nopo.utils.Utils.bold
 import com.nopo.utils.Utils.command
 import com.nopo.utils.Utils.componentBuilder
 import com.nopo.utils.Utils.formatDouble
@@ -76,6 +78,7 @@ object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay,
     override fun render(context: GuiGraphicsExtractor) {
         if (!config.enabled) return
         if (!HypixelUtils.onSkyblock()) return
+        display ?: return
 
         getConfig().pos.render(context) {
             doRender(context)
@@ -83,8 +86,36 @@ object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay,
     }
 
     override fun doRender(context: GuiGraphicsExtractor) {
-        val display = display ?: return
         val font = Minecraft.getInstance().font
+        val display = display
+        if (display == null) {
+            val line1 = componentBuilder {
+                appendWithColor("Pet:", ChatFormatting.YELLOW) {
+                    bold = true
+                }
+            }
+            val line2 = componentBuilder {
+                append(
+                    generateCustomName(
+                        231, 200,
+                        componentBuilder {
+                            appendWithColor("Golden Dragon", ChatFormatting.GOLD)
+                        },
+                        "Golden Dragon", Rarity.LEGENDARY
+                    )
+                )
+            }
+            val line3 = componentBuilder {
+                appendWithColor(" 1,832,110.4", ChatFormatting.YELLOW)
+                appendWithColor("/", ChatFormatting.GOLD)
+                appendWithColor("1.9M XP ", ChatFormatting.YELLOW)
+                appendWithColor("(97.1%)", ChatFormatting.GOLD)
+            }
+            context.drawString(font, line1, 0, 0, -1)
+            context.drawString(font, line2, 0, 10, -1)
+            context.drawString(font, line3, 0, 20, -1)
+            return
+        }
         for ((index, component) in display.withIndex()) {
             context.text(font, component, 0, index * 10, -1)
         }

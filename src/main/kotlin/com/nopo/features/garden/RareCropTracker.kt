@@ -81,6 +81,7 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
     }
 
     fun addRareDrop(drop: String, message: Component) {
+        if (drop.lowercase() == "ethereal vine" && getConfig().ignoreVines) return
         val currentTime = System.currentTimeMillis()
         if (getConfig().dropTimes[drop] == null) {
             getConfig().dropTimes[drop] = mutableListOf(currentTime)
@@ -121,6 +122,19 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
                 if (getConfig().sendToPartyChat) withColor(ChatFormatting.GREEN)
                 else withColor(ChatFormatting.RED)
             }
+            append {
+                append("[")
+                appendEmoji("herb") {
+                    withColor(ChatFormatting.WHITE)
+                }
+                command = "/nopo feature $moduleName etherealVine"
+                hover = componentBuilder {
+                    append("Click to toggle tracking Ethereal Vines")
+                }
+                append("]")
+                if (getConfig().ignoreVines) withColor(ChatFormatting.RED)
+                else withColor(ChatFormatting.GREEN)
+            }
         }
     }
 
@@ -145,6 +159,23 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
                             )
                         }
                     }
+                    "etherealVine" {
+                        runs {
+                            Utils.sendMessageUnlessInConfig(
+                                componentBuilder {
+                                    append("Tracking ethereal vines is now ")
+                                    getConfig().ignoreVines = !getConfig().ignoreVines
+                                    if (getConfig().ignoreVines) {
+                                        append("disabled")
+                                    } else {
+                                        append("enabled")
+                                    }
+                                    withColor(ChatFormatting.YELLOW)
+                                    ConfigManager.save()
+                                }
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -158,4 +189,6 @@ class RareCropConfig {
     var dropTimes = mutableMapOf<String, MutableList<Long>>()
     @Expose
     var sendToPartyChat = false
+    @Expose
+    var ignoreVines = true
 }

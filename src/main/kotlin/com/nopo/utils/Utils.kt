@@ -2,6 +2,7 @@ package com.nopo.utils
 
 import com.google.gson.stream.JsonReader
 import com.nopo.NopoMod
+import com.nopo.categories.Category
 import com.nopo.config.ConfigManager
 import com.nopo.screens.ConfigScreen
 import net.fabricmc.loader.api.FabricLoader
@@ -266,13 +267,30 @@ object Utils {
         (start.blue * (1 - percent) + end.blue * percent).toInt(),
     )
 
-    fun createGradientText(start: Color, end: Color, string: String): Component {
+    fun createGradientText(start: Color, end: Color, string: String, animated: Boolean = false): Component {
+        if (animated) return createAnimatedText(start, end, string)
         val length = string.length
         val text = componentBuilder {
             for ((index, char) in string.withIndex()) {
                 val color = blendRGB(start, end, index, length).rgb
                 append(char.toString()) {
                     withColor(color)
+                }
+            }
+        }
+        return text
+    }
+
+    fun createAnimatedText(start: Color, end: Color, string: String, delay: Int = 1): Component {
+        val length = string.length
+        val colours = mutableListOf<Int>()
+        for (index in 0 until length) {
+            colours.add(blendRGB(start, end, index, length).rgb)
+        }
+        val text = componentBuilder {
+            for ((index, char) in string.withIndex()) {
+                append(char.toString()) {
+                    withColor(colours[(index + getTotalTicks() / delay) % length])
                 }
             }
         }
@@ -300,7 +318,7 @@ object Utils {
     }
 
     fun isDevAllowed(): Boolean {
-        if (NopoMod.config.dev == true) return true
+        if (NopoMod.config.realDevUnlock.enabled) return true
         return FabricLoader.getInstance().isDevelopmentEnvironment || Minecraft.getInstance().player?.uuid == NopoMod.data?.devs?.first()
     }
 
@@ -618,5 +636,28 @@ object Utils {
 
     fun isConfigOpen(): Boolean {
         return Minecraft.getInstance().screen is ConfigScreen
+    }
+
+    fun getAllCategories(): List<String> {
+        val list = mutableListOf<String>()
+        for (module in NopoMod.modules) {
+            if (module is Category) {
+                list.add(module.moduleName)
+            }
+        }
+        return list
+    }
+
+    fun getTotalTicks(): Int {
+        return Minecraft.getInstance().player?.tickCount ?: 0
+    }
+
+    fun hasCosmetics(): Boolean {
+        val cosmetics = NopoMod.data?.cosmetics ?: return false
+        val uuid = Minecraft.getInstance().player?.uuid ?: return false
+        for (data in cosmetics) {
+            if (uuid == data.uuid) return true
+        }
+        return false
     }
 }
