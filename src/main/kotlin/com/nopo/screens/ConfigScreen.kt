@@ -27,7 +27,7 @@ import net.minecraft.network.chat.Component
 import java.awt.Color
 
 
-class ConfigScreen : Screen(Component.literal("Config")) {
+class ConfigScreen(var currentCategory: String? = null) : Screen(Component.literal("Config")) {
 
     private val categoryRenderable = MultiLineTextWidget(
         getCategories(),
@@ -70,6 +70,7 @@ class ConfigScreen : Screen(Component.literal("Config")) {
                 appendEmoji("pray")
                 appendEmoji("pray")
                 append("\nI need community upgrades it would be very appreciated")
+                append("\nIf you ask nicely I can make you some stupid cosmetic :)")
             }
         },
         Minecraft.getInstance().font
@@ -83,10 +84,11 @@ class ConfigScreen : Screen(Component.literal("Config")) {
         append(" for ${SharedConstants.getCurrentVersion().name()}")
     }
 
-    private var currentCategory: String? = null
-
     override fun init() {
         super.init()
+        if (!Utils.getAllCategories().any { it.equals(currentCategory, ignoreCase = true) }) {
+            currentCategory = null
+        }
         NopoMod.config.usedConfigMenu = true
         categoryRenderable.setComponentClickHandler { style ->
             val suggest = style.clickEvent as? ClickEvent.SuggestCommand
@@ -177,14 +179,11 @@ class ConfigScreen : Screen(Component.literal("Config")) {
 
     private fun getCategories(): Component {
         return Utils.componentBuilder {
-            for (module in NopoMod.modules) {
-                if (module is Category) {
-                    val categoryName = module.moduleName
-                    if (currentCategory == null) currentCategory = categoryName
-                    append("$categoryName\n") {
-                        underlined = categoryName == currentCategory
-                        suggest = categoryName
-                    }
+            for (categoryName in Utils.getAllCategories()) {
+                if (currentCategory == null) currentCategory = categoryName
+                append("$categoryName\n") {
+                    underlined = categoryName.equals(currentCategory, ignoreCase = true)
+                    suggest = categoryName
                 }
             }
         }
@@ -196,7 +195,7 @@ class ConfigScreen : Screen(Component.literal("Config")) {
             var hasAppended = false
             for (module in NopoMod.modules) {
                 if (module is Category) {
-                    shouldAdd = module.moduleName == currentCategory
+                    shouldAdd = module.moduleName.equals(currentCategory, ignoreCase = true)
                 }
                 if (!shouldAdd) continue
                 if (module !is FeatureModule) continue

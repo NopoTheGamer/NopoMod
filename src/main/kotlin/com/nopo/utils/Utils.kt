@@ -2,6 +2,7 @@ package com.nopo.utils
 
 import com.google.gson.stream.JsonReader
 import com.nopo.NopoMod
+import com.nopo.categories.Category
 import com.nopo.config.ConfigManager
 import com.nopo.screens.ConfigScreen
 import net.fabricmc.loader.api.FabricLoader
@@ -617,5 +618,15 @@ object Utils {
 
     fun isConfigOpen(): Boolean {
         return Minecraft.getInstance().screen is ConfigScreen
+    }
+
+    fun getAllCategories(): List<String> {
+        val list = mutableListOf<String>()
+        for (module in NopoMod.modules) {
+            if (module is Category) {
+                list.add(module.moduleName)
+            }
+        }
+        return list
     }
 }

@@ -11,6 +11,7 @@ import com.nopo.categories.InventoryCategory
 import com.nopo.categories.MiningCategory
 import com.nopo.categories.MiscCategory
 import com.nopo.categories.RiftCategory
+import com.nopo.commands.ConfigSearchCommand
 import com.nopo.commands.DiscordCommand
 import com.nopo.commands.EmojiCommand
 import com.nopo.commands.InfernoFuelCalculator
@@ -160,6 +161,7 @@ object NopoMod : ModInitializer {
             // commands
             RingCommand,
             MainCommand,
+            ConfigSearchCommand,
             DiscordCommand,
             ListConfigCommand,
             ParrotCommand,
