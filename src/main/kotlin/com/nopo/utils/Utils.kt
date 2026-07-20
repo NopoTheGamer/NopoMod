@@ -266,7 +266,8 @@ object Utils {
         (start.blue * (1 - percent) + end.blue * percent).toInt(),
     )
 
-    fun createGradientText(start: Color, end: Color, string: String): Component {
+    fun createGradientText(start: Color, end: Color, string: String, animated: Boolean = false): Component {
+        if (animated) return createAnimatedText(start, end, string)
         val length = string.length
         val text = componentBuilder {
             for ((index, char) in string.withIndex()) {
@@ -648,5 +649,14 @@ object Utils {
 
     fun getTotalTicks(): Int {
         return Minecraft.getInstance().player?.tickCount ?: 0
+    }
+
+    fun hasCosmetics(): Boolean {
+        val cosmetics = NopoMod.data?.cosmetics ?: return false
+        val uuid = Minecraft.getInstance().player?.uuid ?: return false
+        for (data in cosmetics) {
+            if (uuid == data.uuid) return true
+        }
+        return false
     }
 }

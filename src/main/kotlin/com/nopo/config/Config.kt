@@ -28,7 +28,7 @@ class Config {
     var useLocalJson: Boolean? = null
 
     @Expose
-    var wokeConfig = ModuleConfig()
+    var cosmeticConfig = ModuleConfig()
 
     @Expose
     var chatEmojis = ModuleConfig()

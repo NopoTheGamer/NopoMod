@@ -35,11 +35,9 @@ import com.nopo.features.FastAOTV
 import com.nopo.features.MinionCantReachAlert
 import com.nopo.features.SendOldIcons
 import com.nopo.features.SkyHanniTrackerTitleTotemItem
-import com.nopo.features.WokeName
 import com.nopo.features.combat.CocoonWarning
 import com.nopo.features.combat.KillCounter
 import com.nopo.features.dungeons.PartyFinderKickButton
-import com.nopo.features.emoji.EmojiName
 import com.nopo.features.emoji.EmojiReplace
 import com.nopo.features.fishing.TrophyFishDisplay
 import com.nopo.features.garden.AshwreathReminder
@@ -56,6 +54,7 @@ import com.nopo.features.pets.OverflowPetLevels
 import com.nopo.features.pets.PetDisplay
 import com.nopo.features.rift.ShensOutbidNotification
 import com.nopo.features.silly.BabyDollModel
+import com.nopo.features.silly.Cosmetics
 import com.nopo.features.silly.ParrotCommand
 import com.nopo.features.silly.SmallPlayers
 import com.nopo.features.slayer.BossesSinceDrop
@@ -152,7 +151,7 @@ object NopoMod : ModInitializer {
             RaffleQuests,
 
             DevCategory,
-            WokeName,
+            Cosmetics,
             DebugModule,
             AshwreathReminder,
             AutoJoinParty,
@@ -173,7 +172,6 @@ object NopoMod : ModInitializer {
 
             // other
             TitleApi,
-            EmojiName,
             UpdateNotification,
             FirstTimeGreeting,
             DelayedRuns,

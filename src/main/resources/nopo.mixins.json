@@ -28,6 +28,7 @@
     "MixinMinecraft",
     "MixinModelLayers",
     "MixinParrotOnShoulderLayer",
+    "MixinPlayerTabOverlay",
     "MixinScreen",
     "MixinSplashManager",
     "MixinSuggestionsList",
