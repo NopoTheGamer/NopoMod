@@ -28,7 +28,7 @@ object AutoJoinParty : FeatureModule("autoJoinParty", NopoMod.config.autoJoinPar
     override fun onChat(message: Component, actionBar: Boolean) {
         if (!config.enabled) return
         val string = message.string
-        if (string.contains("has invited you to join their party")) {
+        if (string.contains("has invited you to join")) {
             if (string.contains("meowgirlemily")) {
                 Utils.sendCommandToServer("p meowgirlemily")
             } else if (string.contains("CalMWolfs")) {
