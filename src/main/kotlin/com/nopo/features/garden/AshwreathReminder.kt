@@ -57,6 +57,7 @@ object AshwreathReminder : FeatureModule("ashwreath", NopoMod.config.ashwreath, 
 
     override fun render(context: GuiGraphics) {
         if (!config.enabled || !HypixelUtils.onSkyblock()) return
+        if (!shouldShow) return
         getConfig().pos.render(context) {
             doRender(context)
         }
