@@ -22,7 +22,10 @@ class Config {
     var usedConfigMenu = false
 
     @Expose
-    var dev: Boolean? = null
+    var fakeDevUnlock = ModuleConfig(false)
+
+    @Expose
+    var realDevUnlock = ModuleConfig(false)
 
     @Expose
     var useLocalJson: Boolean? = null

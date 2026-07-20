@@ -317,7 +317,7 @@ object Utils {
     }
 
     fun isDevAllowed(): Boolean {
-        if (NopoMod.config.dev == true) return true
+        if (NopoMod.config.realDevUnlock.enabled) return true
         return FabricLoader.getInstance().isDevelopmentEnvironment || Minecraft.getInstance().player?.uuid == NopoMod.data?.devs?.first()
     }
 

@@ -4,12 +4,14 @@ import com.google.gson.stream.JsonReader
 import com.nopo.categories.ChatCategory
 import com.nopo.categories.CombatCategory
 import com.nopo.categories.DevCategory
+import com.nopo.categories.DevUnlock
 import com.nopo.categories.FarmingCategory
 import com.nopo.categories.FishingCategory
 import com.nopo.categories.FunCategory
 import com.nopo.categories.InventoryCategory
 import com.nopo.categories.MiningCategory
 import com.nopo.categories.MiscCategory
+import com.nopo.categories.RealDevUnlock
 import com.nopo.categories.RiftCategory
 import com.nopo.commands.ConfigSearchCommand
 import com.nopo.commands.DiscordCommand
@@ -151,6 +153,8 @@ object NopoMod : ModInitializer {
             RaffleQuests,
 
             DevCategory,
+            DevUnlock,
+            RealDevUnlock,
             Cosmetics,
             DebugModule,
             AshwreathReminder,

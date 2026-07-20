@@ -19,6 +19,7 @@ open class FeatureModule(
     @Expose var config: ModuleConfig,
     var configData: ConfigData? = null,
     shouldBeHidden: () -> Boolean = { false },
+    val stillRegisterCommand: Boolean = false,
 ) : BaseModule(moduleName, shouldBeHidden) {
 
     open fun registerToggleCommand(): Commodore? {
@@ -35,7 +36,7 @@ open class FeatureModule(
                 return null
             }
         }
-        if (shouldBeHidden()) return null
+        if (shouldBeHidden() && !stillRegisterCommand) return null
         return Commodore("nopo") {
             literal("feature") {
                 literal(moduleName) {
