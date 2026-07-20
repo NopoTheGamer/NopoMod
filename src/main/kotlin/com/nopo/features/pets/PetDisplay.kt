@@ -111,9 +111,9 @@ object PetDisplay : FeatureModule("petDisplay", NopoMod.config.petDisplay,
                 appendWithColor("1.9M XP ", ChatFormatting.YELLOW)
                 appendWithColor("(97.1%)", ChatFormatting.GOLD)
             }
-            context.drawString(font, line1, 0, 0, -1)
-            context.drawString(font, line2, 0, 10, -1)
-            context.drawString(font, line3, 0, 20, -1)
+            context.text(font, line1, 0, 0, -1)
+            context.text(font, line2, 0, 10, -1)
+            context.text(font, line3, 0, 20, -1)
             return
         }
         for ((index, component) in display.withIndex()) {

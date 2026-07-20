@@ -65,7 +65,7 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
 
     override fun doRender(context: GuiGraphicsExtractor) {
         if (!hasAnythingToRender()) {
-            context.renderItem(ItemStack(Items.DIAMOND_HELMET), -16, 0)
+            context.item(ItemStack(Items.DIAMOND_HELMET), -16, 0)
         }
         for ((index, eq) in equipment.withIndex()) {
             if (getConfig().showArmor) {

@@ -81,8 +81,8 @@ object RaffleQuests : FeatureModule("raffleQuestDisplay", NopoMod.config.raffleQ
     override fun doRender(context: GuiGraphicsExtractor) {
         val font = Minecraft.getInstance().font
         if (tasks.isEmpty()) {
-            context.drawString(font, Component.literal("Kill Ashfang"), 0, 0, -1)
-            context.drawString(font, Component.literal("Call someone on your Abiphone"), 0, 10, -1)
+            context.text(font, Component.literal("Kill Ashfang"), 0, 0, -1)
+            context.text(font, Component.literal("Call someone on your Abiphone"), 0, 10, -1)
         }
         for ((index, task) in tasks.entries.withIndex()) {
             context.text(font, task.value, 0, index * 10, -1)

@@ -61,8 +61,8 @@ object TrophyFishDisplay : FeatureModule(
                 appendWithColor("Puddle Jumper", ChatFormatting.GOLD)
                 appendWithColor(" 90/300", ChatFormatting.GRAY)
             }
-            context.drawString(font, line1, 0, 0, -1)
-            context.drawString(font, line2, 0, 10, -1)
+            context.text(font, line1, 0, 0, -1)
+            context.text(font, line2, 0, 10, -1)
             return
         }
         for ((index, component) in display.withIndex()) {
