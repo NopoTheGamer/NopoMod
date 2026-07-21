@@ -6,6 +6,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.authlib.GameProfile;
 import com.nopo.NopoMod;
 import com.nopo.features.silly.BabyDollModel;
+import com.nopo.features.silly.Cosmetics;
 import com.nopo.features.silly.Shoulder;
 import com.nopo.features.silly.SmallPlayers;
 import com.nopo.silly.layers.BabyCapeLayer;
@@ -35,6 +36,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 @Mixin(AvatarRenderer.class)
 public class MixinAvatarRenderer<AvatarlikeEntity extends Avatar & ClientAvatarEntity> {
@@ -66,10 +68,20 @@ public class MixinAvatarRenderer<AvatarlikeEntity extends Avatar & ClientAvatarE
         if (avatarRenderState.isInvisibleToPlayer) return;
         if (avatar instanceof AbstractClientPlayer entity) {
             GameProfile profile = entity.getGameProfile();
-            if (profile.id().equals(NopoMod.INSTANCE.getData().getDevs().getFirst())) {
-                avatarRenderState.parrotOnRightShoulder = Parrot.Variant.YELLOW_BLUE;
+            UUID uuid = profile.id();
+            Parrot.Variant leftParrot = Cosmetics.getLeftParrot(uuid);
+            Parrot.Variant rightParrot = Cosmetics.getRightParrot(uuid);
+            boolean babyDoll = Cosmetics.getBabyDoll(uuid);
+            boolean small = Cosmetics.getSmall(uuid);
+            if (leftParrot != null) avatarRenderState.parrotOnLeftShoulder = leftParrot;
+            if (rightParrot != null) avatarRenderState.parrotOnRightShoulder = rightParrot;
+            if (babyDoll) avatarRenderState.setData(BabyDollModel.getKey(), true);
+            if (small) {
+                avatarRenderState.isBaby = true;
+                avatarRenderState.ageScale = 0.5f;
+                avatarRenderState.setData(SmallPlayers.getKey(), true);
             }
-            if (profile.id() == Minecraft.getInstance().player.getUUID()) {
+            if (uuid == Minecraft.getInstance().player.getUUID()) {
                 if (NopoMod.config.getSmallConfig().getEnabled()) {
                     avatarRenderState.isBaby = true;
                     avatarRenderState.ageScale = 0.5f;

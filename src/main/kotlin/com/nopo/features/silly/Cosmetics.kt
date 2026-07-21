@@ -11,6 +11,7 @@ import com.nopo.utils.Utils.appendEmoji
 import com.nopo.utils.Utils.replace
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
+import net.minecraft.world.entity.animal.parrot.Parrot
 import net.minecraft.world.entity.player.Player
 import java.awt.Color
 import java.util.Optional
@@ -112,6 +113,26 @@ object Cosmetics : FeatureModule(
         }
     }
 
+    @JvmStatic
+    fun getLeftParrot(uuid: UUID): Parrot.Variant? {
+        return getCosmeticData(uuid)?.leftParrot
+    }
+
+    @JvmStatic
+    fun getRightParrot(uuid: UUID): Parrot.Variant? {
+        return getCosmeticData(uuid)?.rightParrot
+    }
+
+    @JvmStatic
+    fun getSmall(uuid: UUID): Boolean {
+        return getCosmeticData(uuid)?.small == true
+    }
+
+    @JvmStatic
+    fun getBabyDoll(uuid: UUID): Boolean {
+        return getCosmeticData(uuid)?.babyDoll == true
+    }
+
 }
 
 data class CosmeticData(
@@ -121,4 +142,8 @@ data class CosmeticData(
     @Expose val endColour: Int?,
     @Expose val animatedColour: Boolean? = true,
     @Expose val emojis: List<String>?,
+    @Expose val babyDoll: Boolean? = false,
+    @Expose val small: Boolean? = false,
+    @Expose val leftParrot: Parrot.Variant?,
+    @Expose val rightParrot: Parrot.Variant?,
 )
