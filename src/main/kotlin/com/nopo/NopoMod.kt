@@ -22,6 +22,7 @@ import com.nopo.commands.MainCommand
 import com.nopo.commands.RingCommand
 import com.nopo.commands.SixSeven
 import com.nopo.commands.TaskList
+import com.nopo.commands.UpdateDataJsonCommand
 import com.nopo.config.Config
 import com.nopo.config.ConfigManager
 import com.nopo.config.RareCropConfigHolder
@@ -102,15 +103,7 @@ object NopoMod : ModInitializer {
         ConfigManager.save()
         ConfigManager.saveRareCrops()
 
-        if (config.useLocalJson != true) {
-            try {
-                val json = URL.of(URI.create(DATA_JSON), null).readText()
-                data = ConfigManager.gson.fromJson<Data>(JsonReader(StringReader(json)), Data::class.java)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-        if (data == null) data = Utils.getJsonFromJar<Data>("data.json")
+        downloadDataJson(true)
 
         modules = listOf(
             ChatCategory,
@@ -175,6 +168,7 @@ object NopoMod : ModInitializer {
             WardrobeKeybinds,
             TaskList,
             InfernoFuelCalculator,
+            UpdateDataJsonCommand,
 
             // other
             TitleApi,
@@ -185,5 +179,17 @@ object NopoMod : ModInitializer {
             HypixelUtils,
             PartyApi,
         )
+    }
+
+    fun downloadDataJson(firstLaunch: Boolean) {
+        if (config.useLocalJson != true || !firstLaunch) {
+            try {
+                val json = URL.of(URI.create(DATA_JSON), null).readText()
+                data = ConfigManager.gson.fromJson<Data>(JsonReader(StringReader(json)), Data::class.java)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        if (data == null) data = Utils.getJsonFromJar<Data>("data.json")
     }
 }

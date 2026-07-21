@@ -30,7 +30,8 @@ object Cosmetics : FeatureModule(
     ): Component? {
         if (actionBar) return null
         if (!message.string.contains("Throwpo")) return null
-        val comp = getCosmeticData("meowgirlemily")?.getComponent(message) ?: return null
+        val replacedName = message.replace("Throwpo", "meowgirlemily") ?: return null
+        val comp = getCosmeticData("meowgirlemily")?.getComponent(replacedName) ?: return null
         return comp
     }
 
