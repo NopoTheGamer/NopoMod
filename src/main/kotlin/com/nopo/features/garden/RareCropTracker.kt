@@ -48,7 +48,14 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
     private const val CROP_FEVER = "WOAH! You caught a case of the CROP FEVER for 60 seconds!"
 
     override fun onChat(message: Component, actionBar: Boolean) {
-        if (!HypixelUtils.onSkyblock() || !config.enabled) return
+        if (actionBar) return
+        if (!HypixelUtils.onSkyblock()) return
+        doCropMessage(message)
+        doPartyCommand(message)
+    }
+
+    fun doCropMessage(message: Component) {
+        if (!config.enabled) return
         if (!IslandType.GARDEN.isActive()) return
         val string = message.string.cleanColor()
 
@@ -78,6 +85,16 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
             }
         }
         addRareDrop(crop, message)
+    }
+
+    fun doPartyCommand(message: Component) {
+        if (!getConfig().partyCommands) return
+        val crop = Utils.getPartyCommand(message, "!since") ?: return
+        val currentTime = System.currentTimeMillis()
+        val drop = getConfig().dropTimes.entries.firstOrNull { it.key.equals(crop, ignoreCase = true) } ?: return
+        val lastDropTime = drop.value.maxOrNull() ?: return
+        val timeSince = (currentTime - lastDropTime).milliseconds
+        Utils.sendCommandToServer("pc ${timeSince.format()} since last ${drop.key}")
     }
 
     fun addRareDrop(drop: String, message: Component) {
@@ -135,6 +152,19 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
                 if (getConfig().ignoreVines) withColor(ChatFormatting.RED)
                 else withColor(ChatFormatting.GREEN)
             }
+            append {
+                append("[")
+                appendEmoji("singer") {
+                    withColor(ChatFormatting.WHITE)
+                }
+                command = "/nopo feature $moduleName partyCommand"
+                hover = componentBuilder {
+                    append("Click to toggle !since (crop) party command")
+                }
+                append("]")
+                if (getConfig().partyCommands) withColor(ChatFormatting.GREEN)
+                else withColor(ChatFormatting.RED)
+            }
         }
     }
 
@@ -176,6 +206,23 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
                             )
                         }
                     }
+                    "partyCommand" {
+                        runs {
+                            Utils.sendMessageUnlessInConfig(
+                                componentBuilder {
+                                    append("!since party command for crops is now ")
+                                    getConfig().partyCommands = !getConfig().partyCommands
+                                    if (getConfig().partyCommands) {
+                                        append("enabled")
+                                    } else {
+                                        append("disabled")
+                                    }
+                                    withColor(ChatFormatting.YELLOW)
+                                    ConfigManager.save()
+                                }
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -191,4 +238,6 @@ class RareCropConfig {
     var sendToPartyChat = false
     @Expose
     var ignoreVines = true
+    @Expose
+    var partyCommands = true
 }

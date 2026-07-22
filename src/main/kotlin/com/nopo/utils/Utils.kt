@@ -660,4 +660,12 @@ object Utils {
         }
         return false
     }
+
+    fun getPartyCommand(message: Component, command: String): String? {
+        val string = message.string.cleanColor()
+        if (!string.startsWith("Party >")) return null
+        val split = string.split(command)
+        if (split.size < 2) return null
+        return split[1].trim()
+    }
 }

@@ -7,6 +7,7 @@ import com.nopo.config.ConfigManager
 import com.nopo.config.ModuleConfig
 import com.nopo.events.ChatEvent
 import com.nopo.events.CommandRegistration
+import com.nopo.events.ListCommandExtras
 import com.nopo.events.WorldChange
 import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
@@ -14,8 +15,14 @@ import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.IslandType
 import com.nopo.utils.Utils
+import com.nopo.utils.Utils.append
+import com.nopo.utils.Utils.appendEmoji
 import com.nopo.utils.Utils.cleanColor
+import com.nopo.utils.Utils.command
 import com.nopo.utils.Utils.componentBuilder
+import com.nopo.utils.Utils.hover
+import com.nopo.utils.Utils.withColor
+import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 
 object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bossesSinceDrop,
@@ -24,7 +31,7 @@ object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bo
         componentBuilder {
             append("Tells you how many Slayer kills it took since last time you got that drop")
         }
-    )), ChatEvent, WorldChange, CommandRegistration {
+    )), ChatEvent, WorldChange, CommandRegistration, ListCommandExtras {
 
     private fun getConfig() = config as BossesSinceDropConfig
 
@@ -57,6 +64,11 @@ object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bo
     override fun onChat(message: Component, actionBar: Boolean) {
         if (actionBar) return
         if (!HypixelUtils.onSkyblock()) return
+        doSlayerDrop(message)
+        doPartyCommand(message)
+    }
+
+    fun doSlayerDrop(message: Component) {
         val string = message.string.cleanColor()
         if (bossTypeRegex.matches(string)) {
             val group = bossTypeRegex.matchEntire(string)?.groups["slayer"]?.value
@@ -104,7 +116,18 @@ object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bo
                 ConfigManager.save()
             }
         }
-        return
+    }
+
+    fun doPartyCommand(message: Component) {
+        if (!getConfig().partyCommands) return
+        val drop = Utils.getPartyCommand(message, "!since") ?: return
+        for (entry in getConfig().bossMap) {
+            val lastDropped = entry.value.drops.entries.firstOrNull { it.key.equals(drop, ignoreCase = true) }
+            if (lastDropped == null) continue
+            val currentKills = getConfig().bossMap[entry.key]?.kills ?: 0
+            val sinceLast = currentKills - lastDropped.value
+            Utils.sendCommandToServer("pc Bosses since last ${lastDropped.key}: $sinceLast")
+        }
     }
 
     override fun onWorldChange() {
@@ -130,6 +153,46 @@ object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bo
                     }
                 }
             }
+            "feature" {
+                moduleName {
+                    "partyCommand" {
+                        runs {
+                            Utils.sendMessageUnlessInConfig(
+                                componentBuilder {
+                                    append("!since party command for drops is now ")
+                                    getConfig().partyCommands = !getConfig().partyCommands
+                                    if (getConfig().partyCommands) {
+                                        append("enabled")
+                                    } else {
+                                        append("disabled")
+                                    }
+                                    withColor(ChatFormatting.YELLOW)
+                                    ConfigManager.save()
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun addListCommandData(): Component {
+        return componentBuilder {
+            append(" ")
+            append {
+                append("[")
+                appendEmoji("singer") {
+                    withColor(ChatFormatting.WHITE)
+                }
+                command = "/nopo feature $moduleName partyCommand"
+                hover = componentBuilder {
+                    append("Click to toggle !since (drop) party command")
+                }
+                append("]")
+                if (getConfig().partyCommands) withColor(ChatFormatting.GREEN)
+                else withColor(ChatFormatting.RED)
+            }
         }
     }
 }
@@ -145,6 +208,9 @@ class BossesSinceDropConfig : ModuleConfig() {
         // NOT how many you have dropped
         @Expose var drops: MutableMap<String, Int> = mutableMapOf()
     )
+
+    @Expose
+    var partyCommands = true
 }
 
 enum class SlayerType(val display: String) {
