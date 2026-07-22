@@ -1,4 +1,4 @@
-package com.nopo.features
+package com.nopo.features.chat
 
 import com.google.gson.annotations.Expose
 import com.google.gson.reflect.TypeToken

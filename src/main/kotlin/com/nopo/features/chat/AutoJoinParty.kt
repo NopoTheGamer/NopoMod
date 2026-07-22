@@ -1,4 +1,4 @@
-package com.nopo.features
+package com.nopo.features.chat
 
 import com.mojang.blaze3d.platform.InputConstants
 import com.nopo.NopoMod
@@ -13,8 +13,8 @@ import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
 import org.lwjgl.glfw.GLFW
 
-
-object AutoJoinParty : FeatureModule("autoJoinParty", NopoMod.config.autoJoinPartyConfig, null, { !Utils.isDevAllowed() && !Utils.isCal() }), ChatEvent, TickEvent {
+object AutoJoinParty : FeatureModule("autoJoinParty", NopoMod.config.autoJoinPartyConfig, null, { !Utils.isDevAllowed() && !Utils.isCal() }),
+    ChatEvent, TickEvent {
 
     val sendLocation = KeyMappingHelper.registerKeyMapping(
         KeyMapping(

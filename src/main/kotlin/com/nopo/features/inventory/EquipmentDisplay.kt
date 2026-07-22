@@ -1,4 +1,4 @@
-package com.nopo.features
+package com.nopo.features.inventory
 
 import com.github.stivais.commodore.Commodore
 import com.google.gson.annotations.Expose

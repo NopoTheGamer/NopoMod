@@ -2,11 +2,11 @@ package com.nopo.config
 
 import com.google.gson.annotations.Expose
 import com.nopo.commands.TaskConfig
-import com.nopo.features.EquipmentDisplayConfig
 import com.nopo.features.FastAOTVConfig
 import com.nopo.features.PerspectiveConfig
 import com.nopo.features.combat.CocoonConfig
 import com.nopo.features.garden.AshwreathConfig
+import com.nopo.features.inventory.EquipmentDisplayConfig
 import com.nopo.features.pets.PetConfig
 import com.nopo.features.silly.ParrotConfig
 import com.nopo.features.silly.RavenousConfig

@@ -31,13 +31,12 @@ import com.nopo.data.Version
 import com.nopo.data.Version.Companion.toVersion
 import com.nopo.data.WardrobeData
 import com.nopo.events.FabricEvents
-import com.nopo.features.AutoJoinParty
 import com.nopo.features.AutoPerspective
-import com.nopo.features.EquipmentDisplay
 import com.nopo.features.FastAOTV
 import com.nopo.features.MinionCantReachAlert
-import com.nopo.features.SendOldIcons
 import com.nopo.features.SkyHanniTrackerTitleTotemItem
+import com.nopo.features.chat.AutoJoinParty
+import com.nopo.features.chat.SendOldIcons
 import com.nopo.features.combat.CocoonWarning
 import com.nopo.features.combat.KillCounter
 import com.nopo.features.dungeons.PartyFinderKickButton
@@ -45,6 +44,7 @@ import com.nopo.features.emoji.EmojiReplace
 import com.nopo.features.fishing.TrophyFishDisplay
 import com.nopo.features.garden.AshwreathReminder
 import com.nopo.features.garden.RareCropTracker
+import com.nopo.features.inventory.EquipmentDisplay
 import com.nopo.features.inventory.ExperimentationRngDisplay
 import com.nopo.features.inventory.HarpMisclick
 import com.nopo.features.inventory.RaffleQuests
