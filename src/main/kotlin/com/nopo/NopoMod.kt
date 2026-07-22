@@ -132,6 +132,7 @@ object NopoMod : ModInitializer {
             SmallPlayers,
             BabyDollModel,
             RavenousSheep,
+            RingCommand,
 
             FishingCategory,
             TrophyFishDisplay,
@@ -157,7 +158,6 @@ object NopoMod : ModInitializer {
 
             // not in /nopo list
             // commands
-            RingCommand,
             MainCommand,
             ConfigSearchCommand,
             DiscordCommand,

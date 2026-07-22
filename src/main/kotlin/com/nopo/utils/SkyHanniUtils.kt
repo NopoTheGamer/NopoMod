@@ -1,5 +1,6 @@
 package com.nopo.utils
 
+import at.hannibal2.skyhanni.data.FriendApi
 import at.hannibal2.skyhanni.data.SackApi.getAmountInSacksOrNull
 import at.hannibal2.skyhanni.utils.BlockUtils
 import at.hannibal2.skyhanni.utils.NeuInternalName.Companion.toInternalName
@@ -37,6 +38,15 @@ object SkyHanniUtils {
             return Vec3i(pos.x.toInt(), pos.y.toInt(), pos.z.toInt())
         } catch (_: Exception) {
             return null
+        }
+    }
+
+    fun getFriends(): List<String> {
+        if (!isSkyHanniLoaded) return emptyList()
+        try {
+            return FriendApi.getAllFriends().map { it.name }
+        } catch (_: Exception) {
+            return emptyList()
         }
     }
 }

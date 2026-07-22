@@ -116,6 +116,9 @@ class Config {
     var ravenousSheepConfig = RavenousConfig()
 
     @Expose
+    var callPartyCommandConfig = ModuleConfig()
+
+    @Expose
     var debug = ModuleConfig(false)
 
 }
