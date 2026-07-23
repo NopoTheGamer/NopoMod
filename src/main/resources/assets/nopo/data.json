@@ -37,6 +37,28 @@
     "ashwreath"
   ],
   "devName": "meowgirlemily",
+  "levelColours": [
+    {
+      "lowLevel": 568,
+      "highLevel": 568,
+      "rainbow": true
+    },
+    {
+      "lowLevel": 520,
+      "highLevel": 559,
+      "colour": 15090688
+    },
+    {
+      "lowLevel": 560,
+      "highLevel": 599,
+      "colour": 16318611
+    },
+    {
+      "lowLevel": 600,
+      "highLevel": 639,
+      "colour": 13866480
+    }
+  ],
   "cosmetics": [
     {
       "name": "meowgirlemily",
