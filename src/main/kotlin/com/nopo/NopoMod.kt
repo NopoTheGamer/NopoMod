@@ -36,6 +36,7 @@ import com.nopo.features.FastAOTV
 import com.nopo.features.MinionCantReachAlert
 import com.nopo.features.SkyHanniTrackerTitleTotemItem
 import com.nopo.features.chat.AutoJoinParty
+import com.nopo.features.chat.NewSBLevelColours
 import com.nopo.features.chat.SendOldIcons
 import com.nopo.features.combat.CocoonWarning
 import com.nopo.features.combat.KillCounter
@@ -133,6 +134,7 @@ object NopoMod : ModInitializer {
             BabyDollModel,
             RavenousSheep,
             RingCommand,
+            NewSBLevelColours,
 
             FishingCategory,
             TrophyFishDisplay,

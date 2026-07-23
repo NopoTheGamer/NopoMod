@@ -297,6 +297,27 @@ object Utils {
         return text
     }
 
+    private val rainbowColours = listOf(
+        ChatFormatting.RED,
+        ChatFormatting.GOLD,
+        ChatFormatting.YELLOW,
+        ChatFormatting.GREEN,
+        ChatFormatting.AQUA,
+        ChatFormatting.LIGHT_PURPLE,
+        ChatFormatting.DARK_PURPLE,
+    )
+
+    fun rainbow(string: String, style: Style = Style.EMPTY, delay: Int = 5): Component {
+        return componentBuilder {
+            for ((index, char) in string.withIndex()) {
+                append(char.toString()) {
+                    withStyle(style)
+                    withColor(rainbowColours[(index + getTotalTicks() / delay) % rainbowColours.size])
+                }
+            }
+        }
+    }
+
     fun themedGradient(string: String): Component {
         // idk if i like this yet
         val start = Color(24, 199, 146)

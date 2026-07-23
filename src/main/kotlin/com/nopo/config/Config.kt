@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose
 import com.nopo.commands.TaskConfig
 import com.nopo.features.FastAOTVConfig
 import com.nopo.features.PerspectiveConfig
+import com.nopo.features.chat.LevelColourConfig
 import com.nopo.features.combat.CocoonConfig
 import com.nopo.features.garden.AshwreathConfig
 import com.nopo.features.inventory.EquipmentDisplayConfig
@@ -117,6 +118,9 @@ class Config {
 
     @Expose
     var callPartyCommandConfig = ModuleConfig()
+
+    @Expose
+    var newSbLevelColourConfig = LevelColourConfig()
 
     @Expose
     var debug = ModuleConfig(false)

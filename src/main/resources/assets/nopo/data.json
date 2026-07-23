@@ -41,7 +41,8 @@
     {
       "lowLevel": 568,
       "highLevel": 568,
-      "rainbow": true
+      "rainbow": true,
+      "rainbowSpeed": 5
     },
     {
       "lowLevel": 520,
