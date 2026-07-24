@@ -108,7 +108,7 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
         val screen = Minecraft.getInstance().screen
         if (screen !is ContainerScreen) return
         val title = screen.title.string
-        if (title == "Your Equipment and Stats") statsAndLoadout()
+        if (title == "Stats & Equipment") statsAndLoadout()
         if (loadoutRegex.matches(title)) statsAndLoadout()
         if (equipmentRegex.matches(title)) eqWardrobe()
     }
