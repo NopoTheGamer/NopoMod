@@ -1,6 +1,7 @@
 package com.nopo.features.chat
 
 import com.github.stivais.commodore.Commodore
+import com.github.stivais.commodore.utils.GreedyString
 import com.google.gson.annotations.Expose
 import com.nopo.NopoMod
 import com.nopo.config.ConfigManager
@@ -22,6 +23,7 @@ import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
 import net.minecraft.world.entity.player.Player
+import java.awt.Color
 import java.util.Optional
 
 object NewSBLevelColours : FeatureModule("newLevelColours", NopoMod.config.newSbLevelColourConfig,
@@ -130,6 +132,23 @@ object NewSBLevelColours : FeatureModule("newLevelColours", NopoMod.config.newSb
 
     override fun createCommand(): Commodore {
         return Commodore("nopo") {
+            "colourTextTest" {
+                runs { hex: GreedyString ->
+                    val hexes = hex.string.split(" ")
+                    for (hex in hexes) {
+                        Utils.sendMessageToPlayer(
+                            Utils.componentBuilder {
+                                append("[")
+                                append("487") {
+                                    withColor(Color.decode(hex).rgb)
+                                }
+                                append("]")
+                                withColor(ChatFormatting.DARK_GRAY)
+                            }
+                        )
+                    }
+                }
+            }
             "feature" {
                 moduleName {
                     "rainbow" {
