@@ -57,6 +57,7 @@ object Utils {
     }
 
     fun debug(message: String) {
+        println("[Nopo] $message")
         if (!isDevAllowed()) return
         sendMessageToPlayer(message)
     }
