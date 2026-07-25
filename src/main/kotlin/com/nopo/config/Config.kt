@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose
 import com.nopo.commands.TaskConfig
 import com.nopo.features.FastAOTVConfig
 import com.nopo.features.PerspectiveConfig
+import com.nopo.features.chat.DiceConfig
 import com.nopo.features.chat.LevelColourConfig
 import com.nopo.features.combat.CocoonConfig
 import com.nopo.features.garden.AshwreathConfig
@@ -121,6 +122,9 @@ class Config {
 
     @Expose
     var newSbLevelColourConfig = LevelColourConfig()
+
+    @Expose
+    var diceTrackerConfig = DiceConfig()
 
     @Expose
     var debug = ModuleConfig(false)

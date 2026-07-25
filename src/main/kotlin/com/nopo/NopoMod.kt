@@ -36,6 +36,7 @@ import com.nopo.features.FastAOTV
 import com.nopo.features.MinionCantReachAlert
 import com.nopo.features.SkyHanniTrackerTitleTotemItem
 import com.nopo.features.chat.AutoJoinParty
+import com.nopo.features.chat.DiceTracker
 import com.nopo.features.chat.NewSBLevelColours
 import com.nopo.features.chat.SendOldIcons
 import com.nopo.features.combat.CocoonWarning
@@ -111,6 +112,7 @@ object NopoMod : ModInitializer {
             EmojiReplace,
             SendOldIcons,
             CocoonWarning,
+            DiceTracker,
 
             CombatCategory,
             BossesSinceDrop,
