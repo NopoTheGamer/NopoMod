@@ -3,6 +3,7 @@ package com.nopo.features.inventory
 import com.github.stivais.commodore.Commodore
 import com.google.gson.annotations.Expose
 import com.nopo.NopoMod
+import com.nopo.config.ConfigManager
 import com.nopo.config.PositionConfig
 import com.nopo.events.CommandRegistration
 import com.nopo.events.GuiRendering
@@ -95,6 +96,7 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
                                     }
                                 }
                             )
+                            ConfigManager.save()
                         }
                     }
                 }
