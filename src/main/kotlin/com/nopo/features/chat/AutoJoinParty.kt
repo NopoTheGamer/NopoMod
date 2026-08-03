@@ -16,7 +16,7 @@ import org.lwjgl.glfw.GLFW
 object AutoJoinParty : FeatureModule("autoJoinParty", NopoMod.config.autoJoinPartyConfig, null, { !Utils.isDevAllowed() && !Utils.isCal() }),
     ChatEvent, TickEvent {
 
-    val sendLocation = KeyMappingHelper.registerKeyMapping(
+    private val sendLocation = KeyMappingHelper.registerKeyMapping(
         KeyMapping(
             "key.nopo.send_location",
             InputConstants.Type.MOUSE,
@@ -25,14 +25,20 @@ object AutoJoinParty : FeatureModule("autoJoinParty", NopoMod.config.autoJoinPar
         )
     )
 
+    private val coolPeople = listOf(
+        "meowgirlemily",
+        "CalMWolfs"
+    )
+
     override fun onChat(message: Component, actionBar: Boolean) {
         if (!config.enabled) return
         val string = message.string
         if (string.contains("has invited you to join")) {
-            if (string.contains("meowgirlemily")) {
-                Utils.sendCommandToServer("p meowgirlemily")
-            } else if (string.contains("CalMWolfs")) {
-                Utils.sendCommandToServer("p CalMWolfs")
+            for (person in coolPeople) {
+                if (string.contains(person)) {
+                    val command = if (string.contains("their")) "p $person" else "p accept $person"
+                    Utils.sendCommandToServer(command)
+                }
             }
         }
     }
