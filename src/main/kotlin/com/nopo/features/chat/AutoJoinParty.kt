@@ -33,6 +33,11 @@ object AutoJoinParty : FeatureModule("autoJoinParty", NopoMod.config.autoJoinPar
     override fun onChat(message: Component, actionBar: Boolean) {
         if (!config.enabled) return
         val string = message.string
+        autoParty(string)
+        ItemPartyCommand.sendItemMessage(message, "Co-op >", "cc")
+    }
+
+    private fun autoParty(string: String) {
         if (string.contains("has invited you to join")) {
             for (person in coolPeople) {
                 if (string.contains(person)) {

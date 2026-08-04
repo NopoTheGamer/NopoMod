@@ -127,6 +127,9 @@ class Config {
     var diceTrackerConfig = DiceConfig()
 
     @Expose
+    var itemPartyCommandConfig = ModuleConfig()
+
+    @Expose
     var debug = ModuleConfig(false)
 
 }

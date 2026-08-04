@@ -57,6 +57,7 @@ dependencies {
 
 	// for a mixin into skyhanni, its not required
 	compileOnly("maven.modrinth:byNkmv5G:d8SLvpH3") // sh for 26.1.2
+	compileOnly("maven.modrinth:dIczrQAR:wwN6ghcO") // skyocean for 26.1.2
 }
 
 tasks.processResources {
