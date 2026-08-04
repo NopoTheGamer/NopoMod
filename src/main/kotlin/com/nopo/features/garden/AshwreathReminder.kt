@@ -72,7 +72,7 @@ object AshwreathReminder : FeatureModule("ashwreath", NopoMod.config.ashwreath, 
         if (!HypixelUtils.onSkyblock()) return
         if (newIsland != IslandType.GARDEN) return
         if (shouldTell()) {
-            DelayedRuns.schedule(200) {
+            DelayedRuns.schedule(40) {
                 Utils.sendMessageToPlayer("Ashwreath Time!!")
             }
         }

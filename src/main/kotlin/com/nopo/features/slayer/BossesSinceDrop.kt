@@ -85,7 +85,7 @@ object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bo
         }
 
         if (dropRegex.matches(string)) {
-            DelayedRuns.schedule(30) {
+            DelayedRuns.schedule(20) {
                 var currentBoss = currentBoss
                 if (IslandType.RIFT.isActive()) currentBoss = SlayerType.VAMPIRE
                 if (currentBoss == null) {

@@ -26,19 +26,24 @@ object PartyApi : BaseModule("party api") {
         }
     }
 
-    private var lastSend = -1L
+    private var lastSendPacket = -1L
+    private var lastSendMessage = -1L
 
     fun sendPartyMessage(message: String) {
         sendPartyPacket()
-        DelayedRuns.schedule(30) {
-            if (inParty()) Utils.sendCommandToServer("pc $message")
+        val currentMs = System.currentTimeMillis()
+        if (currentMs - lastSendMessage > 200) {
+            lastSendMessage = currentMs
+            DelayedRuns.schedule(5) {
+                if (inParty()) Utils.sendCommandToServer("pc $message")
+            }
         }
     }
 
     fun sendPartyPacket() {
         val currentMs = System.currentTimeMillis()
-        if (currentMs - lastSend > 2500) {
-            lastSend = currentMs
+        if (currentMs - lastSendPacket > 2500) {
+            lastSendPacket = currentMs
             HypixelModAPI.getInstance().sendPacket(ServerboundPartyInfoPacket())
         }
     }

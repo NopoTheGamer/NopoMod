@@ -27,7 +27,7 @@ object ShensOutbidNotification : FeatureModule("riftShenOutbidNotification", Nop
 
     override fun onWorldSwap(newIsland: IslandType, oldIsland: IslandType) {
         if (newIsland != IslandType.RIFT) return
-        DelayedRuns.schedule(400) {
+        DelayedRuns.schedule(60) {
             for (line in TabWidget.SHENS.lines) {
                 if (line.string.matches(outbidRegex)) {
                     Utils.sendMessageToPlayer(
