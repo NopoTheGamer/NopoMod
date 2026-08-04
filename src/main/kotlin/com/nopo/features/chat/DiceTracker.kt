@@ -7,6 +7,7 @@ import com.nopo.config.ConfigManager
 import com.nopo.config.ModuleConfig
 import com.nopo.events.ChatEvent
 import com.nopo.events.CommandRegistration
+import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
@@ -19,7 +20,13 @@ import com.nopo.utils.Utils.withColor
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 
-object DiceTracker : FeatureModule("diceTracker", NopoMod.config.diceTrackerConfig), ChatEvent, CommandRegistration {
+object DiceTracker : FeatureModule(
+    "diceTracker", NopoMod.config.diceTrackerConfig,
+    ConfigData(
+        Component.literal("Dice Tracker"),
+        Component.literal("Do /nopo dice to see your lifetime dice stats")
+    )
+), ChatEvent, CommandRegistration {
 
     private fun getConfig() = config as DiceConfig
 
