@@ -16,32 +16,36 @@ object SkyOceanUtils {
 
     fun getItemCount(item: String): Pair<Component, Int>? {
         if (!isSkyOceanLoaded) return null
-        val items = mutableListOf<TrackedItem>()
-        // code airlifted from skyocean
-        // why make it simple :)
-        items.addAll(
-            ItemSources.getAllItems().fold(mutableListOf()) { list, item ->
-                val (itemStack) = item
+        try {
+            val items = mutableListOf<TrackedItem>()
+            // code airlifted from skyocean
+            // why make it simple :)
+            items.addAll(
+                ItemSources.getAllItems().fold(mutableListOf()) { list, item ->
+                    val (itemStack) = item
 
-                list.find { ItemMatcher.compare(it.itemStack, itemStack) }?.let {
-                    if (it !is TrackedItemBundle) {
-                        list.remove(it)
-                        list.add(it.add(item))
-                    } else {
-                        it.add(item)
+                    list.find { ItemMatcher.compare(it.itemStack, itemStack) }?.let {
+                        if (it !is TrackedItemBundle) {
+                            list.remove(it)
+                            list.add(it.add(item))
+                        } else {
+                            it.add(item)
+                        }
+                        return@fold list
                     }
-                    return@fold list
-                }
 
-                list.add(item)
-                list
-            },
-        )
-        val item = items.firstOrNull {
-            val name = it.itemStack.hoverName.string.cleanColor()
-            val replace = cleanNameRegex.replace(name, "").trim()
-            replace.equals(item, ignoreCase = true)
-        } ?: return null
-        return item.itemStack.hoverName to item.itemStack.count
+                    list.add(item)
+                    list
+                },
+            )
+            val item = items.firstOrNull {
+                val name = it.itemStack.hoverName.string.cleanColor()
+                val replace = cleanNameRegex.replace(name, "").trim()
+                replace.equals(item, ignoreCase = true)
+            } ?: return null
+            return item.itemStack.hoverName to item.itemStack.count
+        } catch (_: Exception) {
+            return null
+        }
     }
 }
