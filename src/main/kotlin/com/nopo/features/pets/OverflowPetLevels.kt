@@ -226,7 +226,5 @@ object OverflowPetLevels : FeatureModule("overflowPetLevels", NopoMod.config.ove
         1616700,
         1746700,
         1886700,
-        0,
-        5555,
     )
 }
