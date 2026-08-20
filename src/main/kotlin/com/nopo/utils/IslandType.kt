@@ -7,6 +7,7 @@ enum class IslandType(val map: String, val mode: String) {
     RIFT("The Rift", "rift"),
     DUNGEON("Dungeon", "dungeon"),
     PRIVATE_ISLAND("Private Island", "dynamic"),
+    SAFARI("Safari", "safari"),
     UNKNOWN("null", "null"),
 
     ;

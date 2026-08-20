@@ -12,6 +12,7 @@ import com.nopo.events.TickEvent
 import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
 import com.nopo.utils.HypixelUtils
+import com.nopo.utils.IslandType
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.append
 import com.nopo.utils.Utils.command
@@ -58,6 +59,7 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
     override fun render(context: GuiGraphicsExtractor) {
         if (!config.enabled) return
         if (!HypixelUtils.onSkyblock()) return
+        if (IslandType.SAFARI.isActive()) return
         if (!hasAnythingToRender()) return
         getConfig().pos.render(context) {
             doRender(context)
