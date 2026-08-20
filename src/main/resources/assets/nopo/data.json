@@ -259,7 +259,30 @@
       "name": "iZenoxa",
       "uuid": "5a080dc8-b4c4-4a83-a0bb-94a0b72daa4a",
       "emojis": [
-        "glubglub"
+        "glubglub",
+        "regional_indicator_f",
+        "regional_indicator_i",
+        "regional_indicator_h"
+      ]
+    },
+    {
+      "name": "SinfulCharizard",
+      "uuid": "f2f65059-c130-4505-a7aa-720ba67fc9b5",
+      "emojis": [
+        "rainbow_flag",
+        "rainbow_flag"
+      ]
+    },
+    {
+      "name": "VirulentNyx",
+      "uuid": "643f9f4a-572c-4321-a422-13e9ab9427b3",
+      "emojis": [
+        "regional_indicator_v",
+        "regional_indicator_i",
+        "blue_square",
+        "regional_indicator_v",
+        "regional_indicator_i",
+        "regional_indicator_i"
       ]
     }
   ]
