@@ -71,6 +71,10 @@ import com.nopo.utils.HypixelUtils
 import com.nopo.utils.PartyApi
 import com.nopo.utils.TitleApi
 import com.nopo.utils.Utils
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.gui.screens.Screen
@@ -198,4 +202,10 @@ object NopoMod : ModInitializer {
         }
         if (data == null) data = Utils.getJsonFromJar<Data>("data.json")
     }
+
+    private val globalJob: Job = Job(null)
+
+    val coroutineScope = CoroutineScope(
+        CoroutineName("Nopo") + SupervisorJob(globalJob)
+    )
 }

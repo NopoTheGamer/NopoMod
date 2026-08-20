@@ -8,6 +8,7 @@ import com.nopo.utils.SkyOceanUtils
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.addSeparators
 import com.nopo.utils.Utils.cleanColor
+import kotlinx.coroutines.launch
 import net.minecraft.network.chat.Component
 
 object ItemPartyCommand : FeatureModule(
@@ -25,11 +26,13 @@ object ItemPartyCommand : FeatureModule(
 
     fun sendItemMessage(message: Component, prefix: String, command: String) {
         val item = Utils.getPartyCommand(message, "!item", prefix) ?: return
-        val data = SkyOceanUtils.getItemCount(item)
-        if (data != null) {
-            val itemCount = data.second.addSeparators()
-            val itemName = data.first.string.cleanColor()
-            Utils.sendCommandToServer("$command I have ${itemCount}x $itemName")
+        NopoMod.coroutineScope.launch {
+            val data = SkyOceanUtils.getItemCount(item)
+            if (data != null) {
+                val itemCount = data.second.addSeparators()
+                val itemName = data.first.string.cleanColor()
+                Utils.sendCommandToServer("$command I have ${itemCount}x $itemName")
+            }
         }
     }
 }
