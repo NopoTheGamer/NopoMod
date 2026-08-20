@@ -45,6 +45,12 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
     // PET DROP! LEGENDARY Slug (+136)
     private val petDropRegex = Regex("PET DROP! (?<pet>\\w+) \\(\\+[0-9,.]+\\)")
 
+    // MOSQUITO! You found an Enchanted Carrot!
+    private val mosquitoRegex = Regex("MOSQUITO! You found an? (?<crop>.*)!")
+
+    // RAT! You dropped an additional Dung!
+    private val ratRegex = Regex("RAT! You dropped an additional (?<crop>.*)!")
+
     private const val CROP_FEVER = "WOAH! You caught a case of the CROP FEVER for 60 seconds!"
 
     override fun onChat(message: Component, actionBar: Boolean) {
@@ -77,8 +83,8 @@ object RareCropTracker : FeatureModule("rareCropTracker", NopoMod.config.rareCro
             addRareDrop("CROP FEVER", message)
         }
 
-        if (!string.matches(rareCropRegex)) return
-        val crop = rareCropRegex.matchEntire(string)?.groups["crop"]?.value?.trim() ?: return
+        val match = rareCropRegex.matchEntire(string) ?: ratRegex.matchEntire(string) ?: mosquitoRegex.matchEntire(string) ?: return
+        val crop = match.groups["crop"]?.value?.trim() ?: return
         if (NopoMod.config.debug.enabled) {
             DelayedRuns.schedule(5) {
                 Utils.sendMessageToPlayer("Found crop $crop")
