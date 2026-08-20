@@ -134,14 +134,10 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
             val stack = slots[slot].item
             if (stack.item == Items.LIME_DYE) {
                 found = true
-                val necklace = slots[slot - 36].item
-                if (necklace.item == Items.PLAYER_HEAD) equipment[0] = necklace
-                val cloak = slots[slot - 27].item
-                if (cloak.item == Items.PLAYER_HEAD) equipment[1] = cloak
-                val belt = slots[slot - 18].item
-                if (belt.item == Items.PLAYER_HEAD) equipment[2] = belt
-                val bracelet = slots[slot - 9].item
-                if (bracelet.item == Items.PLAYER_HEAD) equipment[3] = bracelet
+                for ((index, slotId) in (36 downTo 9 step 9).withIndex()) {
+                    val stack = slots[slot - slotId].item
+                    if (stack.item == Items.PLAYER_HEAD || stack.item == Items.PAPER) equipment[index] = stack
+                }
             }
         }
         if (!found) equipment = arrayOfNulls<ItemStack?>(4)
