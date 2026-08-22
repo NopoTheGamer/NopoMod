@@ -284,6 +284,13 @@
         "regional_indicator_i",
         "regional_indicator_i"
       ]
+    },
+    {
+      "name": "Toxilian",
+      "uuid": "4ff8a477-a0aa-42e3-a7e1-0e9f2514f2c0",
+      "emojis": [
+        "biohazard"
+      ]
     }
   ]
 }
