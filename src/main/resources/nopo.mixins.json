@@ -23,6 +23,7 @@
     "MixinChatScreen",
     "MixinClientPacketListener",
     "MixinCommandSuggestions",
+    "MixinHumanoidArmourLayer",
     "MixinLayerDefinitions",
     "MixinLivingEntityRenderer",
     "MixinMinecraft",
@@ -33,5 +34,6 @@
     "MixinSplashManager",
     "MixinSuggestionsList",
     "accessor.AccessorCommandSuggestions"
-  ]
+  ],
+  "mixinextras": {"minVersion": "0.5.4"}
 }

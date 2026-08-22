@@ -42,9 +42,9 @@ import java.util.UUID;
 public class MixinAvatarRenderer<AvatarlikeEntity extends Avatar & ClientAvatarEntity> {
 
     @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;bakeLayer(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;", ordinal = 0))
-    private static ModelPart makeBabyPlayerModel(EntityRendererProvider.Context instance, ModelLayerLocation modelLayerLocation, Operation<ModelPart> original, @Local(argsOnly = true) EntityRendererProvider.Context context, @Local(argsOnly = true) boolean bl) {
-        SmallPlayers.setPLAYER_MODEL(new PlayerModel(context.bakeLayer(Objects.requireNonNull(SmallPlayers.getPLAYER_BABY())), bl));
-        SmallPlayers.setPLAYER_MODEL_SLIM(new PlayerModel(context.bakeLayer(Objects.requireNonNull(SmallPlayers.getPLAYER_BABY_SLIM())), bl));
+    private static ModelPart makeBabyPlayerModel(EntityRendererProvider.Context instance, ModelLayerLocation modelLayerLocation, Operation<ModelPart> original, @Local(argsOnly = true) EntityRendererProvider.Context context, @Local(argsOnly = true) boolean slimSteve) {
+        SmallPlayers.setPLAYER_MODEL(new PlayerModel(context.bakeLayer(Objects.requireNonNull(SmallPlayers.getPLAYER_BABY())), false));
+        SmallPlayers.setPLAYER_MODEL_SLIM(new PlayerModel(context.bakeLayer(Objects.requireNonNull(SmallPlayers.getPLAYER_BABY_SLIM())), true));
         return original.call(instance, modelLayerLocation);
     }
 

@@ -26,14 +26,17 @@ public abstract class MixinLivingEntityRenderer<S extends LivingEntityRenderStat
     protected M modelCopy = null;
 
     @Inject(method = "submit(Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/CameraRenderState;)V", at = @At("HEAD"))
-    public void extract(S livingEntityRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera, CallbackInfo ci) {
-        if (livingEntityRenderState instanceof AvatarRenderState ars) {
-            Object data = livingEntityRenderState.getData(SmallPlayers.getKey());
+    public void extract(S state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera, CallbackInfo ci) {
+        if (state instanceof AvatarRenderState ars) {
+            Object data = state.getData(SmallPlayers.getKey());
             if (data != null) {
                 if (modelCopy == null) modelCopy = model;
                 boolean isBaby = (boolean) data;
                 boolean slim = ars.skin.model() == PlayerModelType.SLIM;
-                if (isBaby) model = (M) (slim ? SmallPlayers.getPLAYER_MODEL_SLIM() : SmallPlayers.getPLAYER_MODEL());
+                if (isBaby) {
+                    //noinspection unchecked
+                    model = (M) (slim ? SmallPlayers.getPLAYER_MODEL_SLIM() : SmallPlayers.getPLAYER_MODEL());
+                }
             } else {
                 if (modelCopy != null) {
                     model = modelCopy;
