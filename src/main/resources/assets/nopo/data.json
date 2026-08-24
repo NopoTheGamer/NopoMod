@@ -289,7 +289,15 @@
       "name": "Toxilian",
       "uuid": "4ff8a477-a0aa-42e3-a7e1-0e9f2514f2c0",
       "emojis": [
-        "biohazard"
+        "glubglub"
+      ]
+    },
+    {
+      "name": "_Zhao",
+      "uuid": "f276d363-de3f-4d43-b16a-285676a0ed71",
+      "emojis": [
+        "older_man",
+        "sparkles"
       ]
     }
   ]
