@@ -45,7 +45,7 @@ object SkyHanniUtils {
         if (!isSkyHanniLoaded) return emptyList()
         try {
             return FriendApi.getAllFriends().map { it.name }
-        } catch (_: Exception) {
+        } catch (_: Error) {
             return emptyList()
         }
     }
