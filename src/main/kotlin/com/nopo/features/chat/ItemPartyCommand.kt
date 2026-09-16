@@ -22,9 +22,10 @@ object ItemPartyCommand : FeatureModule(
     override fun onChat(message: Component, actionBar: Boolean) {
         if (!config.enabled) return
         sendItemMessage(message, "Party >", "pc")
+        sendItemMessage(message, "Co-op >", "cc")
     }
 
-    fun sendItemMessage(message: Component, prefix: String, command: String) {
+    private fun sendItemMessage(message: Component, prefix: String, command: String) {
         val item = Utils.getPartyCommand(message, "!item", prefix) ?: return
         NopoMod.coroutineScope.launch {
             val data = SkyOceanUtils.getItemCount(item)

@@ -34,7 +34,6 @@ object AutoJoinParty : FeatureModule("autoJoinParty", NopoMod.config.autoJoinPar
         if (!config.enabled) return
         val string = message.string
         autoParty(string)
-        ItemPartyCommand.sendItemMessage(message, "Co-op >", "cc")
     }
 
     private fun autoParty(string: String) {
