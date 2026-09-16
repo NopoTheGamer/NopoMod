@@ -109,7 +109,7 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
     override fun onTick(totalTicks: Int) {
         if (!config.enabled) return
         if (!HypixelUtils.onSkyblock()) return
-        val screen = Minecraft.getInstance().screen
+        val screen = Minecraft.getInstance().gui.screen()
         if (screen !is ContainerScreen) return
         val title = screen.title.string
         if (title == "Stats & Equipment") statsAndLoadout()
@@ -122,7 +122,7 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
         equipment = arrayOfNulls<ItemStack?>(4)
         for (index in slotIndexes.withIndex()) {
             val stack = slots[index.value].item
-            if (stack.item != Items.LIGHT_GRAY_STAINED_GLASS_PANE) {
+            if (stack.item != Items.STAINED_GLASS_PANE.lightGray) {
                 equipment[index.index] = stack
             }
         }
@@ -134,7 +134,7 @@ object EquipmentDisplay : FeatureModule("equipmentDisplay", NopoMod.config.equip
         var found = false
         for (slot in eqActiveSwaps) {
             val stack = slots[slot].item
-            if (stack.item == Items.LIME_DYE) {
+            if (stack.item == Items.DYE.lime) {
                 found = true
                 for ((index, slotId) in (36 downTo 9 step 9).withIndex()) {
                     val stack = slots[slot - slotId].item

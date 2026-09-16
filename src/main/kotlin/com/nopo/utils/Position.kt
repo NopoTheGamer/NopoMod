@@ -10,7 +10,7 @@ data class Position(
     @Expose var scale: Float = 1f,
 ) {
     fun render(context: GuiGraphicsExtractor, block: () -> Unit) {
-        if (Minecraft.getInstance().options.hideGui) return
+        if (Minecraft.getInstance().gui.hud.isHidden) return
         context.pose().pushMatrix()
         context.pose().translate(x.toFloat(), y.toFloat())
         if (scale != 1f) context.pose().scale(scale)

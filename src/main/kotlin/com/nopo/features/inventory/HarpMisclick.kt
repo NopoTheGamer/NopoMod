@@ -25,7 +25,7 @@ object HarpMisclick : FeatureModule("preventHarpMisclicks", NopoMod.config.harpM
         if (!config.enabled) return false
         if (clickType != ContainerInput.CLONE) return false
         if (slotId !in 37..43 || slotId == null) return false
-        val screen: Screen? = Minecraft.getInstance().screen
+        val screen: Screen? = Minecraft.getInstance().gui.screen()
         if (screen !is ContainerScreen) return false
         val title = screen.getTitle().string
         if (!title.startsWith("Harp ")) return false

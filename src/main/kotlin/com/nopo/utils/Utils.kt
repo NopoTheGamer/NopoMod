@@ -641,7 +641,7 @@ object Utils {
     }
 
     fun clickSlot(slot: Int, button: Int) {
-        val gui = Minecraft.getInstance().screen
+        val gui = Minecraft.getInstance().gui.screen()
         if (gui is AbstractContainerScreen<*>) {
             val slotObj = gui.menu.getSlot(slot)
             gui.slotClicked(slotObj, slot, button, ContainerInput.PICKUP)
@@ -657,7 +657,7 @@ object Utils {
     }
 
     fun isConfigOpen(): Boolean {
-        return Minecraft.getInstance().screen is ConfigScreen
+        return Minecraft.getInstance().gui.screen() is ConfigScreen
     }
 
     fun getAllCategories(): List<String> {

@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class MixinHumanoidArmourLayer<S extends HumanoidRenderState, M extends HumanoidModel<S>, A extends HumanoidModel<S>> {
     @Definition(id = "entityType", field = "Lnet/minecraft/client/renderer/entity/state/HumanoidRenderState;entityType:Lnet/minecraft/world/entity/EntityType;")
     @Definition(id = "state", local = @Local(type = HumanoidRenderState.class, name = "state", argsOnly = true))
-    @Definition(id = "ARMOR_STAND", field = "Lnet/minecraft/world/entity/EntityType;ARMOR_STAND:Lnet/minecraft/world/entity/EntityType;")
+    @Definition(id = "ARMOR_STAND", field = "Lnet/minecraft/world/entity/EntityTypes;ARMOR_STAND:Lnet/minecraft/world/entity/EntityType;")
     @Expression("state.entityType != ARMOR_STAND")
     @WrapOperation(method = "renderArmorPiece", at = @At("MIXINEXTRAS:EXPRESSION"))
     private boolean modifyArmorType(Object left, Object right, Operation<Boolean> original, @Local(argsOnly = true, name = "state") S state) {

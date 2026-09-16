@@ -62,12 +62,12 @@ object WardrobeKeybinds : BaseModule("wardrobeKeybinds"), TickEvent, CommandRegi
                 val slotId = index + FIRST_SLOT
                 val stack = slots[slotId]
                 val selectorButton = stack.item.item
-                if (selectorButton == Items.PINK_DYE || selectorButton == Items.GRAY_DYE) {
+                if (selectorButton == Items.DYE.pink || selectorButton == Items.DYE.gray) {
                     changeSlot(slotId)
                     return true
                 }
 
-                if (selectorButton == Items.LIME_DYE && bind.allowUnequip != false) {
+                if (selectorButton == Items.DYE.lime && bind.allowUnequip != false) {
                     changeSlot(slotId)
                     return true
                 }
@@ -113,7 +113,7 @@ object WardrobeKeybinds : BaseModule("wardrobeKeybinds"), TickEvent, CommandRegi
                 }
                 val slotId = (index / 3 * 9) + (index % 3) + 14
                 val stack = slots[slotId]
-                if (stack.item.item != Items.GRAY_DYE) {
+                if (stack.item.item != Items.DYE.gray) {
                     changeSlot(slotId)
                     return true
                 }

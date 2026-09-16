@@ -37,7 +37,7 @@ object ExperimentationRngDisplay : FeatureModule("experimentationRngDisplay", No
     override fun onTick(totalTicks: Int) {
         rngXp = null
         if (!config.enabled) return
-        val screen: Screen? = Minecraft.getInstance().screen
+        val screen: Screen? = Minecraft.getInstance().gui.screen()
         if (screen !is ContainerScreen) return
         val title = screen.getTitle().string
         if (!title.startsWith("Experimentation Table")) return

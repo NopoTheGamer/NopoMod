@@ -51,7 +51,7 @@ object DebugModule : FeatureModule("debug", NopoMod.config.debug, shouldBeHidden
 
     override fun render(context: GuiGraphicsExtractor) {
         if (!config.enabled) return
-        val screen = Minecraft.getInstance().screen
+        val screen = Minecraft.getInstance().gui.screen()
         if (screen != null && screen !is ChatScreen) {
             val x = Minecraft.getInstance().mouseHandler.getScaledXPos(Minecraft.getInstance().window).toInt()
             val y = Minecraft.getInstance().mouseHandler.getScaledYPos(Minecraft.getInstance().window).toInt()

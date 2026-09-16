@@ -41,7 +41,7 @@ object RaffleQuests : FeatureModule("raffleQuestDisplay", NopoMod.config.raffleQ
     override fun onTick(totalTicks: Int) {
         if (!config.enabled) return
         if (!HypixelUtils.onSkyblock()) return
-        val screen = Minecraft.getInstance().screen
+        val screen = Minecraft.getInstance().gui.screen()
         if (screen !is ContainerScreen) return
         val slots = Minecraft.getInstance().player?.containerMenu?.slots ?: return
         val containerTitle = screen.title.string
@@ -49,7 +49,7 @@ object RaffleQuests : FeatureModule("raffleQuestDisplay", NopoMod.config.raffleQ
             tasks.clear()
             for (index in questSlots) {
                 val stack = slots[index].item
-                if (stack.item == Items.LIGHT_GRAY_STAINED_GLASS_PANE) continue
+                if (stack.item == Items.STAINED_GLASS_PANE.lightGray) continue
                 val lore = stack.get(DataComponents.LORE)?.lines ?: continue
                 val currentQuest = Component.empty()
                 for ((index, line) in lore.withIndex()) {

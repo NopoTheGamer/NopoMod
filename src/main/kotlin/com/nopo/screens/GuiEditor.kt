@@ -15,7 +15,7 @@ class GuiEditor(val pos: Position, val runnable: (GuiGraphicsExtractor) -> Unit)
     var previousScreen: Screen? = null
 
     init {
-        previousScreen = Minecraft.getInstance().screen as? ConfigScreen
+        previousScreen = Minecraft.getInstance().gui.screen() as? ConfigScreen
     }
 
     override fun init() {
@@ -79,6 +79,6 @@ class GuiEditor(val pos: Position, val runnable: (GuiGraphicsExtractor) -> Unit)
         pos.scale = firstScale
         ConfigManager.save()
         if (previousScreen == null) super.onClose()
-        else Minecraft.getInstance().setScreen(previousScreen)
+        else Minecraft.getInstance().gui.setScreen(previousScreen)
     }
 }

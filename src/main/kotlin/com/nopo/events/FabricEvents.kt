@@ -50,7 +50,7 @@ object FabricEvents : BaseModule("fabric events") {
             if (NopoMod.screenToOpen != null) {
                 screenTicks++
                 if (screenTicks == 5) {
-                    Minecraft.getInstance().setScreen(NopoMod.screenToOpen)
+                    Minecraft.getInstance().gui.setScreen(NopoMod.screenToOpen)
                     screenTicks = 0
                     NopoMod.screenToOpen = null
                 }
