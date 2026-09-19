@@ -14,6 +14,7 @@ import com.nopo.module.FeatureModule
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
 import com.nopo.utils.IslandType
+import com.nopo.utils.PartyApi
 import com.nopo.utils.Utils
 import com.nopo.utils.Utils.append
 import com.nopo.utils.Utils.appendEmoji
@@ -104,14 +105,14 @@ object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bo
                 val dropComponent = Utils.matcherOrString(message, drop)
                 val sinceLast = currentKills - lastDropped
                 if (!config.enabled) return@schedule
-                Utils.sendMessageToPlayer(
-                    componentBuilder {
-                        append("Took $sinceLast boss")
-                        if (sinceLast != 1) append("es")
-                        append(" to drop ")
-                        append(dropComponent)
-                    }
-                )
+                val message = componentBuilder {
+                    append("Took $sinceLast boss")
+                    if (sinceLast != 1) append("es")
+                    append(" to drop ")
+                    append(dropComponent)
+                }
+                Utils.sendMessageToPlayer(message)
+                if (getConfig().sendToPartyChat) PartyApi.sendPartyMessage(message.string)
 
                 ConfigManager.save()
             }
@@ -172,6 +173,23 @@ object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bo
                             )
                         }
                     }
+                    "partyMessage" {
+                        runs {
+                            Utils.sendMessageUnlessInConfig(
+                                componentBuilder {
+                                    append("Sending rng drops to party chat is now ")
+                                    getConfig().sendToPartyChat = !getConfig().sendToPartyChat
+                                    if (getConfig().sendToPartyChat) {
+                                        append("enabled")
+                                    } else {
+                                        append("disabled")
+                                    }
+                                    withColor(ChatFormatting.YELLOW)
+                                    ConfigManager.save()
+                                }
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -193,6 +211,19 @@ object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bo
                 if (getConfig().partyCommands) withColor(ChatFormatting.GREEN)
                 else withColor(ChatFormatting.RED)
             }
+            append {
+                append("[")
+                appendEmoji("speech_balloon") {
+                    withColor(ChatFormatting.WHITE)
+                }
+                command = "/nopo feature $moduleName partyMessage"
+                hover = componentBuilder {
+                    append("Click to toggle sending rare crops to party chat")
+                }
+                append("]")
+                if (getConfig().sendToPartyChat) withColor(ChatFormatting.GREEN)
+                else withColor(ChatFormatting.RED)
+            }
         }
     }
 }
@@ -211,6 +242,8 @@ class BossesSinceDropConfig : ModuleConfig() {
 
     @Expose
     var partyCommands = true
+    @Expose
+    var sendToPartyChat = true
 }
 
 enum class SlayerType(val display: String) {

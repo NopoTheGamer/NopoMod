@@ -30,8 +30,8 @@
     "6099000d-fd1e-4153-acc1-d206f1a93433": ["bug"]
   },
   "updateNotification": {
-    "latestVersion": "2.4.0",
-    "download": "https://modrinth.com/mod/nopo-mod/version/2.4.0"
+    "latestVersion": "2.6.0",
+    "download": "https://modrinth.com/mod/nopo-mod/version/2.6.0"
   },
   "disabledFeatures": [
     "ashwreath"
@@ -216,7 +216,8 @@
       "uuid": "af3f1844-1aa1-4e4e-9eb9-06e6bfef33b2",
       "emojis": [
         "trans",
-        "trans"
+        "trans",
+        "waga"
       ]
     },
     {
