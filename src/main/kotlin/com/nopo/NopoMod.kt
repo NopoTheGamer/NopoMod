@@ -19,7 +19,6 @@ import com.nopo.commands.EmojiCommand
 import com.nopo.commands.InfernoFuelCalculator
 import com.nopo.commands.ListConfigCommand
 import com.nopo.commands.MainCommand
-import com.nopo.commands.MeowPartyCommand
 import com.nopo.commands.RingCommand
 import com.nopo.commands.SixSeven
 import com.nopo.commands.TaskList
@@ -143,7 +142,6 @@ object NopoMod : ModInitializer {
             BabyDollModel,
             RavenousSheep,
             RingCommand,
-            MeowPartyCommand, // uses ring config xd
             NewSBLevelColours,
 
             FishingCategory,
