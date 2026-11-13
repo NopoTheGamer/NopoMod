@@ -5,6 +5,7 @@ import com.nopo.events.ParticleEvent
 import com.nopo.events.ParticleEventData
 import com.nopo.module.ConfigData
 import com.nopo.module.FeatureModule
+import com.nopo.utils.HypixelUtils
 import com.nopo.utils.Utils
 import net.minecraft.client.Minecraft
 import net.minecraft.core.particles.DustParticleOptions
@@ -26,6 +27,8 @@ object PowderCoatingParticleHider : FeatureModule("hidePowderCoatingParticles", 
     )
 
     override fun onParticleReceived(event: ParticleEventData): Boolean {
+        if (!config.enabled) return true
+        if (!HypixelUtils.onSkyblock()) return true
         if (event.options.type != ParticleTypes.DUST) return true
         if (event.options !is DustParticleOptions) return true
         val playerPos = Minecraft.getInstance().player?.position() ?: return true
