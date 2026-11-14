@@ -1,6 +1,7 @@
 package com.nopo.utils
 
 import com.nopo.utils.Utils.matcher
+import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
 import java.util.Optional
@@ -32,6 +33,11 @@ enum class Rarity(val color: String) {
                 Optional.empty<Component>()
             }, Style.EMPTY)
             return rarity
+        }
+
+        fun Rarity?.getColourStyle(): ChatFormatting {
+            if (this == null) return ChatFormatting.WHITE
+            return ChatFormatting.entries.firstOrNull { it.name.equals(this.color, ignoreCase = true) } ?: ChatFormatting.WHITE
         }
     }
 }

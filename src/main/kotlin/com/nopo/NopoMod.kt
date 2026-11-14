@@ -19,7 +19,6 @@ import com.nopo.commands.EmojiCommand
 import com.nopo.commands.InfernoFuelCalculator
 import com.nopo.commands.ListConfigCommand
 import com.nopo.commands.MainCommand
-import com.nopo.commands.MeowPartyCommand
 import com.nopo.commands.RingCommand
 import com.nopo.commands.SixSeven
 import com.nopo.commands.TaskList
@@ -56,6 +55,8 @@ import com.nopo.features.inventory.WardrobeKeybinds
 import com.nopo.features.meta.DebugModule
 import com.nopo.features.meta.FirstTimeGreeting
 import com.nopo.features.meta.UpdateNotification
+import com.nopo.features.mining.DrillGemstoneDisplay
+import com.nopo.features.mining.MineshaftSummary
 import com.nopo.features.mining.PowderCoatingParticleHider
 import com.nopo.features.pets.OverflowPetLevels
 import com.nopo.features.pets.PetDisplay
@@ -69,6 +70,7 @@ import com.nopo.features.slayer.BossesSinceDrop
 import com.nopo.module.BaseModule
 import com.nopo.utils.DelayedRuns
 import com.nopo.utils.HypixelUtils
+import com.nopo.utils.ItemManager
 import com.nopo.utils.PartyApi
 import com.nopo.utils.TitleApi
 import com.nopo.utils.Utils
@@ -76,6 +78,7 @@ import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.gui.screens.Screen
@@ -111,7 +114,10 @@ object NopoMod : ModInitializer {
         ConfigManager.save()
         ConfigManager.saveRareCrops()
 
-        downloadDataJson(true)
+        coroutineScope.launch {
+            downloadDataJson(true)
+            ItemManager.downloadItemsJson()
+        }
 
         modules = listOf(
             ChatCategory,
@@ -137,13 +143,14 @@ object NopoMod : ModInitializer {
 
             MiningCategory,
             PowderCoatingParticleHider,
+            MineshaftSummary,
+            DrillGemstoneDisplay,
 
             FunCategory,
             SmallPlayers,
             BabyDollModel,
             RavenousSheep,
             RingCommand,
-            MeowPartyCommand, // uses ring config xd
             NewSBLevelColours,
 
             FishingCategory,

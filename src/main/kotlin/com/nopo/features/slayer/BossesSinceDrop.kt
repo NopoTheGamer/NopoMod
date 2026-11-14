@@ -218,7 +218,7 @@ object BossesSinceDrop : FeatureModule("killsSinceSlayerDrop", NopoMod.config.bo
                 }
                 command = "/nopo feature $moduleName partyMessage"
                 hover = componentBuilder {
-                    append("Click to toggle sending rare crops to party chat")
+                    append("Click to toggle sending RNG drops to party chat")
                 }
                 append("]")
                 if (getConfig().sendToPartyChat) withColor(ChatFormatting.GREEN)

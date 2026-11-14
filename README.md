@@ -44,3 +44,5 @@ I stole some of the features from other mods ive made in the past
 <summary>Special Thanks</summary>
 I stole a bunch of code from skyhanni but i wrote most that code so whateves
 </details>
+
+I was here - miner_farm

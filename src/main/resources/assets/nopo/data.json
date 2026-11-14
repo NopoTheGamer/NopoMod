@@ -39,8 +39,8 @@
   "devName": "meowgirlemily",
   "levelColours": [
     {
-      "lowLevel": 620,
-      "highLevel": 620,
+      "lowLevel": 622,
+      "highLevel": 622,
       "rainbow": true,
       "rainbowSpeed": 5
     },
@@ -58,6 +58,64 @@
       "lowLevel": 600,
       "highLevel": 639,
       "colour": 13866480
+    }
+  ],
+  "corpseDrops": [
+    {
+      "name": "Frostbitten Dye"
+    },
+    {
+      "name": "Frozen Scute"
+    },
+    {
+      "name": "Caged Wisp"
+    },
+    {
+      "name": "Shattered Locket"
+    },
+    {
+      "name": "Enchanted Book (Ice Cold I)"
+    },
+    {
+      "name": "Umber Plate"
+    },
+    {
+      "name": "Tungsten Plate"
+    },
+    {
+      "name": "Mithril Plate"
+    },
+    {
+      "name": "Skeleton Key"
+    },
+    {
+      "name": "Tungsten Key"
+    },
+    {
+      "name": "Umber Key"
+    },
+    {
+      "name": "Dead Man's Chestplate"
+    },
+    {
+      "name": "Refined Umber",
+      "rng": false
+    },
+    {
+      "name": "Refined Tungsten",
+      "rng": false
+    },
+    {
+      "name": "Glacite Amalgamation",
+      "rng": false
+    },
+    {
+      "name": "Bejeweled Handle",
+      "rng": false
+    },
+    {
+      "name": "Dwarven O's Metallic Minis",
+      "rng": false
     }
   ],
   "cosmetics": [
@@ -170,7 +228,8 @@
       "uuid": "fa6c49a3-cacc-48f8-9d39-d9f876f5b4ed",
       "emojis": [
         "pensive",
-        "skull"
+        "skull",
+        "glubglub"
       ]
     },
     {
@@ -197,7 +256,7 @@
       ]
     },
     {
-      "name": "goohgurlvougy",
+      "name": "girlypopmai",
       "uuid": "10ebc9da-1875-47b4-871b-e60408d4cc09",
       "emojis": [
         "cat2"
@@ -246,7 +305,8 @@
         "pick",
         "woman_farmer",
         "trans",
-        "trans"
+        "trans",
+        "drooling_face"
       ]
     },
     {
@@ -299,6 +359,29 @@
       "emojis": [
         "older_man",
         "sparkles"
+      ]
+    },
+    {
+      "name": "tomatsaus",
+      "uuid": "1626c6d1-689d-420e-9307-379999dfbb01",
+      "emojis": [
+        "flushed"
+      ]
+    },
+    {
+      "name": "Manki_Ninja",
+      "uuid": "4938da03-c102-4358-ba1b-74782c1a00bd",
+      "emojis": [
+        "mouse_three_button",
+        "x",
+        "arrow_left"
+      ]
+    },
+    {
+      "name": "puppybeannrot",
+      "uuid": "8f8154ad-37a6-46d0-abdc-5476a4a11d25",
+      "emojis": [
+        "dog2"
       ]
     }
   ]

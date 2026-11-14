@@ -12588,7 +12588,8 @@
     {
       "name": "pleading_face",
       "alternatives": [
-        "plead"
+        "plead",
+        "pleading"
       ]
     },
     {
