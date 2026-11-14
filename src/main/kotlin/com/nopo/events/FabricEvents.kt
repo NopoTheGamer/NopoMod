@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLevelEvents
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents
+import net.fabricmc.fabric.api.client.rendering.v1.ExtractItemDecorationsCallback
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements
 import net.hypixel.modapi.HypixelModAPI
@@ -39,6 +40,14 @@ object FabricEvents : BaseModule("fabric events") {
                 }
                 if (module is CommandRegistration) {
                     module.createCommand()?.register(dispatcher)
+                }
+            }
+        }
+
+        ExtractItemDecorationsCallback.EVENT.register { drawContext, font, stack, x, y ->
+            for (module in modules) {
+                if (module is ItemOverlayEvent) {
+                    module.onItemOverlay(drawContext, font, stack, x, y)
                 }
             }
         }

@@ -133,6 +133,9 @@ class Config {
     var mineshaftSummaryConfig = ModuleConfig()
 
     @Expose
+    var drillGemstoneDisplayConfig = ModuleConfig()
+
+    @Expose
     var debug = ModuleConfig(false)
 
 }
