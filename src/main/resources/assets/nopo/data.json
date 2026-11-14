@@ -60,6 +60,64 @@
       "colour": 13866480
     }
   ],
+  "corpseDrops": [
+    {
+      "name": "Frostbitten Dye"
+    },
+    {
+      "name": "Frozen Scute"
+    },
+    {
+      "name": "Caged Wisp"
+    },
+    {
+      "name": "Shattered Locket"
+    },
+    {
+      "name": "Enchanted Book (Ice Cold I)"
+    },
+    {
+      "name": "Umber Plate"
+    },
+    {
+      "name": "Tungsten Plate"
+    },
+    {
+      "name": "Mithril Plate"
+    },
+    {
+      "name": "Skeleton Key"
+    },
+    {
+      "name": "Tungsten Key"
+    },
+    {
+      "name": "Umber Key"
+    },
+    {
+      "name": "Dead Man's Chestplate"
+    },
+    {
+      "name": "Refined Umber",
+      "rng": false
+    },
+    {
+      "name": "Refined Tungsten",
+      "rng": false
+    },
+    {
+      "name": "Glacite Amalgamation",
+      "rng": false
+    },
+    {
+      "name": "Bejeweled Handle",
+      "rng": false
+    },
+    {
+      "name": "Dwarven O's Metallic Minis",
+      "rng": false
+    }
+  ],
   "cosmetics": [
     {
       "name": "meowgirlemily",

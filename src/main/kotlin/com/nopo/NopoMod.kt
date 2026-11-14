@@ -55,6 +55,7 @@ import com.nopo.features.inventory.WardrobeKeybinds
 import com.nopo.features.meta.DebugModule
 import com.nopo.features.meta.FirstTimeGreeting
 import com.nopo.features.meta.UpdateNotification
+import com.nopo.features.mining.MineshaftSummary
 import com.nopo.features.mining.PowderCoatingParticleHider
 import com.nopo.features.pets.OverflowPetLevels
 import com.nopo.features.pets.PetDisplay
@@ -141,6 +142,7 @@ object NopoMod : ModInitializer {
 
             MiningCategory,
             PowderCoatingParticleHider,
+            MineshaftSummary,
 
             FunCategory,
             SmallPlayers,

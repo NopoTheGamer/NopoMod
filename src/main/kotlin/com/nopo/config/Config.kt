@@ -130,6 +130,9 @@ class Config {
     var itemPartyCommandConfig = ModuleConfig()
 
     @Expose
+    var mineshaftSummaryConfig = ModuleConfig()
+
+    @Expose
     var debug = ModuleConfig(false)
 
 }
