@@ -195,7 +195,7 @@ object MineshaftSummary : FeatureModule("mineshaftSummary", NopoMod.config.mines
             appendWithColor("\nGlacite Powder: ", ChatFormatting.AQUA)
             appendWithColor((currentPowder - startingPowder).addSeparators(), ChatFormatting.DARK_GRAY)
         }
-        if (startingPowder != -1) {
+        if (startingPowder != -1 && currentPowder - startingPowder > 0) {
             finalMessage.append(powderMessage)
             hoverText.append(powderMessage)
         }
