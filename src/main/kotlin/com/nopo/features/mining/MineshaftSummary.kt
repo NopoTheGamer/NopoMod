@@ -168,7 +168,7 @@ object MineshaftSummary : FeatureModule("mineshaftSummary", NopoMod.config.mines
                         append("\n")
                         appendWithColor(item.name ?: name.trim(), item.rarity.getColourStyle())
                         append(" ")
-                        appendWithColor("x$amount", ChatFormatting.DARK_GRAY)
+                        appendWithColor("x${amount.addSeparators()}", ChatFormatting.DARK_GRAY)
                         if (price != 0) {
                             append(" ")
                             appendWithColor("(", ChatFormatting.GRAY)
